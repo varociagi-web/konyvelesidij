@@ -409,6 +409,14 @@
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
 
+  .egyedi-ked-block {
+    margin-top: 4px;
+    padding: 14px 16px;
+    background: rgba(200,120,42,0.05);
+    border: 1px dashed rgba(200,120,42,0.25);
+    border-radius: 8px;
+  }
+
   /* Webshop specifics */
   .felarak-grid {
     display: grid;
@@ -763,28 +771,30 @@
               <div>
                 <div class="check-label">ÁFA bevallás</div>
               </div>
-              <div class="check-price">5 000 Ft</div>
+              <div class="check-price">5 000 Ft/hó</div>
               <label class="toggle"><input type="checkbox" id="ev-afa" onchange="calc()"><span class="toggle-slider"></span></label>
             </div>
             <div class="check-row">
               <div>
                 <div class="check-label">A60-as ÁFA összesítő</div>
+                <div class="check-sub">Csak ha van ÁFA bevallás</div>
               </div>
-              <div class="check-price">2 000 Ft</div>
+              <div class="check-price">2 000 Ft/hó</div>
               <label class="toggle"><input type="checkbox" id="ev-a60" onchange="calc()"><span class="toggle-slider"></span></label>
             </div>
             <div class="check-row">
               <div>
                 <div class="check-label">KSH jelentés</div>
               </div>
-              <div class="check-price">10 000 Ft</div>
+              <div class="check-price">10 000 Ft/alkalom</div>
               <label class="toggle"><input type="checkbox" id="ev-ksh" onchange="calc()"><span class="toggle-slider"></span></label>
             </div>
             <div class="check-row">
               <div>
-                <div class="check-label">Cégautóadó bevallás (negyedéves)</div>
+                <div class="check-label">Cégautóadó bevallás</div>
+                <div class="check-sub">Negyedéves → havi bontásban: 1 667 Ft/autó/hó</div>
               </div>
-              <div class="check-price">5 000 Ft/autó</div>
+              <div class="check-price">5 000 Ft/autó/negyed.</div>
               <div class="inline-num">
                 <input type="number" id="ev-cegauto" min="0" value="0" onchange="calc()" style="width:60px">
                 <span style="font-size:12px;color:var(--text-muted)">autó</span>
@@ -835,6 +845,23 @@
               <div class="check-price">–5% alapdíj</div>
               <label class="toggle"><input type="checkbox" id="ev-ked3" onchange="calc()"><span class="toggle-slider"></span></label>
             </div>
+            <div class="divider"></div>
+            <div class="egyedi-ked-block">
+              <div class="two-col" style="margin-bottom:8px">
+                <div class="field">
+                  <label>Egyedi kedvezmény – jogcím</label>
+                  <input type="text" id="ev-ked-jogcim" placeholder="pl. cégcsoport kedvezmény" oninput="updateEgyediLabel('ev'); calc()">
+                </div>
+                <div class="field">
+                  <label>Mértéke (% az alapdíjból)</label>
+                  <div style="position:relative">
+                    <input type="number" id="ev-ked-egyedi" min="0" max="100" value="" placeholder="0" onchange="calc()" style="padding-right:32px">
+                    <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:14px;pointer-events:none">%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="hint">Szabadon megadható kedvezmény az alapdíj százalékában – pl. cégcsoport, hosszú távú szerződés stb.</div>
+            </div>
           </div>
         </div>
 
@@ -856,6 +883,7 @@
             <div class="result-line"><span class="lbl">Bérszámfejtés</span><span class="val" id="ev-r-ber">–</span></div>
             <div class="result-line"><span class="lbl">Rendszeres feladatok</span><span class="val" id="ev-r-rend">–</span></div>
             <div class="result-line discount"><span class="lbl">Kedvezmények</span><span class="val" id="ev-r-ked">–</span></div>
+            <div class="result-line discount" id="ev-r-egyedi-row" style="display:none"><span class="lbl">Egyedi kedvezmény</span><span class="val" id="ev-r-egyedi">–</span></div>
 
             <div class="result-total">
               <div class="total-label">Havi becsült díj</div>
@@ -962,27 +990,27 @@
           <div class="section-body">
             <div class="check-row">
               <div><div class="check-label">ÁFA bevallás</div></div>
-              <div class="check-price">5 000 Ft</div>
+              <div class="check-price">5 000 Ft/hó</div>
               <label class="toggle"><input type="checkbox" id="ceg-afa" onchange="calc()"><span class="toggle-slider"></span></label>
             </div>
             <div class="check-row">
-              <div><div class="check-label">A60-as ÁFA összesítő</div></div>
-              <div class="check-price">2 000 Ft</div>
+              <div><div class="check-label">A60-as ÁFA összesítő</div><div class="check-sub">Csak ha van ÁFA bevallás</div></div>
+              <div class="check-price">2 000 Ft/hó</div>
               <label class="toggle"><input type="checkbox" id="ceg-a60" onchange="calc()"><span class="toggle-slider"></span></label>
             </div>
             <div class="check-row">
-              <div><div class="check-label">KIVA előleg bevallás (negyedévente)</div></div>
-              <div class="check-price">5 000 Ft</div>
+              <div><div class="check-label">KIVA előleg bevallás</div><div class="check-sub">Negyedéves → havi bontásban: 1 667 Ft/hó</div></div>
+              <div class="check-price">5 000 Ft/negyed.</div>
               <label class="toggle"><input type="checkbox" id="ceg-kiva" onchange="calc()"><span class="toggle-slider"></span></label>
             </div>
             <div class="check-row">
               <div><div class="check-label">KSH jelentés</div></div>
-              <div class="check-price">10 000 Ft</div>
+              <div class="check-price">10 000 Ft/alkalom</div>
               <label class="toggle"><input type="checkbox" id="ceg-ksh" onchange="calc()"><span class="toggle-slider"></span></label>
             </div>
             <div class="check-row">
-              <div><div class="check-label">Cégautóadó bevallás (negyedéves)</div></div>
-              <div class="check-price">5 000 Ft/autó</div>
+              <div><div class="check-label">Cégautóadó bevallás</div><div class="check-sub">Negyedéves → havi bontásban: 1 667 Ft/autó/hó</div></div>
+              <div class="check-price">5 000 Ft/autó/negyed.</div>
               <div class="inline-num">
                 <input type="number" id="ceg-cegauto" min="0" value="0" onchange="calc()" style="width:60px">
                 <span style="font-size:12px;color:var(--text-muted)">autó</span>
@@ -1017,6 +1045,23 @@
               <div class="check-price">–5% alapdíj</div>
               <label class="toggle"><input type="checkbox" id="ceg-ked2" onchange="calc()"><span class="toggle-slider"></span></label>
             </div>
+            <div class="divider"></div>
+            <div class="egyedi-ked-block">
+              <div class="two-col" style="margin-bottom:8px">
+                <div class="field">
+                  <label>Egyedi kedvezmény – jogcím</label>
+                  <input type="text" id="ceg-ked-jogcim" placeholder="pl. cégcsoport kedvezmény" oninput="updateEgyediLabel('ceg'); calc()">
+                </div>
+                <div class="field">
+                  <label>Mértéke (% az alapdíjból)</label>
+                  <div style="position:relative">
+                    <input type="number" id="ceg-ked-egyedi" min="0" max="100" value="" placeholder="0" onchange="calc()" style="padding-right:32px">
+                    <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:14px;pointer-events:none">%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="hint">Szabadon megadható kedvezmény az alapdíj százalékában – pl. cégcsoport, hosszú távú szerződés stb.</div>
+            </div>
           </div>
         </div>
 
@@ -1025,6 +1070,9 @@
       <!-- Result panel CÉG -->
       <div>
         <div class="result-panel" id="ceg-result">
+          <div class="result-header">
+            <div class="result-title">Becsült havi díj</div>
+            <div class="result-subtitle">Gazdasági társaság · Nettó árak</div>
             <div id="ceg-client-display" style="margin-top:8px;font-size:13px;color:var(--gold);display:none"></div>
           </div>
           <div class="result-body">
@@ -1034,13 +1082,12 @@
             <div class="result-line"><span class="lbl">Bérszámfejtés</span><span class="val" id="ceg-r-ber">–</span></div>
             <div class="result-line"><span class="lbl">Rendszeres feladatok</span><span class="val" id="ceg-r-rend">–</span></div>
             <div class="result-line discount"><span class="lbl">Kedvezmények</span><span class="val" id="ceg-r-ked">–</span></div>
-
+            <div class="result-line discount" id="ceg-r-egyedi-row" style="display:none"><span class="lbl">Egyedi kedvezmény</span><span class="val" id="ceg-r-egyedi">–</span></div>
             <div class="result-total">
               <div class="total-label">Havi becsült díj (nettó)</div>
               <div class="total-net" id="ceg-total">–</div>
               <div class="total-gross">Bruttó (27% ÁFA): <span id="ceg-total-gross">–</span></div>
             </div>
-
             <div class="note-box" id="ceg-egyedi-note" style="display:none">
               ⚠️ Egyedi ajánlat szükséges – kérjük, vegye fel velünk a kapcsolatot!
             </div>
@@ -1293,6 +1340,23 @@
                 <label class="toggle"><input type="checkbox" id="ws-ked-kicsi" onchange="calc()"><span class="toggle-slider"></span></label>
               </div>
             </div>
+            <div class="divider"></div>
+            <div class="egyedi-ked-block">
+              <div class="two-col" style="margin-bottom:8px">
+                <div class="field">
+                  <label>Egyedi kedvezmény – jogcím</label>
+                  <input type="text" id="ws-ked-jogcim" placeholder="pl. cégcsoport kedvezmény" oninput="updateEgyediLabel('ws'); calc()">
+                </div>
+                <div class="field">
+                  <label>Mértéke (% az alapdíjból)</label>
+                  <div style="position:relative">
+                    <input type="number" id="ws-ked-egyedi" min="0" max="100" value="" placeholder="0" onchange="calc()" style="padding-right:32px">
+                    <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:14px;pointer-events:none">%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="hint">Szabadon megadható kedvezmény az alapdíj százalékában – pl. cégcsoport, hosszú távú szerződés stb.</div>
+            </div>
           </div>
         </div>
 
@@ -1313,6 +1377,7 @@
             <div class="result-line subtotal"><span class="lbl">Módosított alapdíj</span><span class="val" id="ws-r-modalap">–</span></div>
             <div class="result-line"><span class="lbl">Bérszámfejtés</span><span class="val" id="ws-r-ber">–</span></div>
             <div class="result-line discount"><span class="lbl">Kedvezmények</span><span class="val" id="ws-r-ked">–</span></div>
+            <div class="result-line discount" id="ws-r-egyedi-row" style="display:none"><span class="lbl">Egyedi kedvezmény</span><span class="val" id="ws-r-egyedi">–</span></div>
 
             <div class="result-total">
               <div class="total-label">Havi becsült díj (nettó)</div>
@@ -1396,6 +1461,14 @@ function setWsType(type) {
   calc();
 }
 
+function updateEgyediLabel(prefix) {
+  const jogcim = document.getElementById(prefix + '-ked-jogcim').value.trim();
+  const labelEl = document.querySelector('#' + prefix + '-r-egyedi-row .lbl');
+  if (labelEl) {
+    labelEl.textContent = jogcim ? jogcim : 'Egyedi kedvezmény';
+  }
+}
+
 function updateClientName() {
   const name = document.getElementById('client-name').value.trim();
   ['ev', 'ceg', 'ws'].forEach(prefix => {
@@ -1464,7 +1537,6 @@ function calcEV() {
 
   if (egyedi) {
     document.getElementById('ev-total').textContent = 'Egyedi ajánlat';
-    document.getElementById('ev-total-gross').textContent = '–';
     return;
   }
 
@@ -1486,17 +1558,19 @@ function calcEV() {
   if (checked('ev-afa')) rend += 5000;
   if (checked('ev-a60')) rend += 2000;
   if (checked('ev-ksh')) rend += 10000;
-  rend += val('ev-cegauto') * 5000;
+  rend += val('ev-cegauto') * Math.round(5000/3);  // negyedéves ÷ 3
   if (checked('ev-turizmus')) rend += 5000;
   if (checked('ev-repr')) rend += 10000;
 
-  // Kedvezmények az alapdíj alapján (az alap tételszám díj * mértékek)
+  // Kedvezmények – alap: modAlap (alapdíj + árbevétel felár)
   let ked = 0;
-  if (checked('ev-ked1')) ked += alapdijBase * 0.1;
-  if (checked('ev-ked2')) ked += alapdijBase * 0.05;
-  if (checked('ev-ked3')) ked += alapdijBase * 0.05;
+  if (checked('ev-ked1')) ked += modAlap * 0.1;
+  if (checked('ev-ked2')) ked += modAlap * 0.05;
+  if (checked('ev-ked3')) ked += modAlap * 0.05;
 
-  const total = modAlap + ber + rend - ked;
+  const egyediPct = val('ev-ked-egyedi');
+  const egyediKed = Math.round(modAlap * egyediPct / 100);
+  const total = modAlap + ber + rend - ked - egyediKed;
 
   document.getElementById('ev-r-alap').textContent = fmt(alapdijBase);
   document.getElementById('ev-r-arbev').textContent = arbevFelár > 0 ? fmt(arbevFelár) : '0 Ft';
@@ -1504,9 +1578,11 @@ function calcEV() {
   document.getElementById('ev-r-modalap').textContent = fmt(modAlap);
   document.getElementById('ev-r-ber').textContent = ber > 0 ? fmt(ber) : '0 Ft';
   document.getElementById('ev-r-rend').textContent = rend > 0 ? fmt(rend) : '0 Ft';
-  document.getElementById('ev-r-ked').textContent = ked > 0 ? '–' + fmt(ked) : '0 Ft';
-  document.getElementById('ev-total').textContent = fmt(total);
-  // EV: alanyi mentes, nincs ÁFA
+  document.getElementById('ev-r-ked').textContent = ked > 0 ? '–' + fmt(Math.round(ked)) : '0 Ft';
+  const evEgyediRow = document.getElementById('ev-r-egyedi-row');
+  evEgyediRow.style.display = egyediKed > 0 ? '' : 'none';
+  document.getElementById('ev-r-egyedi').textContent = egyediKed > 0 ? '–' + fmt(egyediKed) : '0 Ft';
+  document.getElementById('ev-total').textContent = fmt(Math.round(total));
 }
 
 function calcCEG() {
@@ -1529,28 +1605,35 @@ function calcCEG() {
     val('ceg-ber-passz'), val('ceg-ber-ingatlan')
   );
 
+  // Rendszeres
   let rend = 0;
   if (checked('ceg-afa')) rend += 5000;
   if (checked('ceg-a60')) rend += 2000;
-  if (checked('ceg-kiva')) rend += 5000;
+  if (checked('ceg-kiva')) rend += Math.round(5000/3);   // negyedéves ÷ 3
   if (checked('ceg-ksh')) rend += 10000;
-  rend += val('ceg-cegauto') * 5000;
+  rend += val('ceg-cegauto') * Math.round(5000/3);       // negyedéves ÷ 3
   if (checked('ceg-turizmus')) rend += 5000;
   if (checked('ceg-repr')) rend += 10000;
 
+  // Kedvezmények – alap: modAlap
   let ked = 0;
-  if (checked('ceg-ked1')) ked += alapdijBase * 0.1;
-  if (checked('ceg-ked2')) ked += alapdijBase * 0.05;
+  if (checked('ceg-ked1')) ked += modAlap * 0.1;
+  if (checked('ceg-ked2')) ked += modAlap * 0.05;
 
-  const total = modAlap + ber + rend - ked;
+  const egyediPct = val('ceg-ked-egyedi');
+  const egyediKed = Math.round(modAlap * egyediPct / 100);
+  const total = modAlap + ber + rend - ked - egyediKed;
 
   document.getElementById('ceg-r-alap').textContent = fmt(alapdijBase);
   document.getElementById('ceg-r-arbev').textContent = arbevFelár > 0 ? fmt(arbevFelár) : '0 Ft';
   document.getElementById('ceg-r-modalap').textContent = fmt(modAlap);
   document.getElementById('ceg-r-ber').textContent = ber > 0 ? fmt(ber) : '0 Ft';
   document.getElementById('ceg-r-rend').textContent = rend > 0 ? fmt(rend) : '0 Ft';
-  document.getElementById('ceg-r-ked').textContent = ked > 0 ? '–' + fmt(ked) : '0 Ft';
-  document.getElementById('ceg-total').textContent = fmt(total);
+  document.getElementById('ceg-r-ked').textContent = ked > 0 ? '–' + fmt(Math.round(ked)) : '0 Ft';
+  const cegEgyediRow = document.getElementById('ceg-r-egyedi-row');
+  cegEgyediRow.style.display = egyediKed > 0 ? '' : 'none';
+  document.getElementById('ceg-r-egyedi').textContent = egyediKed > 0 ? '–' + fmt(egyediKed) : '0 Ft';
+  document.getElementById('ceg-total').textContent = fmt(Math.round(total));
   document.getElementById('ceg-total-gross').textContent = fmt(Math.round(total * 1.27));
 }
 
@@ -1590,24 +1673,29 @@ function calcWS() {
   const ber = berCalc(val('ws-ber-egyszer'), val('ws-ber-1let'), val('ws-ber-tobbet'), 0, 0);
 
   let ked = 0;
-  if (checked('ws-ked1')) ked += alapdijBase * 0.1;
-  if (checked('ws-ked2')) ked += alapdijBase * 0.05;
+  if (checked('ws-ked1')) ked += modAlap * 0.1;
+  if (checked('ws-ked2')) ked += modAlap * 0.05;
   // EV-only kedvezmények
   if (wsType === 'ev') {
-    if (checked('ws-ked-kata')) ked += alapdijBase * 0.5;
-    else if (checked('ws-ked-atalany')) ked += alapdijBase * 0.2;
-    if (checked('ws-ked-kicsi')) ked += alapdijBase * 0.05;
+    if (checked('ws-ked-kata')) ked += modAlap * 0.5;
+    else if (checked('ws-ked-atalany')) ked += modAlap * 0.2;
+    if (checked('ws-ked-kicsi')) ked += modAlap * 0.05;
   }
 
-  const total = modAlap + ber - ked;
+  const egyediPct = val('ws-ked-egyedi');
+  const egyediKed = Math.round(modAlap * egyediPct / 100);
+  const total = modAlap + ber - Math.round(ked) - egyediKed;
 
   document.getElementById('ws-r-alap').textContent = fmt(alapdijBase);
   document.getElementById('ws-r-kock').textContent = kockFelár > 0 ? fmt(kockFelár) : '0 Ft';
   document.getElementById('ws-r-komplex').textContent = komplex > 0 ? fmt(komplex) : '0 Ft';
   document.getElementById('ws-r-modalap').textContent = fmt(modAlap);
   document.getElementById('ws-r-ber').textContent = ber > 0 ? fmt(ber) : '0 Ft';
-  document.getElementById('ws-r-ked').textContent = ked > 0 ? '–' + fmt(ked) : '0 Ft';
-  document.getElementById('ws-total').textContent = fmt(total);
+  document.getElementById('ws-r-ked').textContent = ked > 0 ? '–' + fmt(Math.round(ked)) : '0 Ft';
+  const wsEgyediRow = document.getElementById('ws-r-egyedi-row');
+  wsEgyediRow.style.display = egyediKed > 0 ? '' : 'none';
+  document.getElementById('ws-r-egyedi').textContent = egyediKed > 0 ? '–' + fmt(egyediKed) : '0 Ft';
+  document.getElementById('ws-total').textContent = fmt(Math.round(total));
 
   if (wsType === 'ceg') {
     const grossEl = document.getElementById('ws-total-gross');
