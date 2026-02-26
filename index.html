@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SukorADÓ – Könyvelési Díj Kalkulátor</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --surface: #1a1916;
+    --surface2: #242220;
+    --border: #2e2c29;
+    --accent: #c8782a;
+    --accent-light: #e8954a;
+    --gold: #d4a843;
+    --text: #f0ede8;
+    --text-muted: #8a8680;
+    --text-dim: #5a5753;
+    --green: #5a9e6e;
+    --red: #c85a3a;
+    --radius: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* Header */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 28px 40px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: var(--surface);
+  }
+
+  .logo-mark {
+    width: 44px; height: 44px;
+    background: var(--accent);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: white;
+    flex-shrink: 0;
+    letter-spacing: -1px;
+  }
+
+  .header-text h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--text);
+  }
+  .header-text p {
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 6px;
+    margin-bottom: 36px;
+  }
+
+  .tab-btn {
+    flex: 1;
+    padding: 12px 16px;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.3px;
+  }
+
+  .tab-btn.active {
+    background: var(--accent);
+    color: white;
+    font-weight: 500;
+  }
+
+  .tab-btn:not(.active):hover {
+    background: var(--surface2);
+    color: var(--text);
+  }
+
+  /* Section */
+  .section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+
+  .section-header {
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-num {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .section-body {
+    padding: 24px;
+  }
+
+  /* Form elements */
+  .field {
+    margin-bottom: 20px;
+  }
+
+  .field:last-child { margin-bottom: 0; }
+
+  label {
+    display: block;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  select, input[type="number"], input[type="text"] {
+    width: 100%;
+    padding: 11px 14px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    transition: border-color 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a8680' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+  }
+
+  select:focus, input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  select option { background: #1a1916; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* Checkbox / toggle rows */
+  .check-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+  }
+
+  .check-row:last-child { border-bottom: none; }
+
+  .check-label {
+    font-size: 13px;
+    color: var(--text);
+    flex: 1;
+  }
+
+  .check-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .check-price {
+    font-size: 13px;
+    color: var(--gold);
+    white-space: nowrap;
+    min-width: 120px;
+    text-align: right;
+  }
+
+  .toggle {
+    position: relative;
+    width: 40px; height: 22px;
+    flex-shrink: 0;
+    margin-left: 12px;
+  }
+
+  .toggle input { opacity: 0; width: 0; height: 0; }
+
+  .toggle-slider {
+    position: absolute;
+    inset: 0;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .toggle-slider:before {
+    content: '';
+    position: absolute;
+    width: 16px; height: 16px;
+    left: 2px; top: 2px;
+    background: var(--text-muted);
+    border-radius: 50%;
+    transition: 0.2s;
+  }
+
+  .toggle input:checked + .toggle-slider {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .toggle input:checked + .toggle-slider:before {
+    transform: translateX(18px);
+    background: white;
+  }
+
+  /* Small number input inline */
+  .inline-num {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .inline-num input {
+    width: 70px;
+    text-align: center;
+    padding: 8px 10px;
+  }
+
+  /* Result panel */
+  .result-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    position: sticky;
+    top: 20px;
+  }
+
+  .result-header {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, #1e1c19, #242220);
+  }
+
+  .result-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .result-subtitle {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .result-body { padding: 20px 24px; }
+
+  .result-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 7px 0;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .result-line:last-of-type { border-bottom: none; }
+
+  .result-line .lbl { color: var(--text-muted); }
+  .result-line .val { color: var(--text); font-weight: 400; }
+  .result-line.discount .val { color: var(--green); }
+  .result-line.subtotal .val { color: var(--gold); font-weight: 500; }
+
+  .result-total {
+    margin-top: 16px;
+    padding: 18px 20px;
+    background: var(--surface2);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+
+  .total-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 6px;
+  }
+
+  .total-net {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--accent-light);
+    font-weight: 600;
+  }
+
+  .total-gross {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  .total-gross span {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .note-box {
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: rgba(200, 120, 42, 0.08);
+    border: 1px solid rgba(200, 120, 42, 0.2);
+    border-radius: 7px;
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* Layout */
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 24px;
+    align-items: start;
+  }
+
+  /* Info badge */
+  .info-badge {
+    display: inline-block;
+    background: rgba(212, 168, 67, 0.15);
+    border: 1px solid rgba(212, 168, 67, 0.3);
+    color: var(--gold);
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  /* Hidden panel */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* Webshop specifics */
+  .felarak-grid {
+    display: grid;
+    gap: 0;
+  }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 20px 0;
+  }
+
+  .hint {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 6px;
+  }
+
+  .ws-type-btn {
+    padding: 8px 16px;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .ws-type-btn.active {
+    background: var(--accent);
+    color: white;
+  }
+  .ws-type-btn:not(.active):hover {
+    color: var(--text);
+    background: var(--surface2);
+  }
+
+  /* ===== MOBILE ===== */
+  @media (max-width: 700px) {
+
+    /* Header */
+    header { padding: 14px 16px; gap: 12px; }
+    .logo-mark { width: 36px; height: 36px; font-size: 15px; }
+    .header-text h1 { font-size: 17px; }
+    .header-text p { font-size: 11px; }
+
+    /* Container */
+    .container { padding: 16px 12px 80px; }
+
+    /* Tabs – vízszintes scroll, ne törjön */
+    .tabs {
+      flex-direction: row;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      gap: 4px;
+      padding: 5px;
+      border-radius: 10px;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      flex: 0 0 auto;
+      white-space: nowrap;
+      font-size: 13px;
+      padding: 10px 14px;
+    }
+
+    /* Client name */
+    #client-name { max-width: 100% !important; }
+
+    /* Layout: összesítő FELÜLRE kerül mobilon */
+    .layout {
+      display: flex;
+      flex-direction: column-reverse; /* result panel first visually = last in DOM but first on screen */
+      gap: 16px;
+    }
+
+    /* Result panel mobilon */
+    .result-panel {
+      position: static;
+      /* összesítő legyen compact de látható */
+    }
+    .result-header { padding: 14px 16px 12px; }
+    .result-body { padding: 14px 16px; }
+    .total-net { font-size: 24px; }
+    .result-total { padding: 14px 16px; }
+
+    /* Form grids */
+    .two-col, .three-col { grid-template-columns: 1fr; gap: 12px; }
+
+    /* Section */
+    .section-body { padding: 16px; }
+    .section-header { padding: 14px 16px; }
+    .section-title { font-size: 15px; }
+
+    /* Check rows – touch-barát */
+    .check-row {
+      padding: 13px 0;
+      gap: 8px;
+      min-height: 48px;
+    }
+    .check-label { font-size: 13px; }
+    .check-price { font-size: 12px; min-width: 90px; }
+
+    /* Toggle nagyobb touch területtel */
+    .toggle { width: 44px; height: 26px; }
+    .toggle-slider { border-radius: 13px; }
+    .toggle-slider:before { width: 18px; height: 18px; top: 3px; left: 3px; }
+    .toggle input:checked + .toggle-slider:before { transform: translateX(18px); }
+
+    /* Inline number inputs */
+    .inline-num input { width: 56px; padding: 9px 8px; font-size: 14px; }
+
+    /* Select & input */
+    select, input[type="number"], input[type="text"] {
+      font-size: 16px; /* iOS ne zoomoljon be */
+      padding: 12px 14px;
+    }
+    select { padding-right: 36px; }
+
+    /* Webshop type toggle */
+    #tab-ws > div > div:first-child { flex-wrap: wrap; gap: 10px; }
+    .ws-type-btn { padding: 9px 14px; font-size: 13px; }
+
+    /* Hint szöveg */
+    .hint { font-size: 11px; }
+
+    /* Note box */
+    .note-box { font-size: 12px; padding: 10px 12px; }
+  }
+
+  /* Floating összesítő gomb – csak mobilon */
+  .fab-summary {
+    display: none;
+  }
+  @media (max-width: 700px) {
+    .fab-summary {
+      display: flex;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 13px 24px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(200,120,42,0.4);
+      align-items: center;
+      gap: 8px;
+      z-index: 100;
+      white-space: nowrap;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .fab-summary:active {
+      transform: translateX(-50%) scale(0.96);
+    }
+    .fab-summary.hidden { display: none !important; }
+  }
+
+  /* Print – csak az összesítő panel nyomtatódjon */
+  @media print {
+    body { background: white; color: black; }
+    .tabs, .tab-btn, header .header-text p,
+    .fab-summary, .note-box,
+    [class*="section"]:not(.result-panel),
+    .layout > div:first-child { display: none !important; }
+    .layout { display: block; }
+    .result-panel {
+      border: 1px solid #ccc;
+      box-shadow: none;
+      position: static;
+    }
+    .result-header { background: #f5f5f5 !important; color: black !important; }
+    .result-title, .result-subtitle, .result-line .lbl,
+    .result-line .val, .total-label { color: black !important; }
+    .total-net { color: #c8782a !important; }
+    header { border-bottom: 1px solid #ccc; background: white !important; }
+    .logo-mark { background: #c8782a !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-mark">SA</div>
+  <div class="header-text">
+    <h1>SukorADÓ</h1>
+    <p>Könyvelési díj kalkulátor</p>
+  </div>
+</header>
+
+<button class="fab-summary" id="fab-btn" onclick="scrollToResult()">
+  <span>↓</span> Összesítő
+</button>
+
+<div class="container">
+
+  <!-- Client name -->
+  <div style="margin-bottom:20px">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 24px;display:flex;align-items:center;gap:16px">
+      <span style="font-size:13px;color:var(--text-muted);white-space:nowrap;letter-spacing:0.5px">Ajánlatkérő neve:</span>
+      <input type="text" id="client-name" placeholder="pl. Kovács Péter" oninput="updateClientName()" style="flex:1;max-width:360px">
+    </div>
+  </div>
+
+  <!-- Tab selector -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('ev')">Egyéni vállalkozó</button>
+    <button class="tab-btn" onclick="switchTab('ceg')">Gazdasági társaság</button>
+    <button class="tab-btn" onclick="switchTab('ws')">Webshop</button>
+  </div>
+
+  <!-- ==================== EV TAB ==================== -->
+  <div class="tab-panel active" id="tab-ev">
+    <div class="layout">
+      <div>
+
+        <!-- 1. Alapdíj -->
+        <div class="section">
+          <div class="section-header">
+            <div class="section-num">1</div>
+            <div class="section-title">Alapdíj</div>
+          </div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="field">
+                <label>Havi könyvelési tételszám</label>
+                <select id="ev-tetelek" onchange="calc()">
+                  <option value="45000">0–70 tétel</option>
+                  <option value="60000">71–150 tétel</option>
+                  <option value="90000">151–250 tétel</option>
+                  <option value="130000">251–350 tétel</option>
+                  <option value="160000">351–500 tétel</option>
+                  <option value="190000">501–700 tétel</option>
+                  <option value="0">700+ (egyedi ajánlat)</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Éves árbevétel</label>
+                <select id="ev-arbev" onchange="calc()">
+                  <option value="0">0–50 millió Ft</option>
+                  <option value="10000">50–100 millió Ft</option>
+                  <option value="20000">100–250 millió Ft</option>
+                  <option value="40000">250–500 millió Ft</option>
+                  <option value="60000">500–700 millió Ft</option>
+                  <option value="80000">700–900 millió Ft</option>
+                  <option value="-1">900 millió felett (egyedi)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Adózási forma</label>
+              <select id="ev-adozas" onchange="calc()">
+                <option value="0">Vállalkozói SZJA / TAO</option>
+                <option value="kata">KATA (–50% alapdíjból)</option>
+                <option value="atalany">Átalányadózás (–20% alapdíjból)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Bérszámfejtés -->
+        <div class="section">
+          <div class="section-header">
+            <div class="section-num">2</div>
+            <div class="section-title">Bérszámfejtés</div>
+          </div>
+          <div class="section-body">
+            <div class="three-col">
+              <div class="field">
+                <label>Egyszerű havibéres (fő)</label>
+                <input type="number" id="ev-ber-egyszer" min="0" value="0" onchange="calc()">
+                <div class="hint">1–5 fő: 4 000 Ft/fő | 6–20: 3 700 | 21+: 2 500</div>
+              </div>
+              <div class="field">
+                <label>1 letiltás / pótlék / túlóra (fő)</label>
+                <input type="number" id="ev-ber-1let" min="0" value="0" onchange="calc()">
+                <div class="hint">4 500 Ft/fő/hó</div>
+              </div>
+              <div class="field">
+                <label>Több letiltás / komplex (fő)</label>
+                <input type="number" id="ev-ber-tobbet" min="0" value="0" onchange="calc()">
+                <div class="hint">5 000 Ft/fő/hó</div>
+              </div>
+            </div>
+            <div class="two-col" style="margin-top:16px">
+              <div class="field">
+                <label>Jövedelem nélküli / passzív tag (fő)</label>
+                <input type="number" id="ev-ber-passz" min="0" value="0" onchange="calc()">
+                <div class="hint">2 000 Ft/fő/hó</div>
+              </div>
+              <div class="field">
+                <label>Bérelt ingatlan magánszemélytől (fő)</label>
+                <input type="number" id="ev-ber-ingatlan" min="0" value="0" onchange="calc()">
+                <div class="hint">3 700 Ft/fő/hó</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Rendszeres feladatok -->
+        <div class="section">
+          <div class="section-header">
+            <div class="section-num">3</div>
+            <div class="section-title">Rendszeres feladatok</div>
+          </div>
+          <div class="section-body">
+            <div class="check-row">
+              <div>
+                <div class="check-label">ÁFA bevallás</div>
+              </div>
+              <div class="check-price">5 000 Ft</div>
+              <label class="toggle"><input type="checkbox" id="ev-afa" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="check-row">
+              <div>
+                <div class="check-label">A60-as ÁFA összesítő</div>
+              </div>
+              <div class="check-price">2 000 Ft</div>
+              <label class="toggle"><input type="checkbox" id="ev-a60" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="check-row">
+              <div>
+                <div class="check-label">KSH jelentés</div>
+              </div>
+              <div class="check-price">10 000 Ft</div>
+              <label class="toggle"><input type="checkbox" id="ev-ksh" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="check-row">
+              <div>
+                <div class="check-label">Cégautóadó bevallás (negyedéves)</div>
+              </div>
+              <div class="check-price">5 000 Ft/autó</div>
+              <div class="inline-num">
+                <input type="number" id="ev-cegauto" min="0" value="0" onchange="calc()" style="width:60px">
+                <span style="font-size:12px;color:var(--text-muted)">autó</span>
+              </div>
+            </div>
+            <div class="check-row">
+              <div>
+                <div class="check-label">Turizmusfejlesztési hozzájárulás</div>
+              </div>
+              <div class="check-price">5 000 Ft</div>
+              <label class="toggle"><input type="checkbox" id="ev-turizmus" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="check-row">
+              <div>
+                <div class="check-label">Reprezentációs költségek bevallása</div>
+              </div>
+              <div class="check-price">10 000 Ft</div>
+              <label class="toggle"><input type="checkbox" id="ev-repr" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Kedvezmények -->
+        <div class="section">
+          <div class="section-header">
+            <div class="section-num">4</div>
+            <div class="section-title">Kedvezmények</div>
+          </div>
+          <div class="section-body">
+            <div class="check-row">
+              <div>
+                <div class="check-label">Kiegyenlített számlákról határidőn belüli információszolgáltatás</div>
+              </div>
+              <div class="check-price">–10% alapdíj</div>
+              <label class="toggle"><input type="checkbox" id="ev-ked1" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="check-row">
+              <div>
+                <div class="check-label">Határidőben történő díjfizetés</div>
+              </div>
+              <div class="check-price">–5% alapdíj</div>
+              <label class="toggle"><input type="checkbox" id="ev-ked2" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="check-row">
+              <div>
+                <div class="check-label">Éves árbevétel 1 800 000 Ft alatt</div>
+              </div>
+              <div class="check-price">–5% alapdíj</div>
+              <label class="toggle"><input type="checkbox" id="ev-ked3" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /left col -->
+
+      <!-- Result panel EV -->
+      <div>
+        <div class="result-panel" id="ev-result-panel">
+          <div class="result-header">
+            <div class="result-title">Becsült havi díj</div>
+            <div class="result-subtitle">Egyéni vállalkozó · Áfamentes (alanyi mentes)</div>
+            <div id="ev-client-display" style="margin-top:8px;font-size:13px;color:var(--gold);display:none"></div>
+          </div>
+          <div class="result-body">
+            <div class="result-line"><span class="lbl">Alapdíj (tételszám)</span><span class="val" id="ev-r-alap">–</span></div>
+            <div class="result-line"><span class="lbl">Árbevétel felár</span><span class="val" id="ev-r-arbev">–</span></div>
+            <div class="result-line"><span class="lbl">Adózási kedvezmény</span><span class="val discount" id="ev-r-adozas">–</span></div>
+            <div class="result-line subtotal"><span class="lbl">Módosított alapdíj</span><span class="val" id="ev-r-modalap">–</span></div>
+            <div class="result-line"><span class="lbl">Bérszámfejtés</span><span class="val" id="ev-r-ber">–</span></div>
+            <div class="result-line"><span class="lbl">Rendszeres feladatok</span><span class="val" id="ev-r-rend">–</span></div>
+            <div class="result-line discount"><span class="lbl">Kedvezmények</span><span class="val" id="ev-r-ked">–</span></div>
+
+            <div class="result-total">
+              <div class="total-label">Havi becsült díj</div>
+              <div class="total-net" id="ev-total">–</div>
+              <div class="total-gross" style="color:var(--green);font-size:12px;margin-top:4px">✓ Áfamentes – alanyi adómentes számlázás</div>
+            </div>
+
+            <div class="note-box" id="ev-egyedi-note" style="display:none">
+              ⚠️ Egyedi ajánlat szükséges – kérjük, vegye fel velünk a kapcsolatot!
+            </div>
+            <div class="note-box" style="margin-top:12px">
+              Az árak tájékoztató jellegűek. A végleges díj az írásos szerződésben kerül rögzítésre.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /layout -->
+  </div><!-- /ev tab -->
+
+
+  <!-- ==================== CÉG TAB ==================== -->
+  <div class="tab-panel" id="tab-ceg">
+    <div class="layout">
+      <div>
+
+        <div class="section">
+          <div class="section-header">
+            <div class="section-num">1</div>
+            <div class="section-title">Alapdíj</div>
+          </div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="field">
+                <label>Havi könyvelési tételszám</label>
+                <select id="ceg-tetelek" onchange="calc()">
+                  <option value="45000">0–70 tétel</option>
+                  <option value="60000">71–150 tétel</option>
+                  <option value="90000">151–250 tétel</option>
+                  <option value="130000">251–350 tétel</option>
+                  <option value="160000">351–500 tétel</option>
+                  <option value="190000">501–700 tétel</option>
+                  <option value="0">700+ (egyedi ajánlat)</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Éves árbevétel</label>
+                <select id="ceg-arbev" onchange="calc()">
+                  <option value="0">0–50 millió Ft</option>
+                  <option value="10000">50–100 millió Ft</option>
+                  <option value="20000">100–250 millió Ft</option>
+                  <option value="40000">250–500 millió Ft</option>
+                  <option value="60000">500–700 millió Ft</option>
+                  <option value="80000">700–900 millió Ft</option>
+                  <option value="-1">900 millió felett (egyedi)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            <div class="section-num">2</div>
+            <div class="section-title">Bérszámfejtés</div>
+          </div>
+          <div class="section-body">
+            <div class="three-col">
+              <div class="field">
+                <label>Egyszerű havibéres (fő)</label>
+                <input type="number" id="ceg-ber-egyszer" min="0" value="0" onchange="calc()">
+                <div class="hint">1–5 fő: 4 000 | 6–20: 3 700 | 21+: 2 500 Ft/fő</div>
+              </div>
+              <div class="field">
+                <label>1 letiltás / pótlék (fő)</label>
+                <input type="number" id="ceg-ber-1let" min="0" value="0" onchange="calc()">
+                <div class="hint">4 500 Ft/fő/hó</div>
+              </div>
+              <div class="field">
+                <label>Több letiltás / komplex (fő)</label>
+                <input type="number" id="ceg-ber-tobbet" min="0" value="0" onchange="calc()">
+                <div class="hint">5 000 Ft/fő/hó</div>
+              </div>
+            </div>
+            <div class="two-col" style="margin-top:16px">
+              <div class="field">
+                <label>Jövedelem nélküli / passzív tag (fő)</label>
+                <input type="number" id="ceg-ber-passz" min="0" value="0" onchange="calc()">
+                <div class="hint">2 000 Ft/fő/hó</div>
+              </div>
+              <div class="field">
+                <label>Bérelt ingatlan magánszemélytől (fő)</label>
+                <input type="number" id="ceg-ber-ingatlan" min="0" value="0" onchange="calc()">
+                <div class="hint">3 700 Ft/fő/hó</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            <div class="section-num">3</div>
+            <div class="section-title">Rendszeres feladatok</div>
+          </div>
+          <div class="section-body">
+            <div class="check-row">
+              <div><div class="check-label">ÁFA bevallás</div></div>
+              <div class="check-price">5 000 Ft</div>
+              <label class="toggle"><input type="checkbox" id="ceg-afa" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">A60-as ÁFA összesítő</div></div>
+              <div class="check-price">2 000 Ft</div>
+              <label class="toggle"><input type="checkbox" id="ceg-a60" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">KIVA előleg bevallás (negyedévente)</div></div>
+              <div class="check-price">5 000 Ft</div>
+              <label class="toggle"><input type="checkbox" id="ceg-kiva" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">KSH jelentés</div></div>
+              <div class="check-price">10 000 Ft</div>
+              <label class="toggle"><input type="checkbox" id="ceg-ksh" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">Cégautóadó bevallás (negyedéves)</div></div>
+              <div class="check-price">5 000 Ft/autó</div>
+              <div class="inline-num">
+                <input type="number" id="ceg-cegauto" min="0" value="0" onchange="calc()" style="width:60px">
+                <span style="font-size:12px;color:var(--text-muted)">autó</span>
+              </div>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">Turizmusfejlesztési hozzájárulás</div></div>
+              <div class="check-price">5 000 Ft</div>
+              <label class="toggle"><input type="checkbox" id="ceg-turizmus" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">Reprezentációs költségek bevallása</div></div>
+              <div class="check-price">10 000 Ft</div>
+              <label class="toggle"><input type="checkbox" id="ceg-repr" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            <div class="section-num">4</div>
+            <div class="section-title">Kedvezmények</div>
+          </div>
+          <div class="section-body">
+            <div class="check-row">
+              <div><div class="check-label">Számlák / bankkivonatok határidőre, hiánytalanul feltöltve az EDITH-be</div></div>
+              <div class="check-price">–10% alapdíj</div>
+              <label class="toggle"><input type="checkbox" id="ceg-ked1" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">Határidőben történő díjfizetés</div></div>
+              <div class="check-price">–5% alapdíj</div>
+              <label class="toggle"><input type="checkbox" id="ceg-ked2" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /left col -->
+
+      <!-- Result panel CÉG -->
+      <div>
+        <div class="result-panel" id="ceg-result">
+            <div id="ceg-client-display" style="margin-top:8px;font-size:13px;color:var(--gold);display:none"></div>
+          </div>
+          <div class="result-body">
+            <div class="result-line"><span class="lbl">Alapdíj (tételszám)</span><span class="val" id="ceg-r-alap">–</span></div>
+            <div class="result-line"><span class="lbl">Árbevétel felár</span><span class="val" id="ceg-r-arbev">–</span></div>
+            <div class="result-line subtotal"><span class="lbl">Módosított alapdíj</span><span class="val" id="ceg-r-modalap">–</span></div>
+            <div class="result-line"><span class="lbl">Bérszámfejtés</span><span class="val" id="ceg-r-ber">–</span></div>
+            <div class="result-line"><span class="lbl">Rendszeres feladatok</span><span class="val" id="ceg-r-rend">–</span></div>
+            <div class="result-line discount"><span class="lbl">Kedvezmények</span><span class="val" id="ceg-r-ked">–</span></div>
+
+            <div class="result-total">
+              <div class="total-label">Havi becsült díj (nettó)</div>
+              <div class="total-net" id="ceg-total">–</div>
+              <div class="total-gross">Bruttó (27% ÁFA): <span id="ceg-total-gross">–</span></div>
+            </div>
+
+            <div class="note-box" id="ceg-egyedi-note" style="display:none">
+              ⚠️ Egyedi ajánlat szükséges – kérjük, vegye fel velünk a kapcsolatot!
+            </div>
+            <div class="note-box" style="margin-top:12px">
+              Az éves zárás díja: 1 havi alapdíj (könyvvizsgálattal: 1,5×). Az árak tájékoztatók, nettók.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /ceg tab -->
+
+
+  <!-- ==================== WEBSHOP TAB ==================== -->
+  <div class="tab-panel" id="tab-ws">
+    <div class="layout">
+      <div>
+
+        <!-- EV/Cég kapcsoló -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 24px;margin-bottom:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+          <span style="font-size:13px;color:var(--text-muted);letter-spacing:0.5px">Vállalkozás típusa:</span>
+          <div style="display:flex;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:4px;gap:4px">
+            <button id="ws-toggle-ceg" class="ws-type-btn active" onclick="setWsType('ceg')">Gazdasági társaság</button>
+            <button id="ws-toggle-ev" class="ws-type-btn" onclick="setWsType('ev')">Egyéni vállalkozó</button>
+          </div>
+          <span id="ws-type-note" style="font-size:12px;color:var(--text-muted)">Számlázás: +27% ÁFA</span>
+        </div>
+
+        <!-- 1. Alapdíj -->
+        <div class="section">
+          <div class="section-header">
+            <div class="section-num">1</div>
+            <div class="section-title">Webshop alapdíj</div>
+          </div>
+          <div class="section-body">
+            <div class="two-col">
+              <div class="field">
+                <label>Havi rendelési volumen</label>
+                <select id="ws-rendeles" onchange="calc()">
+                  <option value="75000">0–300 rendelés</option>
+                  <option value="95000">301–800 rendelés</option>
+                  <option value="130000">801–1 500 rendelés</option>
+                  <option value="170000">1 501–3 000 rendelés</option>
+                  <option value="0">3 000+ (egyedi ajánlat)</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Éves webshop árbevétel</label>
+                <select id="ws-arbev" onchange="calc()">
+                  <option value="0">0–150 millió Ft</option>
+                  <option value="15000">150–400 millió Ft</option>
+                  <option value="30000">400–800 millió Ft</option>
+                  <option value="50000">800 M – 1,5 milliárd Ft</option>
+                  <option value="-1">1,5 milliárd Ft felett (egyedi)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Komplexitási felárak -->
+        <div class="section">
+          <div class="section-header">
+            <div class="section-num">2</div>
+            <div class="section-title">Komplexitási felárak</div>
+          </div>
+          <div class="section-body">
+
+            <div style="margin-bottom:16px">
+              <label style="margin-bottom:12px;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted)">Bankszámlák</label>
+              <div class="check-row">
+                <div><div class="check-label">1. bankszámla</div><div class="check-sub">Alapdíj tartalmazza</div></div>
+                <div class="check-price">0 Ft</div>
+                <div style="width:40px"></div>
+              </div>
+              <div class="check-row">
+                <div><div class="check-label">2. bankszámla</div></div>
+                <div class="check-price">+10 000 Ft</div>
+                <label class="toggle"><input type="checkbox" id="ws-bank2" onchange="calc()"><span class="toggle-slider"></span></label>
+              </div>
+              <div class="check-row">
+                <div><div class="check-label">3. bankszámla</div></div>
+                <div class="check-price">+10 000 Ft</div>
+                <label class="toggle"><input type="checkbox" id="ws-bank3" onchange="calc()"><span class="toggle-slider"></span></label>
+              </div>
+              <div class="check-row">
+                <div><div class="check-label">4. bankszámla felett (darabonként)</div></div>
+                <div class="check-price">+15 000 Ft/db</div>
+                <div class="inline-num">
+                  <input type="number" id="ws-bank4plus" min="0" value="0" onchange="calc()" style="width:60px">
+                  <span style="font-size:12px;color:var(--text-muted)">db</span>
+                </div>
+              </div>
+              <div class="check-row">
+                <div><div class="check-label">Devizás bankszámla (devizanemenként)</div></div>
+                <div class="check-price">+15 000 Ft</div>
+                <div class="inline-num">
+                  <input type="number" id="ws-devbank" min="0" value="0" onchange="calc()" style="width:60px">
+                  <span style="font-size:12px;color:var(--text-muted)">db</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div style="margin-bottom:16px">
+              <label style="margin-bottom:12px;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted)">Fizetési szolgáltatók</label>
+              <div class="check-row">
+                <div><div class="check-label">1. bankkártya-elszámoló</div><div class="check-sub">Alapdíj tartalmazza</div></div>
+                <div class="check-price">0 Ft</div>
+                <div style="width:40px"></div>
+              </div>
+              <div class="check-row">
+                <div><div class="check-label">További bankkártya-elszámoló</div></div>
+                <div class="check-price">+15 000 Ft</div>
+                <label class="toggle"><input type="checkbox" id="ws-kart2" onchange="calc()"><span class="toggle-slider"></span></label>
+              </div>
+              <div class="check-row">
+                <div><div class="check-label">1 futárszolgálat utánvétes elszámolással</div><div class="check-sub">Alapdíj tartalmazza</div></div>
+                <div class="check-price">0 Ft</div>
+                <div style="width:40px"></div>
+              </div>
+              <div class="check-row">
+                <div><div class="check-label">További futárszolgálat (darabonként)</div></div>
+                <div class="check-price">+10 000 Ft/futár</div>
+                <div class="inline-num">
+                  <input type="number" id="ws-futar" min="0" value="0" onchange="calc()" style="width:60px">
+                  <span style="font-size:12px;color:var(--text-muted)">db</span>
+                </div>
+              </div>
+              <div class="check-row">
+                <div><div class="check-label">Tömeges visszáru-kezelés</div></div>
+                <div class="check-price">+15 000 Ft</div>
+                <label class="toggle"><input type="checkbox" id="ws-vissz" onchange="calc()"><span class="toggle-slider"></span></label>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div style="margin-bottom:16px">
+              <label style="margin-bottom:12px;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted)">Nemzetközi ügyletek</label>
+              <div class="check-row">
+                <div><div class="check-label">EU-s beszerzések rendszeres könyvelése</div></div>
+                <div class="check-price">+15 000 Ft</div>
+                <label class="toggle"><input type="checkbox" id="ws-eubesz" onchange="calc()"><span class="toggle-slider"></span></label>
+              </div>
+              <div class="check-row">
+                <div><div class="check-label">EU-s értékesítés (OSS rendszer)</div></div>
+                <div class="check-price">+25 000 Ft</div>
+                <label class="toggle"><input type="checkbox" id="ws-oss" onchange="calc()"><span class="toggle-slider"></span></label>
+              </div>
+              <div class="check-row">
+                <div><div class="check-label">Harmadik országból történő beszerzés</div></div>
+                <div class="check-price">+20 000 Ft</div>
+                <label class="toggle"><input type="checkbox" id="ws-harmadik" onchange="calc()"><span class="toggle-slider"></span></label>
+              </div>
+              <div class="check-row">
+                <div><div class="check-label">Devizás értékesítés</div></div>
+                <div class="check-price">+15 000 Ft</div>
+                <label class="toggle"><input type="checkbox" id="ws-deviz" onchange="calc()"><span class="toggle-slider"></span></label>
+              </div>
+              <div class="check-row">
+                <div><div class="check-label">Import ÁFA ügyintézés</div></div>
+                <div class="check-price">+15 000 Ft</div>
+                <label class="toggle"><input type="checkbox" id="ws-importafa" onchange="calc()"><span class="toggle-slider"></span></label>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div>
+              <label style="margin-bottom:12px;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted)">Marketplace értékesítés</label>
+              <div class="check-row">
+                <div><div class="check-label">1. marketplace platform (pl. Amazon, eMAG)</div></div>
+                <div class="check-price">+20 000 Ft</div>
+                <label class="toggle"><input type="checkbox" id="ws-mp1" onchange="calc()"><span class="toggle-slider"></span></label>
+              </div>
+              <div class="check-row">
+                <div><div class="check-label">További marketplace platform (darabonként)</div></div>
+                <div class="check-price">+15 000 Ft/db</div>
+                <div class="inline-num">
+                  <input type="number" id="ws-mp2plus" min="0" value="0" onchange="calc()" style="width:60px">
+                  <span style="font-size:12px;color:var(--text-muted)">db</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 3. Bérszámfejtés -->
+        <div class="section">
+          <div class="section-header">
+            <div class="section-num">3</div>
+            <div class="section-title">Bérszámfejtés</div>
+          </div>
+          <div class="section-body">
+            <div class="three-col">
+              <div class="field">
+                <label>Egyszerű havibéres (fő)</label>
+                <input type="number" id="ws-ber-egyszer" min="0" value="0" onchange="calc()">
+                <div class="hint">1–5: 4 000 | 6–20: 3 700 | 21+: 2 500 Ft</div>
+              </div>
+              <div class="field">
+                <label>1 letiltás / pótlék (fő)</label>
+                <input type="number" id="ws-ber-1let" min="0" value="0" onchange="calc()">
+                <div class="hint">4 500 Ft/fő/hó</div>
+              </div>
+              <div class="field">
+                <label>Több letiltás / komplex (fő)</label>
+                <input type="number" id="ws-ber-tobbet" min="0" value="0" onchange="calc()">
+                <div class="hint">5 000 Ft/fő/hó</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Kedvezmények -->
+        <div class="section">
+          <div class="section-header">
+            <div class="section-num">4</div>
+            <div class="section-title">Kedvezmények</div>
+          </div>
+          <div class="section-body">
+            <div class="check-row">
+              <div><div class="check-label">EDITH rendszerbe határidőre, hiánytalanul feltöltés</div></div>
+              <div class="check-price">–10% alapdíj</div>
+              <label class="toggle"><input type="checkbox" id="ws-ked1" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">Határidőben történő díjfizetés</div></div>
+              <div class="check-price">–5% alapdíj</div>
+              <label class="toggle"><input type="checkbox" id="ws-ked2" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <!-- EV-only discounts -->
+            <div class="ws-ev-only" style="display:none">
+              <div class="check-row">
+                <div><div class="check-label">KATA adózási mód</div></div>
+                <div class="check-price">–50% alapdíj</div>
+                <label class="toggle"><input type="checkbox" id="ws-ked-kata" onchange="calc()"><span class="toggle-slider"></span></label>
+              </div>
+              <div class="check-row">
+                <div><div class="check-label">Átalányadózás</div></div>
+                <div class="check-price">–20% alapdíj</div>
+                <label class="toggle"><input type="checkbox" id="ws-ked-atalany" onchange="calc()"><span class="toggle-slider"></span></label>
+              </div>
+              <div class="check-row">
+                <div><div class="check-label">Éves árbevétel 1 800 000 Ft alatt</div></div>
+                <div class="check-price">–5% alapdíj</div>
+                <label class="toggle"><input type="checkbox" id="ws-ked-kicsi" onchange="calc()"><span class="toggle-slider"></span></label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /left -->
+
+      <!-- Result panel WS -->
+      <div>
+        <div class="result-panel" id="ws-result">
+          <div class="result-header">
+            <div class="result-title">Becsült havi díj</div>
+            <div class="result-subtitle">Webshop · Nettó árak</div>
+            <div id="ws-client-display" style="margin-top:8px;font-size:13px;color:var(--gold);display:none"></div>
+          </div>
+          <div class="result-body">
+            <div class="result-line"><span class="lbl">Alapdíj (rendelési volumen)</span><span class="val" id="ws-r-alap">–</span></div>
+            <div class="result-line"><span class="lbl">Forgalmi kockázati felár</span><span class="val" id="ws-r-kock">–</span></div>
+            <div class="result-line"><span class="lbl">Komplexitási felárak</span><span class="val" id="ws-r-komplex">–</span></div>
+            <div class="result-line subtotal"><span class="lbl">Módosított alapdíj</span><span class="val" id="ws-r-modalap">–</span></div>
+            <div class="result-line"><span class="lbl">Bérszámfejtés</span><span class="val" id="ws-r-ber">–</span></div>
+            <div class="result-line discount"><span class="lbl">Kedvezmények</span><span class="val" id="ws-r-ked">–</span></div>
+
+            <div class="result-total">
+              <div class="total-label">Havi becsült díj (nettó)</div>
+              <div class="total-net" id="ws-total">–</div>
+              <div class="total-gross" id="ws-afa-line">Bruttó (27% ÁFA): <span id="ws-total-gross">–</span></div>
+            </div>
+
+            <div class="note-box" id="ws-egyedi-note" style="display:none">
+              ⚠️ Egyedi ajánlat szükséges – kérjük, vegye fel velünk a kapcsolatot!
+            </div>
+            <div class="note-box" style="margin-top:12px">
+              Az éves zárás díja: 1 havi alapdíj. Közbülső mérleg: 1 havi alapdíj. Árak tájékoztatók, nettók.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /ws tab -->
+
+</div><!-- /container -->
+
+<script>
+let wsType = 'ceg'; // 'ceg' or 'ev'
+
+function getActiveResultId() {
+  const active = document.querySelector('.tab-panel.active');
+  if (!active) return null;
+  if (active.id === 'tab-ev') return 'ev-result-panel';
+  if (active.id === 'tab-ceg') return 'ceg-result';
+  return 'ws-result';
+}
+
+function scrollToResult() {
+  const id = getActiveResultId();
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Show/hide FAB based on whether result panel is visible
+function updateFab() {
+  if (window.innerWidth > 700) return;
+  const id = getActiveResultId();
+  const el = document.getElementById(id);
+  if (!el) return;
+  const rect = el.getBoundingClientRect();
+  const fab = document.getElementById('fab-btn');
+  // Hide FAB if result panel is fully visible
+  if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
+    fab.classList.add('hidden');
+  } else {
+    fab.classList.remove('hidden');
+  }
+}
+
+window.addEventListener('scroll', updateFab, { passive: true });
+window.addEventListener('resize', updateFab);
+
+function setWsType(type) {
+  wsType = type;
+  document.getElementById('ws-toggle-ceg').classList.toggle('active', type === 'ceg');
+  document.getElementById('ws-toggle-ev').classList.toggle('active', type === 'ev');
+  
+  const note = document.getElementById('ws-type-note');
+  const evOnlyRows = document.querySelectorAll('.ws-ev-only');
+  const wsSubtitle = document.querySelector('#tab-ws .result-subtitle');
+  const wsAfaline = document.getElementById('ws-afa-line');
+
+  if (type === 'ev') {
+    note.textContent = 'Számlázás: áfamentes (alanyi mentes)';
+    note.style.color = 'var(--green)';
+    evOnlyRows.forEach(el => el.style.display = '');
+    if (wsSubtitle) wsSubtitle.textContent = 'Webshop · Egyéni vállalkozó · Áfamentes';
+    wsAfaline.innerHTML = '<span style="color:var(--green)">✓ Áfamentes – alanyi adómentes számlázás</span>';
+  } else {
+    note.textContent = 'Számlázás: +27% ÁFA';
+    note.style.color = 'var(--text-muted)';
+    evOnlyRows.forEach(el => el.style.display = 'none');
+    if (wsSubtitle) wsSubtitle.textContent = 'Webshop · Gazdasági társaság · Nettó árak';
+    wsAfaline.innerHTML = 'Bruttó (27% ÁFA): <span id="ws-total-gross">–</span>';
+  }
+  calc();
+}
+
+function updateClientName() {
+  const name = document.getElementById('client-name').value.trim();
+  ['ev', 'ceg', 'ws'].forEach(prefix => {
+    const el = document.getElementById(prefix + '-client-display');
+    if (name) {
+      el.textContent = '📋 ' + name + ' részére';
+      el.style.display = '';
+    } else {
+      el.style.display = 'none';
+    }
+  });
+}
+
+function fmt(n) {
+  return n.toLocaleString('hu-HU') + ' Ft';
+}
+
+function berCalc(egyszer, elet, tobbet, passz, ingatlan) {
+  let total = 0;
+  // Simple salary
+  if (egyszer > 0) {
+    if (egyszer <= 5) total += egyszer * 4000;
+    else if (egyszer <= 20) total += 5 * 4000 + (egyszer - 5) * 3700;
+    else total += 5 * 4000 + 15 * 3700 + (egyszer - 20) * 2500;
+  }
+  total += elet * 4500;
+  total += tobbet * 5000;
+  total += (passz || 0) * 2000;
+  total += (ingatlan || 0) * 3700;
+  return total;
+}
+
+function switchTab(t) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    b.classList.toggle('active', ['ev','ceg','ws'][i] === t);
+  });
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + t).classList.add('active');
+  calc();
+  setTimeout(updateFab, 50);
+}
+
+function val(id) {
+  return parseFloat(document.getElementById(id).value) || 0;
+}
+function checked(id) {
+  return document.getElementById(id).checked;
+}
+function sel(id) {
+  return parseFloat(document.getElementById(id).value);
+}
+
+function calc() {
+  calcEV();
+  calcCEG();
+  calcWS();
+}
+
+function calcEV() {
+  const alapdijBase = sel('ev-tetelek');
+  const arbevFelár = sel('ev-arbev');
+  const adozas = document.getElementById('ev-adozas').value;
+  const egyedi = alapdijBase === 0 || arbevFelár === -1;
+
+  document.getElementById('ev-egyedi-note').style.display = egyedi ? '' : 'none';
+
+  if (egyedi) {
+    document.getElementById('ev-total').textContent = 'Egyedi ajánlat';
+    document.getElementById('ev-total-gross').textContent = '–';
+    return;
+  }
+
+  // Adózási kedvezmény az alapdíjon
+  let adozasKed = 0;
+  if (adozas === 'kata') adozasKed = alapdijBase * 0.5;
+  else if (adozas === 'atalany') adozasKed = alapdijBase * 0.2;
+
+  const modAlap = alapdijBase - adozasKed + arbevFelár;
+
+  // Bérszámfejtés
+  const ber = berCalc(
+    val('ev-ber-egyszer'), val('ev-ber-1let'), val('ev-ber-tobbet'),
+    val('ev-ber-passz'), val('ev-ber-ingatlan')
+  );
+
+  // Rendszeres
+  let rend = 0;
+  if (checked('ev-afa')) rend += 5000;
+  if (checked('ev-a60')) rend += 2000;
+  if (checked('ev-ksh')) rend += 10000;
+  rend += val('ev-cegauto') * 5000;
+  if (checked('ev-turizmus')) rend += 5000;
+  if (checked('ev-repr')) rend += 10000;
+
+  // Kedvezmények az alapdíj alapján (az alap tételszám díj * mértékek)
+  let ked = 0;
+  if (checked('ev-ked1')) ked += alapdijBase * 0.1;
+  if (checked('ev-ked2')) ked += alapdijBase * 0.05;
+  if (checked('ev-ked3')) ked += alapdijBase * 0.05;
+
+  const total = modAlap + ber + rend - ked;
+
+  document.getElementById('ev-r-alap').textContent = fmt(alapdijBase);
+  document.getElementById('ev-r-arbev').textContent = arbevFelár > 0 ? fmt(arbevFelár) : '0 Ft';
+  document.getElementById('ev-r-adozas').textContent = adozasKed > 0 ? '–' + fmt(adozasKed) : '0 Ft';
+  document.getElementById('ev-r-modalap').textContent = fmt(modAlap);
+  document.getElementById('ev-r-ber').textContent = ber > 0 ? fmt(ber) : '0 Ft';
+  document.getElementById('ev-r-rend').textContent = rend > 0 ? fmt(rend) : '0 Ft';
+  document.getElementById('ev-r-ked').textContent = ked > 0 ? '–' + fmt(ked) : '0 Ft';
+  document.getElementById('ev-total').textContent = fmt(total);
+  // EV: alanyi mentes, nincs ÁFA
+}
+
+function calcCEG() {
+  const alapdijBase = sel('ceg-tetelek');
+  const arbevFelár = sel('ceg-arbev');
+  const egyedi = alapdijBase === 0 || arbevFelár === -1;
+
+  document.getElementById('ceg-egyedi-note').style.display = egyedi ? '' : 'none';
+
+  if (egyedi) {
+    document.getElementById('ceg-total').textContent = 'Egyedi ajánlat';
+    document.getElementById('ceg-total-gross').textContent = '–';
+    return;
+  }
+
+  const modAlap = alapdijBase + arbevFelár;
+
+  const ber = berCalc(
+    val('ceg-ber-egyszer'), val('ceg-ber-1let'), val('ceg-ber-tobbet'),
+    val('ceg-ber-passz'), val('ceg-ber-ingatlan')
+  );
+
+  let rend = 0;
+  if (checked('ceg-afa')) rend += 5000;
+  if (checked('ceg-a60')) rend += 2000;
+  if (checked('ceg-kiva')) rend += 5000;
+  if (checked('ceg-ksh')) rend += 10000;
+  rend += val('ceg-cegauto') * 5000;
+  if (checked('ceg-turizmus')) rend += 5000;
+  if (checked('ceg-repr')) rend += 10000;
+
+  let ked = 0;
+  if (checked('ceg-ked1')) ked += alapdijBase * 0.1;
+  if (checked('ceg-ked2')) ked += alapdijBase * 0.05;
+
+  const total = modAlap + ber + rend - ked;
+
+  document.getElementById('ceg-r-alap').textContent = fmt(alapdijBase);
+  document.getElementById('ceg-r-arbev').textContent = arbevFelár > 0 ? fmt(arbevFelár) : '0 Ft';
+  document.getElementById('ceg-r-modalap').textContent = fmt(modAlap);
+  document.getElementById('ceg-r-ber').textContent = ber > 0 ? fmt(ber) : '0 Ft';
+  document.getElementById('ceg-r-rend').textContent = rend > 0 ? fmt(rend) : '0 Ft';
+  document.getElementById('ceg-r-ked').textContent = ked > 0 ? '–' + fmt(ked) : '0 Ft';
+  document.getElementById('ceg-total').textContent = fmt(total);
+  document.getElementById('ceg-total-gross').textContent = fmt(Math.round(total * 1.27));
+}
+
+function calcWS() {
+  const alapdijBase = sel('ws-rendeles');
+  const kockFelár = sel('ws-arbev');
+  const egyedi = alapdijBase === 0 || kockFelár === -1;
+
+  document.getElementById('ws-egyedi-note').style.display = egyedi ? '' : 'none';
+
+  if (egyedi) {
+    document.getElementById('ws-total').textContent = 'Egyedi ajánlat';
+    const grossEl = document.getElementById('ws-total-gross');
+    if (grossEl) grossEl.textContent = '–';
+    return;
+  }
+
+  // Komplexitás
+  let komplex = 0;
+  if (checked('ws-bank2')) komplex += 10000;
+  if (checked('ws-bank3')) komplex += 10000;
+  komplex += val('ws-bank4plus') * 15000;
+  komplex += val('ws-devbank') * 15000;
+  if (checked('ws-kart2')) komplex += 15000;
+  komplex += val('ws-futar') * 10000;
+  if (checked('ws-vissz')) komplex += 15000;
+  if (checked('ws-eubesz')) komplex += 15000;
+  if (checked('ws-oss')) komplex += 25000;
+  if (checked('ws-harmadik')) komplex += 20000;
+  if (checked('ws-deviz')) komplex += 15000;
+  if (checked('ws-importafa')) komplex += 15000;
+  if (checked('ws-mp1')) komplex += 20000;
+  komplex += val('ws-mp2plus') * 15000;
+
+  const modAlap = alapdijBase + kockFelár + komplex;
+
+  const ber = berCalc(val('ws-ber-egyszer'), val('ws-ber-1let'), val('ws-ber-tobbet'), 0, 0);
+
+  let ked = 0;
+  if (checked('ws-ked1')) ked += alapdijBase * 0.1;
+  if (checked('ws-ked2')) ked += alapdijBase * 0.05;
+  // EV-only kedvezmények
+  if (wsType === 'ev') {
+    if (checked('ws-ked-kata')) ked += alapdijBase * 0.5;
+    else if (checked('ws-ked-atalany')) ked += alapdijBase * 0.2;
+    if (checked('ws-ked-kicsi')) ked += alapdijBase * 0.05;
+  }
+
+  const total = modAlap + ber - ked;
+
+  document.getElementById('ws-r-alap').textContent = fmt(alapdijBase);
+  document.getElementById('ws-r-kock').textContent = kockFelár > 0 ? fmt(kockFelár) : '0 Ft';
+  document.getElementById('ws-r-komplex').textContent = komplex > 0 ? fmt(komplex) : '0 Ft';
+  document.getElementById('ws-r-modalap').textContent = fmt(modAlap);
+  document.getElementById('ws-r-ber').textContent = ber > 0 ? fmt(ber) : '0 Ft';
+  document.getElementById('ws-r-ked').textContent = ked > 0 ? '–' + fmt(ked) : '0 Ft';
+  document.getElementById('ws-total').textContent = fmt(total);
+
+  if (wsType === 'ceg') {
+    const grossEl = document.getElementById('ws-total-gross');
+    if (grossEl) grossEl.textContent = fmt(Math.round(total * 1.27));
+  }
+}
+
+// Init
+calc();
+setTimeout(updateFab, 100);
+</script>
+</body>
+</html>
