@@ -766,24 +766,210 @@
 
   /* Print – csak az összesítő panel nyomtatódjon */
   @media print {
-    body { background: white; color: black; }
-    .tabs, .tab-btn, header .header-text p,
-    .fab-summary, .note-box,
-    [class*="section"]:not(.result-panel),
-    .layout > div:first-child { display: none !important; }
-    .layout { display: block; }
-    .result-panel {
-      border: 1px solid #ccc;
-      box-shadow: none;
-      position: static;
-    }
-    .result-header { background: #f5f5f5 !important; color: black !important; }
-    .result-title, .result-subtitle, .result-line .lbl,
-    .result-line .val, .total-label { color: black !important; }
-    .total-net { color: #c8782a !important; }
-    header { border-bottom: 1px solid #ccc; background: white !important; }
-    .logo-mark { background: #c8782a !important; }
+    body { background: white !important; }
+    body > *:not(#print-view) { display: none !important; }
+    #print-view { display: block !important; }
   }
+
+  #print-view {
+    display: none;
+  }
+
+  .print-page {
+    font-family: 'DM Sans', sans-serif;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 40px;
+    color: #2d2a26;
+  }
+
+  .print-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #c8782a;
+  }
+
+  .print-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .print-logo-mark {
+    width: 40px; height: 40px;
+    background: #c8782a;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .print-logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #2d2a26;
+  }
+
+  .print-meta {
+    text-align: right;
+    font-size: 12px;
+    color: #7a7268;
+    line-height: 1.6;
+  }
+
+  .print-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #2d2a26;
+    margin-bottom: 4px;
+  }
+
+  .print-subtitle {
+    font-size: 13px;
+    color: #7a7268;
+    margin-bottom: 28px;
+  }
+
+  .print-client {
+    background: #fdf5ee;
+    border: 1px solid rgba(200,120,42,0.25);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 24px;
+    font-size: 13px;
+    color: #7a7268;
+  }
+
+  .print-client strong {
+    color: #2d2a26;
+    font-size: 15px;
+  }
+
+  .print-section-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #b0a89e;
+    margin: 20px 0 8px;
+  }
+
+  .print-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 6px 0;
+    border-bottom: 1px solid #f0eeeb;
+    font-size: 13px;
+  }
+
+  .print-line .lbl { color: #2d2a26; }
+  .print-line .val { color: #2d2a26; font-weight: 500; white-space: nowrap; margin-left: 16px; }
+  .print-line .val.discount { color: #2e6b44; }
+  .print-line .sub { font-size: 11px; color: #b0a89e; margin-top: 1px; }
+
+  .print-ked-box {
+    background: #f7fdf9;
+    border: 1px solid #c2e0cc;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin: 8px 0;
+  }
+
+  .print-ked-box .print-line { border-bottom-color: #e6f5ec; }
+  .print-ked-box .print-line .lbl { color: #4a7a5a; }
+  .print-ked-box .print-line .val { color: #2e6b44; }
+  .print-ked-total {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 8px;
+    margin-top: 4px;
+    border-top: 1.5px solid #5a9e6e;
+    font-size: 13px;
+    font-weight: 600;
+    color: #2e6b44;
+  }
+
+  .print-modalap {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 8px 0;
+    border-bottom: 1px solid #e0dbd4;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .print-modalap .vals { display: flex; align-items: baseline; gap: 6px; }
+  .print-modalap .orig { text-decoration: line-through; color: #b0a89e; font-size: 11px; font-weight: 400; }
+  .print-modalap .arrow { color: #5a9e6e; font-size: 11px; }
+  .print-modalap .new { color: #c8782a; font-size: 14px; }
+
+  .print-total-box {
+    margin-top: 24px;
+    background: #2d2a26;
+    border-radius: 10px;
+    padding: 18px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .print-total-box .lbl { color: #f5f4f2; font-size: 13px; font-weight: 500; }
+  .print-total-box .val { color: #c8782a; font-size: 22px; font-weight: 700; font-family: 'Playfair Display', serif; }
+  .print-total-box .gross { color: #b0a89e; font-size: 11px; margin-top: 2px; }
+
+  .print-zar-box {
+    margin-top: 16px;
+    background: #fffbf2;
+    border: 1.5px solid #e6a830;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 12px;
+  }
+
+  .print-zar-title { font-weight: 700; color: #b07a10; text-transform: uppercase; font-size: 10px; letter-spacing: 1px; margin-bottom: 4px; }
+  .print-zar-text { color: #7a7268; line-height: 1.5; }
+  .print-zar-amount { color: #b07a10; font-weight: 700; font-size: 13px; margin-top: 4px; }
+
+  .print-footer {
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px solid #e0dbd4;
+    font-size: 11px;
+    color: #b0a89e;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  .print-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #c8782a;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 16px rgba(200,120,42,0.35);
+    transition: background 0.15s;
+    z-index: 100;
+  }
+  .print-btn:hover { background: #b06820; }
 </style>
 </head>
 <body>
@@ -1651,6 +1837,14 @@
 
 </div><!-- /container -->
 
+<!-- Print view -->
+<div id="print-view"></div>
+
+<!-- Print button -->
+<button class="print-btn" onclick="openPrintView()" title="Összesítő nyomtatása / PDF mentés">
+  🖨️ Összesítő nyomtatása
+</button>
+
 <script>
 let wsType = 'ceg'; // 'ceg' or 'ev'
 
@@ -2158,7 +2352,140 @@ function calcWS() {
   if (wsZarEl) wsZarEl.textContent = 'Becsült éves zárás díja: ' + fmt(Math.round(modAlap)) + ' Ft' + (wsType === 'ceg' ? ' (+ ÁFA)' : '') + ' · Közbenső mérleg igény esetén: ugyanennyi';
 }
 
-// Init
+// ==================== PRINT VIEW ====================
+function openPrintView() {
+  const activeTab = document.querySelector('.tab-panel.active').id;
+  const prefix = activeTab === 'tab-ev' ? 'ev' : activeTab === 'tab-ceg' ? 'ceg' : 'ws';
+
+  // Collect visible result lines
+  function getLines(sectionLabelId, rowPrefix) {
+    // gets all visible result-line rows from result body
+  }
+
+  // Gather data from result panel
+  const resultPanel = document.getElementById(
+    prefix === 'ev' ? 'ev-result-panel' : prefix === 'ceg' ? 'ceg-result' : 'ws-result'
+  );
+
+  const clientName = document.getElementById('client-name').value.trim();
+  const today = new Date().toLocaleDateString('hu-HU', { year: 'numeric', month: 'long', day: 'numeric' });
+
+  // Subtitle
+  const subtitle = resultPanel.querySelector('.result-subtitle').textContent;
+
+  // Collect all visible result lines from the panel
+  const allLines = resultPanel.querySelectorAll('.result-section-label, .result-line, .subtotal-ked, .ked-box, .total-area, .eves-zar-box');
+
+  let itemsHTML = '';
+
+  allLines.forEach(el => {
+    if (el.style.display === 'none') return;
+
+    if (el.classList.contains('result-section-label')) {
+      itemsHTML += `<div class="print-section-label">${el.textContent}</div>`;
+
+    } else if (el.classList.contains('ked-box')) {
+      // Green discount box
+      const rows = el.querySelectorAll('.result-line[style*="display: none"], .result-line:not([style])');
+      let kedRows = '';
+      el.querySelectorAll('.result-line').forEach(row => {
+        if (row.style.display === 'none') return;
+        const lbl = row.querySelector('.lbl') ? row.querySelector('.lbl').textContent : '';
+        const val = row.querySelector('.val') ? row.querySelector('.val').textContent : '';
+        kedRows += `<div class="print-line"><span class="lbl">${lbl}</span><span class="val discount">${val}</span></div>`;
+      });
+      const totalEl = el.querySelector('.ked-box-total');
+      const totalVal = totalEl ? totalEl.querySelector('.val').textContent : '';
+      itemsHTML += `<div class="print-ked-box">
+        ${kedRows}
+        <div class="print-ked-total"><span>Kedvezmény összesen</span><span>${totalVal}</span></div>
+      </div>`;
+
+    } else if (el.classList.contains('subtotal-ked')) {
+      const lbl = 'Módosított alapdíj';
+      const origEl = el.querySelector('.val-orig');
+      const newEl = el.querySelector('.val-new');
+      const hasOrig = origEl && origEl.style.display !== 'none';
+      const valsHTML = hasOrig
+        ? `<span class="vals"><span class="orig">${origEl.textContent}</span><span class="arrow"> → </span><span class="new">${newEl.textContent}</span></span>`
+        : `<span class="vals"><span class="new">${newEl.textContent}</span></span>`;
+      itemsHTML += `<div class="print-modalap"><span>${lbl}</span>${valsHTML}</div>`;
+
+    } else if (el.classList.contains('result-line')) {
+      if (el.style.display === 'none') return;
+      const lblEl = el.querySelector('.lbl');
+      const valEl = el.querySelector('.val, .val-new');
+      if (!lblEl || !valEl) return;
+      const subEl = lblEl.querySelector('.result-sub');
+      const subText = subEl ? subEl.textContent : '';
+      const lblText = lblEl.childNodes[0] ? lblEl.childNodes[0].textContent.trim() : lblEl.textContent.trim();
+      const isDiscount = el.classList.contains('discount');
+      itemsHTML += `<div class="print-line">
+        <span class="lbl">${lblText}${subText ? `<div class="sub">${subText}</div>` : ''}</span>
+        <span class="val${isDiscount ? ' discount' : ''}">${valEl.textContent}</span>
+      </div>`;
+
+    } else if (el.classList.contains('eves-zar-box')) {
+      if (el.style.display === 'none') return;
+      const title = el.querySelector('.eves-zar-title') ? el.querySelector('.eves-zar-title').textContent : '';
+      const text = el.querySelector('.eves-zar-text') ? el.querySelector('.eves-zar-text').textContent : '';
+      const amount = el.querySelector('.eves-zar-amount') ? el.querySelector('.eves-zar-amount').textContent : '';
+      itemsHTML += `<div class="print-zar-box">
+        <div class="print-zar-title">📅 ${title}</div>
+        <div class="print-zar-text">${text}</div>
+        <div class="print-zar-amount">${amount}</div>
+      </div>`;
+    }
+  });
+
+  // Total
+  const totalEl = resultPanel.querySelector('.total-net');
+  const totalVal = totalEl ? totalEl.textContent : '–';
+  const grossEl = resultPanel.querySelector('.total-gross');
+  const grossHTML = grossEl && grossEl.style.display !== 'none'
+    ? `<div class="gross">${grossEl.textContent}</div>` : '';
+
+  const clientHTML = clientName
+    ? `<div class="print-client">Ajánlatkérő: <strong>${clientName}</strong></div>` : '';
+
+  const html = `
+    <div class="print-page">
+      <div class="print-header">
+        <div class="print-logo">
+          <div class="print-logo-mark">S</div>
+          <div class="print-logo-text">SukorADÓ</div>
+        </div>
+        <div class="print-meta">
+          Könyvelési díjajánlat<br>
+          ${today}
+        </div>
+      </div>
+
+      <div class="print-title">Becsült havi könyvelési díj</div>
+      <div class="print-subtitle">${subtitle}</div>
+
+      ${clientHTML}
+
+      ${itemsHTML}
+
+      <div class="print-total-box">
+        <div><div class="lbl">Becsült havi díj összesen</div>${grossHTML}</div>
+        <div class="val">${totalVal}</div>
+      </div>
+
+      <div class="print-footer">
+        Az árak tájékoztató jellegűek, nettók. A végleges díj az írásos szerződésben kerül rögzítésre.<br>
+        SukorADÓ Könyvelő és Adótanácsadó Iroda · sukorado.hu
+      </div>
+    </div>
+  `;
+
+  const printDiv = document.getElementById('print-view');
+  printDiv.innerHTML = html;
+  window.print();
+}
+
+// ==================== INIT ====================
 calc();
 setTimeout(updateFab, 100);
 </script>
