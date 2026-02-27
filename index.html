@@ -125,6 +125,25 @@
     box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
 
+  .section.section-ked {
+    border-color: #5a9e6e;
+    box-shadow: 0 0 0 1px #5a9e6e, 0 2px 8px rgba(90,158,110,0.10);
+    background: #f7fdf9;
+  }
+
+  .section.section-ked .section-header {
+    background: #e6f5ec;
+    border-bottom-color: #c2e0cc;
+  }
+
+  .section.section-ked .section-num {
+    background: #5a9e6e;
+  }
+
+  .section.section-ked .section-title {
+    color: #2e6b44;
+  }
+
   .section-header {
     padding: 18px 24px;
     display: flex;
@@ -488,6 +507,43 @@
     line-height: 1.5;
   }
 
+  .eves-zar-box {
+    margin-top: 16px;
+    padding: 14px 16px;
+    background: #fffbf2;
+    border: 1.5px solid #e6a830;
+    border-radius: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .eves-zar-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    line-height: 1;
+    margin-top: 1px;
+  }
+  .eves-zar-body { flex: 1; }
+  .eves-zar-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #b07a10;
+    margin-bottom: 4px;
+  }
+  .eves-zar-text {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .eves-zar-amount {
+    font-size: 14px;
+    font-weight: 700;
+    color: #b07a10;
+    margin-top: 4px;
+  }
+
   /* Layout */
   .layout {
     display: grid;
@@ -811,10 +867,58 @@
           </div>
         </div>
 
-        <!-- 2. Bérszámfejtés -->
-        <div class="section">
+        <!-- 2. Kedvezmények -->
+        <div class="section section-ked">
           <div class="section-header">
             <div class="section-num">2</div>
+            <div class="section-title">Kedvezmények</div>
+          </div>
+          <div class="section-body">
+            <div class="check-row">
+              <div>
+                <div class="check-label">Kiegyenlített számlákról határidőn belüli információszolgáltatás</div>
+              </div>
+              <div class="check-price">–10% alapdíj</div>
+              <label class="toggle"><input type="checkbox" id="ev-ked1" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="check-row">
+              <div>
+                <div class="check-label">Határidőben történő díjfizetés</div>
+              </div>
+              <div class="check-price">–5% alapdíj</div>
+              <label class="toggle"><input type="checkbox" id="ev-ked2" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="check-row">
+              <div>
+                <div class="check-label">Éves árbevétel 1 800 000 Ft alatt</div>
+              </div>
+              <div class="check-price">–5% alapdíj</div>
+              <label class="toggle"><input type="checkbox" id="ev-ked3" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="divider"></div>
+            <div class="egyedi-ked-block">
+              <div class="two-col" style="margin-bottom:8px">
+                <div class="field">
+                  <label>Egyedi kedvezmény – jogcím</label>
+                  <input type="text" id="ev-ked-jogcim" placeholder="pl. cégcsoport kedvezmény" oninput="updateEgyediLabel('ev'); calc()">
+                </div>
+                <div class="field">
+                  <label>Mértéke (% az alapdíjból)</label>
+                  <div style="position:relative">
+                    <input type="number" id="ev-ked-egyedi" min="0" max="100" value="" placeholder="0" onchange="calc()" style="padding-right:32px">
+                    <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:14px;pointer-events:none">%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="hint">Szabadon megadható kedvezmény az alapdíj százalékában – pl. cégcsoport, hosszú távú szerződés stb.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Bérszámfejtés -->
+        <div class="section">
+          <div class="section-header">
+            <div class="section-num">3</div>
             <div class="section-title">Bérszámfejtés</div>
           </div>
           <div class="section-body">
@@ -850,10 +954,10 @@
           </div>
         </div>
 
-        <!-- 3. Rendszeres feladatok -->
+        <!-- 4. Rendszeres feladatok -->
         <div class="section">
           <div class="section-header">
-            <div class="section-num">3</div>
+            <div class="section-num">4</div>
             <div class="section-title">Rendszeres feladatok</div>
           </div>
           <div class="section-body">
@@ -903,54 +1007,6 @@
               </div>
               <div class="check-price">10 000 Ft</div>
               <label class="toggle"><input type="checkbox" id="ev-repr" onchange="calc()"><span class="toggle-slider"></span></label>
-            </div>
-          </div>
-        </div>
-
-        <!-- 4. Kedvezmények -->
-        <div class="section">
-          <div class="section-header">
-            <div class="section-num">4</div>
-            <div class="section-title">Kedvezmények</div>
-          </div>
-          <div class="section-body">
-            <div class="check-row">
-              <div>
-                <div class="check-label">Kiegyenlített számlákról határidőn belüli információszolgáltatás</div>
-              </div>
-              <div class="check-price">–10% alapdíj</div>
-              <label class="toggle"><input type="checkbox" id="ev-ked1" onchange="calc()"><span class="toggle-slider"></span></label>
-            </div>
-            <div class="check-row">
-              <div>
-                <div class="check-label">Határidőben történő díjfizetés</div>
-              </div>
-              <div class="check-price">–5% alapdíj</div>
-              <label class="toggle"><input type="checkbox" id="ev-ked2" onchange="calc()"><span class="toggle-slider"></span></label>
-            </div>
-            <div class="check-row">
-              <div>
-                <div class="check-label">Éves árbevétel 1 800 000 Ft alatt</div>
-              </div>
-              <div class="check-price">–5% alapdíj</div>
-              <label class="toggle"><input type="checkbox" id="ev-ked3" onchange="calc()"><span class="toggle-slider"></span></label>
-            </div>
-            <div class="divider"></div>
-            <div class="egyedi-ked-block">
-              <div class="two-col" style="margin-bottom:8px">
-                <div class="field">
-                  <label>Egyedi kedvezmény – jogcím</label>
-                  <input type="text" id="ev-ked-jogcim" placeholder="pl. cégcsoport kedvezmény" oninput="updateEgyediLabel('ev'); calc()">
-                </div>
-                <div class="field">
-                  <label>Mértéke (% az alapdíjból)</label>
-                  <div style="position:relative">
-                    <input type="number" id="ev-ked-egyedi" min="0" max="100" value="" placeholder="0" onchange="calc()" style="padding-right:32px">
-                    <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:14px;pointer-events:none">%</span>
-                  </div>
-                </div>
-              </div>
-              <div class="hint">Szabadon megadható kedvezmény az alapdíj százalékában – pl. cégcsoport, hosszú távú szerződés stb.</div>
             </div>
           </div>
         </div>
@@ -1019,7 +1075,15 @@
             <div class="note-box" id="ev-egyedi-note" style="display:none">
               ⚠️ Egyedi ajánlat szükséges – kérjük, vegye fel velünk a kapcsolatot!
             </div>
-            <div class="note-box" style="margin-top:12px">
+            <div class="eves-zar-box">
+              <div class="eves-zar-icon">📅</div>
+              <div class="eves-zar-body">
+                <div class="eves-zar-title">Éves zárás – egyszer számlázva</div>
+                <div class="eves-zar-text">Az éves zárás díja 1 havi alapdíj, könyvvizsgálattal 1,5×. Ez nem szerepel a havi díjban.</div>
+                <div class="eves-zar-amount" id="ev-zar-amount">–</div>
+              </div>
+            </div>
+            <div class="note-box" style="margin-top:10px">
               Az árak tájékoztató jellegűek. A végleges díj az írásos szerződésben kerül rögzítésre.
             </div>
           </div>
@@ -1069,9 +1133,45 @@
           </div>
         </div>
 
-        <div class="section">
+        <div class="section section-ked">
           <div class="section-header">
             <div class="section-num">2</div>
+            <div class="section-title">Kedvezmények</div>
+          </div>
+          <div class="section-body">
+            <div class="check-row">
+              <div><div class="check-label">Számlák / bankkivonatok határidőre, hiánytalanul feltöltve az EDITH-be</div></div>
+              <div class="check-price">–10% alapdíj</div>
+              <label class="toggle"><input type="checkbox" id="ceg-ked1" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">Határidőben történő díjfizetés</div></div>
+              <div class="check-price">–5% alapdíj</div>
+              <label class="toggle"><input type="checkbox" id="ceg-ked2" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="divider"></div>
+            <div class="egyedi-ked-block">
+              <div class="two-col" style="margin-bottom:8px">
+                <div class="field">
+                  <label>Egyedi kedvezmény – jogcím</label>
+                  <input type="text" id="ceg-ked-jogcim" placeholder="pl. cégcsoport kedvezmény" oninput="updateEgyediLabel('ceg'); calc()">
+                </div>
+                <div class="field">
+                  <label>Mértéke (% az alapdíjból)</label>
+                  <div style="position:relative">
+                    <input type="number" id="ceg-ked-egyedi" min="0" max="100" value="" placeholder="0" onchange="calc()" style="padding-right:32px">
+                    <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:14px;pointer-events:none">%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="hint">Szabadon megadható kedvezmény az alapdíj százalékában – pl. cégcsoport, hosszú távú szerződés stb.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            <div class="section-num">3</div>
             <div class="section-title">Bérszámfejtés</div>
           </div>
           <div class="section-body">
@@ -1109,7 +1209,7 @@
 
         <div class="section">
           <div class="section-header">
-            <div class="section-num">3</div>
+            <div class="section-num">4</div>
             <div class="section-title">Rendszeres feladatok</div>
           </div>
           <div class="section-body">
@@ -1150,42 +1250,6 @@
               <div><div class="check-label">Reprezentációs költségek bevallása</div></div>
               <div class="check-price">10 000 Ft</div>
               <label class="toggle"><input type="checkbox" id="ceg-repr" onchange="calc()"><span class="toggle-slider"></span></label>
-            </div>
-          </div>
-        </div>
-
-        <div class="section">
-          <div class="section-header">
-            <div class="section-num">4</div>
-            <div class="section-title">Kedvezmények</div>
-          </div>
-          <div class="section-body">
-            <div class="check-row">
-              <div><div class="check-label">Számlák / bankkivonatok határidőre, hiánytalanul feltöltve az EDITH-be</div></div>
-              <div class="check-price">–10% alapdíj</div>
-              <label class="toggle"><input type="checkbox" id="ceg-ked1" onchange="calc()"><span class="toggle-slider"></span></label>
-            </div>
-            <div class="check-row">
-              <div><div class="check-label">Határidőben történő díjfizetés</div></div>
-              <div class="check-price">–5% alapdíj</div>
-              <label class="toggle"><input type="checkbox" id="ceg-ked2" onchange="calc()"><span class="toggle-slider"></span></label>
-            </div>
-            <div class="divider"></div>
-            <div class="egyedi-ked-block">
-              <div class="two-col" style="margin-bottom:8px">
-                <div class="field">
-                  <label>Egyedi kedvezmény – jogcím</label>
-                  <input type="text" id="ceg-ked-jogcim" placeholder="pl. cégcsoport kedvezmény" oninput="updateEgyediLabel('ceg'); calc()">
-                </div>
-                <div class="field">
-                  <label>Mértéke (% az alapdíjból)</label>
-                  <div style="position:relative">
-                    <input type="number" id="ceg-ked-egyedi" min="0" max="100" value="" placeholder="0" onchange="calc()" style="padding-right:32px">
-                    <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:14px;pointer-events:none">%</span>
-                  </div>
-                </div>
-              </div>
-              <div class="hint">Szabadon megadható kedvezmény az alapdíj százalékában – pl. cégcsoport, hosszú távú szerződés stb.</div>
             </div>
           </div>
         </div>
@@ -1252,8 +1316,16 @@
             <div class="note-box" id="ceg-egyedi-note" style="display:none">
               ⚠️ Egyedi ajánlat szükséges – kérjük, vegye fel velünk a kapcsolatot!
             </div>
-            <div class="note-box" style="margin-top:12px">
-              Az éves zárás díja: 1 havi alapdíj (könyvvizsgálattal: 1,5×). Az árak tájékoztatók, nettók.
+            <div class="eves-zar-box">
+              <div class="eves-zar-icon">📅</div>
+              <div class="eves-zar-body">
+                <div class="eves-zar-title">Éves zárás – egyszer számlázva</div>
+                <div class="eves-zar-text">Az éves zárás díja 1 havi alapdíj, könyvvizsgálattal 1,5×. Ez nem szerepel a havi díjban.</div>
+                <div class="eves-zar-amount" id="ceg-zar-amount">–</div>
+              </div>
+            </div>
+            <div class="note-box" style="margin-top:10px">
+              Az árak tájékoztatók, nettók.
             </div>
           </div>
         </div>
@@ -1309,10 +1381,10 @@
           </div>
         </div>
 
-        <!-- 2. Komplexitási felárak -->
+        <!-- 3. Komplexitási felárak -->
         <div class="section">
           <div class="section-header">
-            <div class="section-num">2</div>
+            <div class="section-num">3</div>
             <div class="section-title">Komplexitási felárak</div>
           </div>
           <div class="section-body">
@@ -1439,37 +1511,10 @@
           </div>
         </div>
 
-        <!-- 3. Bérszámfejtés -->
-        <div class="section">
+        <!-- 4. Kedvezmények → 2. pozícióba -->
+        <div class="section section-ked">
           <div class="section-header">
-            <div class="section-num">3</div>
-            <div class="section-title">Bérszámfejtés</div>
-          </div>
-          <div class="section-body">
-            <div class="three-col">
-              <div class="field">
-                <label>Egyszerű havibéres (fő)</label>
-                <input type="number" id="ws-ber-egyszer" min="0" value="0" onchange="calc()">
-                <div class="hint">1–5: 4 000 | 6–20: 3 700 | 21+: 2 500 Ft</div>
-              </div>
-              <div class="field">
-                <label>1 letiltás / pótlék (fő)</label>
-                <input type="number" id="ws-ber-1let" min="0" value="0" onchange="calc()">
-                <div class="hint">4 500 Ft/fő/hó</div>
-              </div>
-              <div class="field">
-                <label>Több letiltás / komplex (fő)</label>
-                <input type="number" id="ws-ber-tobbet" min="0" value="0" onchange="calc()">
-                <div class="hint">5 000 Ft/fő/hó</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 4. Kedvezmények -->
-        <div class="section">
-          <div class="section-header">
-            <div class="section-num">4</div>
+            <div class="section-num">2</div>
             <div class="section-title">Kedvezmények</div>
           </div>
           <div class="section-body">
@@ -1517,6 +1562,45 @@
                 </div>
               </div>
               <div class="hint">Szabadon megadható kedvezmény az alapdíj százalékában – pl. cégcsoport, hosszú távú szerződés stb.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Bérszámfejtés -->
+        <div class="section">
+          <div class="section-header">
+            <div class="section-num">4</div>
+            <div class="section-title">Bérszámfejtés</div>
+          </div>
+          <div class="section-body">
+            <div class="three-col">
+              <div class="field">
+                <label>Egyszerű havibéres (fő)</label>
+                <input type="number" id="ws-ber-egyszer" min="0" value="0" onchange="calc()">
+                <div class="hint">1–5: 4 000 | 6–20: 3 700 | 21+: 2 500 Ft</div>
+              </div>
+              <div class="field">
+                <label>1 letiltás / pótlék (fő)</label>
+                <input type="number" id="ws-ber-1let" min="0" value="0" onchange="calc()">
+                <div class="hint">4 500 Ft/fő/hó</div>
+              </div>
+              <div class="field">
+                <label>Több letiltás / komplex (fő)</label>
+                <input type="number" id="ws-ber-tobbet" min="0" value="0" onchange="calc()">
+                <div class="hint">5 000 Ft/fő/hó</div>
+              </div>
+            </div>
+            <div class="two-col" style="margin-top:16px">
+              <div class="field">
+                <label>Jövedelem nélküli / passzív tag (fő)</label>
+                <input type="number" id="ws-ber-passz" min="0" value="0" onchange="calc()">
+                <div class="hint">2 000 Ft/fő/hó</div>
+              </div>
+              <div class="field">
+                <label>Bérelt ingatlan magánszemélytől (fő)</label>
+                <input type="number" id="ws-ber-ingatlan" min="0" value="0" onchange="calc()">
+                <div class="hint">3 700 Ft/fő/hó</div>
+              </div>
             </div>
           </div>
         </div>
@@ -1582,6 +1666,8 @@
             <div class="result-line" id="ws-r-ber-egyszer-row" style="display:none"><span class="lbl">Egyszerű havibéres</span><span class="val" id="ws-r-ber-egyszer">–</span></div>
             <div class="result-line" id="ws-r-ber-1let-row" style="display:none"><span class="lbl">1 letiltás / pótlék</span><span class="val" id="ws-r-ber-1let">–</span></div>
             <div class="result-line" id="ws-r-ber-tobbet-row" style="display:none"><span class="lbl">Több letiltás / komplex</span><span class="val" id="ws-r-ber-tobbet">–</span></div>
+            <div class="result-line" id="ws-r-ber-passz-row" style="display:none"><span class="lbl">Passzív / jövedelem nélküli tag</span><span class="val" id="ws-r-ber-passz">–</span></div>
+            <div class="result-line" id="ws-r-ber-ingatlan-row" style="display:none"><span class="lbl">Bérelt ingatlan magánszemélytől</span><span class="val" id="ws-r-ber-ingatlan">–</span></div>
 
             <div class="result-total">
               <div class="total-label">Havi becsült díj (nettó)</div>
@@ -1592,8 +1678,16 @@
             <div class="note-box" id="ws-egyedi-note" style="display:none">
               ⚠️ Egyedi ajánlat szükséges – kérjük, vegye fel velünk a kapcsolatot!
             </div>
-            <div class="note-box" style="margin-top:12px">
-              Az éves zárás díja: 1 havi alapdíj. Közbülső mérleg: 1 havi alapdíj. Árak tájékoztatók, nettók.
+            <div class="eves-zar-box">
+              <div class="eves-zar-icon">📅</div>
+              <div class="eves-zar-body">
+                <div class="eves-zar-title">Éves zárás & közbülső mérleg – egyszer számlázva</div>
+                <div class="eves-zar-text">Éves zárás: 1 havi alapdíj. Közbülső mérleg (igény esetén): szintén 1 havi alapdíj. Ezek nem szerepelnek a havi díjban.</div>
+                <div class="eves-zar-amount" id="ws-zar-amount">–</div>
+              </div>
+            </div>
+            <div class="note-box" style="margin-top:10px">
+              Az árak tájékoztatók, nettók.
             </div>
           </div>
         </div>
@@ -1866,6 +1960,10 @@ function calcEV() {
   setRow('ev-r-repr',    rRepr,    'ev');
 
   document.getElementById('ev-total').textContent = fmt(Math.round(total));
+
+  // Éves zárás figyelmeztetés
+  const evZarEl = document.getElementById('ev-zar-amount');
+  if (evZarEl) evZarEl.textContent = 'Becsült éves zárás díja: ' + fmt(Math.round(modAlap)) + ' Ft (könyvvizsgálattal: ' + fmt(Math.round(modAlap * 1.5)) + ' Ft)';
 }
 
 function calcCEG() {
@@ -1971,6 +2069,10 @@ function calcCEG() {
 
   document.getElementById('ceg-total').textContent = fmt(Math.round(total));
   document.getElementById('ceg-total-gross').textContent = fmt(Math.round(total * 1.27));
+
+  // Éves zárás figyelmeztetés
+  const cegZarEl = document.getElementById('ceg-zar-amount');
+  if (cegZarEl) cegZarEl.textContent = 'Becsült éves zárás díja: ' + fmt(Math.round(modAlap)) + ' Ft (könyvvizsgálattal: ' + fmt(Math.round(modAlap * 1.5)) + ' Ft)';
 }
 
 function calcWS() {
@@ -2008,13 +2110,17 @@ function calcWS() {
   const nEgyszer = val('ws-ber-egyszer');
   const n1let    = val('ws-ber-1let');
   const nTobbet  = val('ws-ber-tobbet');
+  const nPassz   = val('ws-ber-passz');
+  const nIngatlan= val('ws-ber-ingatlan');
   let berEgyszer = 0;
   if (nEgyszer <= 5)       berEgyszer = nEgyszer * 4000;
   else if (nEgyszer <= 20) berEgyszer = 5*4000 + (nEgyszer-5)*3700;
   else                     berEgyszer = 5*4000 + 15*3700 + (nEgyszer-20)*2500;
-  const ber1let   = n1let * 4500;
-  const berTobbet = nTobbet * 5000;
-  const berTotal  = berEgyszer + ber1let + berTobbet;
+  const ber1let    = n1let * 4500;
+  const berTobbet  = nTobbet * 5000;
+  const berPassz   = nPassz * 2000;
+  const berIngatlan= nIngatlan * 3700;
+  const berTotal   = berEgyszer + ber1let + berTobbet + berPassz + berIngatlan;
 
   // Kedvezmények tételenként
   const ked1 = checked('ws-ked1') ? Math.round(modAlap * 0.1)  : 0;
@@ -2090,6 +2196,8 @@ function calcWS() {
   setRow('ws-r-ber-egyszer', berEgyszer, 'ws');
   setRow('ws-r-ber-1let',    ber1let,    'ws');
   setRow('ws-r-ber-tobbet',  berTobbet,  'ws');
+  setRow('ws-r-ber-passz',   berPassz,   'ws');
+  setRow('ws-r-ber-ingatlan',berIngatlan,'ws');
 
   document.getElementById('ws-total').textContent = fmt(Math.round(total));
   const wsAfaline = document.getElementById('ws-afa-line');
@@ -2101,6 +2209,10 @@ function calcWS() {
     if (wsAfaline) wsAfaline.innerHTML = '✓ Áfamentes – alanyi adómentes számlázás';
     if (wsAfaline) wsAfaline.style.color = 'var(--green)';
   }
+
+  // Éves zárás figyelmeztetés
+  const wsZarEl = document.getElementById('ws-zar-amount');
+  if (wsZarEl) wsZarEl.textContent = 'Becsült éves zárás díja: ' + fmt(Math.round(modAlap)) + ' Ft' + (wsType === 'ceg' ? ' (+ ÁFA)' : '') + ' · Közbülső mérleg igény esetén: ugyanennyi';
 }
 
 // Init
