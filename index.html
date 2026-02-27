@@ -769,127 +769,164 @@
     body { background: white !important; }
     body > *:not(#print-view) { display: none !important; }
     #print-view { display: block !important; }
+    @page { margin: 15mm 18mm; size: A4; }
   }
 
-  #print-view {
-    display: none;
-  }
+  #print-view { display: none; }
 
-  .print-page {
+  /* ---- Ajánlat lap ---- */
+  .aj-page {
     font-family: 'DM Sans', sans-serif;
-    max-width: 680px;
+    max-width: 720px;
     margin: 0 auto;
-    padding: 40px;
+    padding: 48px 40px 40px;
     color: #2d2a26;
+    background: white;
   }
 
-  .print-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  /* Top sáv – accent vonal */
+  .aj-topbar {
+    height: 5px;
+    background: linear-gradient(90deg, #c8782a, #e8a85a);
+    border-radius: 3px;
     margin-bottom: 32px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid #c8782a;
   }
 
-  .print-logo {
+  /* Fejléc: bal=ajánlattevő, jobb=meta */
+  .aj-header {
     display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .print-logo-mark {
-    width: 40px; height: 40px;
-    background: #c8782a;
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    color: white;
-    font-family: 'Playfair Display', serif;
-    font-size: 18px;
-    font-weight: 700;
-  }
-
-  .print-logo-text {
-    font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    font-weight: 700;
-    color: #2d2a26;
-  }
-
-  .print-meta {
-    text-align: right;
-    font-size: 12px;
-    color: #7a7268;
-    line-height: 1.6;
-  }
-
-  .print-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-weight: 700;
-    color: #2d2a26;
-    margin-bottom: 4px;
-  }
-
-  .print-subtitle {
-    font-size: 13px;
-    color: #7a7268;
+    justify-content: space-between;
+    align-items: flex-start;
     margin-bottom: 28px;
   }
 
-  .print-client {
-    background: #fdf5ee;
-    border: 1px solid rgba(200,120,42,0.25);
-    border-radius: 8px;
-    padding: 12px 16px;
-    margin-bottom: 24px;
-    font-size: 13px;
-    color: #7a7268;
+  .aj-sender {}
+  .aj-sender-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
   }
-
-  .print-client strong {
+  .aj-sender-mark {
+    width: 36px; height: 36px;
+    background: #c8782a;
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .aj-sender-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
     color: #2d2a26;
-    font-size: 15px;
+  }
+  .aj-sender-detail {
+    font-size: 12px;
+    color: #7a7268;
+    line-height: 1.7;
+    padding-left: 46px;
   }
 
-  .print-section-label {
+  .aj-docinfo {
+    text-align: right;
+    font-size: 12px;
+    color: #7a7268;
+    line-height: 1.7;
+  }
+  .aj-docinfo .aj-doc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #c8782a;
+    margin-bottom: 4px;
+  }
+
+  /* Felek sáv */
+  .aj-parties {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .aj-party {
+    background: #faf9f7;
+    border: 1px solid #e0dbd4;
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .aj-party-role {
     font-size: 10px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1.2px;
     color: #b0a89e;
-    margin: 20px 0 8px;
+    margin-bottom: 6px;
+  }
+  .aj-party-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d2a26;
+    margin-bottom: 2px;
+  }
+  .aj-party-detail {
+    font-size: 12px;
+    color: #7a7268;
+    line-height: 1.6;
   }
 
-  .print-line {
+  /* Tárgy sáv */
+  .aj-subject {
+    background: #fdf5ee;
+    border-left: 3px solid #c8782a;
+    border-radius: 0 6px 6px 0;
+    padding: 10px 16px;
+    margin-bottom: 24px;
+    font-size: 13px;
+    color: #2d2a26;
+    line-height: 1.5;
+  }
+
+  /* Tételek */
+  .aj-section-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #b0a89e;
+    margin: 18px 0 6px;
+  }
+
+  .aj-line {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    padding: 6px 0;
+    padding: 5px 0;
     border-bottom: 1px solid #f0eeeb;
     font-size: 13px;
   }
+  .aj-line .lbl { color: #2d2a26; flex: 1; }
+  .aj-line .sub { font-size: 11px; color: #b0a89e; margin-top: 1px; }
+  .aj-line .val { color: #2d2a26; font-weight: 500; white-space: nowrap; margin-left: 16px; }
+  .aj-line .val.discount { color: #2e6b44; }
 
-  .print-line .lbl { color: #2d2a26; }
-  .print-line .val { color: #2d2a26; font-weight: 500; white-space: nowrap; margin-left: 16px; }
-  .print-line .val.discount { color: #2e6b44; }
-  .print-line .sub { font-size: 11px; color: #b0a89e; margin-top: 1px; }
-
-  .print-ked-box {
+  .aj-ked-box {
     background: #f7fdf9;
     border: 1px solid #c2e0cc;
     border-radius: 8px;
-    padding: 10px 14px;
+    padding: 8px 14px;
     margin: 8px 0;
   }
-
-  .print-ked-box .print-line { border-bottom-color: #e6f5ec; }
-  .print-ked-box .print-line .lbl { color: #4a7a5a; }
-  .print-ked-box .print-line .val { color: #2e6b44; }
-  .print-ked-total {
+  .aj-ked-box .aj-line { border-bottom-color: #e6f5ec; }
+  .aj-ked-box .aj-line .lbl { color: #4a7a5a; }
+  .aj-ked-box .aj-line .val { color: #2e6b44; }
+  .aj-ked-total {
     display: flex;
     justify-content: space-between;
-    padding-top: 8px;
+    padding-top: 6px;
     margin-top: 4px;
     border-top: 1.5px solid #5a9e6e;
     font-size: 13px;
@@ -897,58 +934,86 @@
     color: #2e6b44;
   }
 
-  .print-modalap {
+  .aj-modalap {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    padding: 8px 0;
+    padding: 7px 0;
     border-bottom: 1px solid #e0dbd4;
     font-size: 13px;
     font-weight: 600;
   }
+  .aj-modalap .vals { display: flex; align-items: baseline; gap: 6px; }
+  .aj-modalap .orig { text-decoration: line-through; color: #b0a89e; font-size: 11px; font-weight: 400; }
+  .aj-modalap .arrow { color: #5a9e6e; }
+  .aj-modalap .new { color: #c8782a; }
 
-  .print-modalap .vals { display: flex; align-items: baseline; gap: 6px; }
-  .print-modalap .orig { text-decoration: line-through; color: #b0a89e; font-size: 11px; font-weight: 400; }
-  .print-modalap .arrow { color: #5a9e6e; font-size: 11px; }
-  .print-modalap .new { color: #c8782a; font-size: 14px; }
-
-  .print-total-box {
+  /* Végösszeg */
+  .aj-total-box {
     margin-top: 24px;
     background: #2d2a26;
     border-radius: 10px;
-    padding: 18px 20px;
+    padding: 16px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
+  .aj-total-box .lbl { color: #d4cfc8; font-size: 12px; }
+  .aj-total-box .sub { color: #7a7268; font-size: 11px; margin-top: 2px; }
+  .aj-total-box .val {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: #c8782a;
+  }
 
-  .print-total-box .lbl { color: #f5f4f2; font-size: 13px; font-weight: 500; }
-  .print-total-box .val { color: #c8782a; font-size: 22px; font-weight: 700; font-family: 'Playfair Display', serif; }
-  .print-total-box .gross { color: #b0a89e; font-size: 11px; margin-top: 2px; }
-
-  .print-zar-box {
-    margin-top: 16px;
+  /* Éves zárás */
+  .aj-zar-box {
+    margin-top: 14px;
     background: #fffbf2;
     border: 1.5px solid #e6a830;
     border-radius: 8px;
-    padding: 12px 16px;
-    font-size: 12px;
+    padding: 11px 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
   }
+  .aj-zar-icon { font-size: 18px; flex-shrink: 0; }
+  .aj-zar-body { flex: 1; }
+  .aj-zar-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #b07a10; margin-bottom: 3px; }
+  .aj-zar-text { font-size: 12px; color: #7a7268; line-height: 1.5; }
+  .aj-zar-amount { font-size: 13px; font-weight: 700; color: #b07a10; margin-top: 3px; }
 
-  .print-zar-title { font-weight: 700; color: #b07a10; text-transform: uppercase; font-size: 10px; letter-spacing: 1px; margin-bottom: 4px; }
-  .print-zar-text { color: #7a7268; line-height: 1.5; }
-  .print-zar-amount { color: #b07a10; font-weight: 700; font-size: 13px; margin-top: 4px; }
+  /* Aláírás */
+  .aj-sign {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 40px;
+    padding-top: 12px;
+  }
+  .aj-sign-block { text-align: center; }
+  .aj-sign-line {
+    border-top: 1px solid #2d2a26;
+    margin-bottom: 6px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .aj-sign-label { font-size: 11px; color: #7a7268; }
 
-  .print-footer {
-    margin-top: 32px;
-    padding-top: 16px;
+  /* Lábléc */
+  .aj-footer {
+    margin-top: 28px;
+    padding-top: 14px;
     border-top: 1px solid #e0dbd4;
     font-size: 11px;
     color: #b0a89e;
     text-align: center;
-    line-height: 1.6;
+    line-height: 1.7;
   }
 
+  /* Nyomtatás gomb */
   .print-btn {
     position: fixed;
     bottom: 24px;
@@ -979,6 +1044,13 @@
   <div class="header-text">
     <h1>SukorADÓ</h1>
     <p>Könyvelési díj kalkulátor</p>
+  </div>
+  <div style="margin-left:auto;text-align:right;font-size:12px;color:var(--text-muted);line-height:1.8">
+    <span id="header-ajanlattevo" style="font-weight:500;color:var(--text)">Váróci Ágnes e.v.</span><br>
+    8096 Sukoró, Körmös utca 79.<br>
+    <a href="https://sukorado-konyveles.hu" style="color:var(--accent);text-decoration:none">sukorado-konyveles.hu</a>
+    · <a href="mailto:sukorado@sukorado.hu" style="color:var(--accent);text-decoration:none">sukorado@sukorado.hu</a>
+    · +36 30 493 3303
   </div>
 </header>
 
@@ -1905,6 +1977,7 @@ function setWsType(type) {
     const zarBox = document.getElementById('ws-zar-box');
     if (zarBox) zarBox.style.display = '';
   }
+  updateHeaderSender();
   calc();
 }
 
@@ -1948,12 +2021,20 @@ function berCalc(egyszer, elet, tobbet, passz, ingatlan) {
   return total;
 }
 
+function updateHeaderSender() {
+  const activeTab = document.querySelector('.tab-panel.active').id;
+  const isEv = activeTab === 'tab-ev' || (activeTab === 'tab-ws' && wsType === 'ev');
+  const el = document.getElementById('header-ajanlattevo');
+  if (el) el.textContent = isEv ? 'Váróci Ágnes e.v.' : 'SukorADÓ ÁSZ Kft.';
+}
+
 function switchTab(t) {
   document.querySelectorAll('.tab-btn').forEach((b,i) => {
     b.classList.toggle('active', ['ev','ceg','ws'][i] === t);
   });
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.getElementById('tab-' + t).classList.add('active');
+  updateHeaderSender();
   calc();
   setTimeout(updateFab, 50);
 }
@@ -2352,136 +2433,176 @@ function calcWS() {
   if (wsZarEl) wsZarEl.textContent = 'Becsült éves zárás díja: ' + fmt(Math.round(modAlap)) + ' Ft' + (wsType === 'ceg' ? ' (+ ÁFA)' : '') + ' · Közbenső mérleg igény esetén: ugyanennyi';
 }
 
-// ==================== PRINT VIEW ====================
+// ==================== PRINT / AJÁNLAT ====================
 function openPrintView() {
   const activeTab = document.querySelector('.tab-panel.active').id;
   const prefix = activeTab === 'tab-ev' ? 'ev' : activeTab === 'tab-ceg' ? 'ceg' : 'ws';
 
-  // Collect visible result lines
-  function getLines(sectionLabelId, rowPrefix) {
-    // gets all visible result-line rows from result body
-  }
+  const isWsEv = prefix === 'ws' && wsType === 'ev';
+  const isEv   = prefix === 'ev' || isWsEv;
+  const isCeg  = prefix === 'ceg' || (prefix === 'ws' && wsType === 'ceg');
 
-  // Gather data from result panel
+  // Ajánlattevő adatok
+  const senderName   = isEv ? 'Váróci Ágnes e.v.' : 'SukorADÓ ÁSZ Kft.';
+  const senderAdoszam = isEv ? '64491950-1-27' : '32079915-2-07';
+  const senderDetail = `8096 Sukoró, Körmös utca 79.<br>sukorado-konyveles.hu · sukorado@sukorado.hu<br>+36 30 493 3303 · Adószám: ${senderAdoszam}`;
+
+  // Ajánlatkérő
+  const clientName = document.getElementById('client-name').value.trim() || '–';
+
+  // Dátum + sorszám
+  const today = new Date();
+  const dateStr = today.toLocaleDateString('hu-HU', { year: 'numeric', month: 'long', day: 'numeric' });
+  const docNum = today.getFullYear() + '/' + String(today.getMonth()+1).padStart(2,'0') + '/' + String(today.getDate()).padStart(2,'0');
+
+  // Típus szöveg
   const resultPanel = document.getElementById(
     prefix === 'ev' ? 'ev-result-panel' : prefix === 'ceg' ? 'ceg-result' : 'ws-result'
   );
-
-  const clientName = document.getElementById('client-name').value.trim();
-  const today = new Date().toLocaleDateString('hu-HU', { year: 'numeric', month: 'long', day: 'numeric' });
-
-  // Subtitle
   const subtitle = resultPanel.querySelector('.result-subtitle').textContent;
 
-  // Collect all visible result lines from the panel
-  const allLines = resultPanel.querySelectorAll('.result-section-label, .result-line, .subtotal-ked, .ked-box, .total-area, .eves-zar-box');
+  // Összegyűjti a látható result sorokat HTML-be (aj- prefix)
+  function buildItems() {
+    let html = '';
+    const allLines = resultPanel.querySelectorAll(
+      '.result-section-label, .result-line, .subtotal-ked, .ked-box, .eves-zar-box'
+    );
 
-  let itemsHTML = '';
-
-  allLines.forEach(el => {
-    if (el.style.display === 'none') return;
-
-    if (el.classList.contains('result-section-label')) {
-      itemsHTML += `<div class="print-section-label">${el.textContent}</div>`;
-
-    } else if (el.classList.contains('ked-box')) {
-      // Green discount box
-      const rows = el.querySelectorAll('.result-line[style*="display: none"], .result-line:not([style])');
-      let kedRows = '';
-      el.querySelectorAll('.result-line').forEach(row => {
-        if (row.style.display === 'none') return;
-        const lbl = row.querySelector('.lbl') ? row.querySelector('.lbl').textContent : '';
-        const val = row.querySelector('.val') ? row.querySelector('.val').textContent : '';
-        kedRows += `<div class="print-line"><span class="lbl">${lbl}</span><span class="val discount">${val}</span></div>`;
-      });
-      const totalEl = el.querySelector('.ked-box-total');
-      const totalVal = totalEl ? totalEl.querySelector('.val').textContent : '';
-      itemsHTML += `<div class="print-ked-box">
-        ${kedRows}
-        <div class="print-ked-total"><span>Kedvezmény összesen</span><span>${totalVal}</span></div>
-      </div>`;
-
-    } else if (el.classList.contains('subtotal-ked')) {
-      const lbl = 'Módosított alapdíj';
-      const origEl = el.querySelector('.val-orig');
-      const newEl = el.querySelector('.val-new');
-      const hasOrig = origEl && origEl.style.display !== 'none';
-      const valsHTML = hasOrig
-        ? `<span class="vals"><span class="orig">${origEl.textContent}</span><span class="arrow"> → </span><span class="new">${newEl.textContent}</span></span>`
-        : `<span class="vals"><span class="new">${newEl.textContent}</span></span>`;
-      itemsHTML += `<div class="print-modalap"><span>${lbl}</span>${valsHTML}</div>`;
-
-    } else if (el.classList.contains('result-line')) {
+    allLines.forEach(el => {
       if (el.style.display === 'none') return;
-      const lblEl = el.querySelector('.lbl');
-      const valEl = el.querySelector('.val, .val-new');
-      if (!lblEl || !valEl) return;
-      const subEl = lblEl.querySelector('.result-sub');
-      const subText = subEl ? subEl.textContent : '';
-      const lblText = lblEl.childNodes[0] ? lblEl.childNodes[0].textContent.trim() : lblEl.textContent.trim();
-      const isDiscount = el.classList.contains('discount');
-      itemsHTML += `<div class="print-line">
-        <span class="lbl">${lblText}${subText ? `<div class="sub">${subText}</div>` : ''}</span>
-        <span class="val${isDiscount ? ' discount' : ''}">${valEl.textContent}</span>
-      </div>`;
 
-    } else if (el.classList.contains('eves-zar-box')) {
-      if (el.style.display === 'none') return;
-      const title = el.querySelector('.eves-zar-title') ? el.querySelector('.eves-zar-title').textContent : '';
-      const text = el.querySelector('.eves-zar-text') ? el.querySelector('.eves-zar-text').textContent : '';
-      const amount = el.querySelector('.eves-zar-amount') ? el.querySelector('.eves-zar-amount').textContent : '';
-      itemsHTML += `<div class="print-zar-box">
-        <div class="print-zar-title">📅 ${title}</div>
-        <div class="print-zar-text">${text}</div>
-        <div class="print-zar-amount">${amount}</div>
-      </div>`;
-    }
-  });
+      if (el.classList.contains('result-section-label')) {
+        html += `<div class="aj-section-label">${el.textContent.trim()}</div>`;
 
-  // Total
+      } else if (el.classList.contains('ked-box')) {
+        let rows = '';
+        el.querySelectorAll('.result-line').forEach(row => {
+          if (row.style.display === 'none') return;
+          const lbl = row.querySelector('.lbl') ? row.querySelector('.lbl').childNodes[0].textContent.trim() : '';
+          const val = row.querySelector('.val') ? row.querySelector('.val').textContent : '';
+          rows += `<div class="aj-line"><span class="lbl">${lbl}</span><span class="val discount">${val}</span></div>`;
+        });
+        const totalVal = el.querySelector('.ked-box-total .val') ? el.querySelector('.ked-box-total .val').textContent : '';
+        html += `<div class="aj-ked-box">
+          ${rows}
+          <div class="aj-ked-total"><span>Kedvezmény összesen</span><span>${totalVal}</span></div>
+        </div>`;
+
+      } else if (el.classList.contains('subtotal-ked')) {
+        const origEl  = el.querySelector('.val-orig');
+        const newEl   = el.querySelector('.val-new');
+        const hasOrig = origEl && origEl.style.display !== 'none';
+        const valsHTML = hasOrig
+          ? `<span class="vals"><span class="orig">${origEl.textContent}</span><span class="arrow"> → </span><span class="new">${newEl.textContent}</span></span>`
+          : `<span class="vals"><span class="new">${newEl ? newEl.textContent : ''}</span></span>`;
+        html += `<div class="aj-modalap"><span>Módosított alapdíj</span>${valsHTML}</div>`;
+
+      } else if (el.classList.contains('result-line')) {
+        if (el.style.display === 'none') return;
+        const lblEl = el.querySelector('.lbl');
+        const valEl = el.querySelector('.val, .val-new');
+        if (!lblEl || !valEl) return;
+        const subEl   = lblEl.querySelector('.result-sub');
+        const subText = subEl ? subEl.textContent.trim() : '';
+        const lblText = lblEl.childNodes[0] ? lblEl.childNodes[0].textContent.trim() : lblEl.textContent.trim();
+        const isDsc   = el.classList.contains('discount');
+        html += `<div class="aj-line">
+          <span class="lbl">${lblText}${subText ? `<div class="sub">${subText}</div>` : ''}</span>
+          <span class="val${isDsc ? ' discount' : ''}">${valEl.textContent}</span>
+        </div>`;
+
+      } else if (el.classList.contains('eves-zar-box')) {
+        if (el.style.display === 'none') return;
+        const title  = el.querySelector('.eves-zar-title')  ? el.querySelector('.eves-zar-title').textContent  : '';
+        const text   = el.querySelector('.eves-zar-text')   ? el.querySelector('.eves-zar-text').textContent   : '';
+        const amount = el.querySelector('.eves-zar-amount') ? el.querySelector('.eves-zar-amount').textContent : '';
+        html += `<div class="aj-zar-box">
+          <div class="aj-zar-icon">📅</div>
+          <div class="aj-zar-body">
+            <div class="aj-zar-title">${title}</div>
+            <div class="aj-zar-text">${text}</div>
+            <div class="aj-zar-amount">${amount}</div>
+          </div>
+        </div>`;
+      }
+    });
+    return html;
+  }
+
+  // Végösszeg
   const totalEl = resultPanel.querySelector('.total-net');
   const totalVal = totalEl ? totalEl.textContent : '–';
-  const grossEl = resultPanel.querySelector('.total-gross');
-  const grossHTML = grossEl && grossEl.style.display !== 'none'
-    ? `<div class="gross">${grossEl.textContent}</div>` : '';
-
-  const clientHTML = clientName
-    ? `<div class="print-client">Ajánlatkérő: <strong>${clientName}</strong></div>` : '';
+  const grossEl  = resultPanel.querySelector('.total-gross');
+  const grossText = (grossEl && grossEl.style.display !== 'none' && grossEl.textContent.trim())
+    ? `<div class="sub">${grossEl.textContent.trim()}</div>` : '';
 
   const html = `
-    <div class="print-page">
-      <div class="print-header">
-        <div class="print-logo">
-          <div class="print-logo-mark">S</div>
-          <div class="print-logo-text">SukorADÓ</div>
+  <div class="aj-page">
+    <div class="aj-topbar"></div>
+
+    <div class="aj-header">
+      <div class="aj-sender">
+        <div class="aj-sender-logo">
+          <div class="aj-sender-mark">SA</div>
+          <div class="aj-sender-name">SukorADÓ</div>
         </div>
-        <div class="print-meta">
-          Könyvelési díjajánlat<br>
-          ${today}
+        <div class="aj-sender-detail">
+          ${senderName}<br>${senderDetail}
         </div>
       </div>
-
-      <div class="print-title">Becsült havi könyvelési díj</div>
-      <div class="print-subtitle">${subtitle}</div>
-
-      ${clientHTML}
-
-      ${itemsHTML}
-
-      <div class="print-total-box">
-        <div><div class="lbl">Becsült havi díj összesen</div>${grossHTML}</div>
-        <div class="val">${totalVal}</div>
-      </div>
-
-      <div class="print-footer">
-        Az árak tájékoztató jellegűek, nettók. A végleges díj az írásos szerződésben kerül rögzítésre.<br>
-        SukorADÓ Könyvelő és Adótanácsadó Iroda · sukorado.hu
+      <div class="aj-docinfo">
+        <div class="aj-doc-title">Díjajánlat</div>
+        Dátum: ${dateStr}<br>
+        Hivatkozás: DJ-${docNum}
       </div>
     </div>
-  `;
 
-  const printDiv = document.getElementById('print-view');
-  printDiv.innerHTML = html;
+    <div class="aj-parties">
+      <div class="aj-party">
+        <div class="aj-party-role">Ajánlattevő</div>
+        <div class="aj-party-name">${senderName}</div>
+        <div class="aj-party-detail">8096 Sukoró, Körmös utca 79.<br>sukorado-konyveles.hu · sukorado@sukorado.hu<br>+36 30 493 3303 · Adószám: ${senderAdoszam}</div>
+      </div>
+      <div class="aj-party">
+        <div class="aj-party-role">Ajánlatkérő</div>
+        <div class="aj-party-name">${clientName}</div>
+        <div class="aj-party-detail">${subtitle}</div>
+      </div>
+    </div>
+
+    <div class="aj-subject">
+      Tárgy: <strong>Havi könyvelési és számviteli szolgáltatás díjajánlata</strong> – az alábbi tételek a hatályos díjtáblázaton alapulnak, és a megjelölt feltételek teljesülése esetén érvényesek.
+    </div>
+
+    ${buildItems()}
+
+    <div class="aj-total-box">
+      <div>
+        <div class="lbl">Becsült havi díj összesen</div>
+        ${grossText}
+      </div>
+      <div class="val">${totalVal}</div>
+    </div>
+
+    <div class="aj-sign">
+      <div class="aj-sign-block">
+        <div class="aj-sign-line"></div>
+        <div class="aj-sign-label">${senderName}<br>ajánlattevő</div>
+      </div>
+      <div class="aj-sign-block">
+        <div class="aj-sign-line"></div>
+        <div class="aj-sign-label">${clientName}<br>ajánlatkérő</div>
+      </div>
+    </div>
+
+    <div class="aj-footer">
+      Az ajánlat a kiállítás napjától számított 30 napig érvényes. Az árak nettók, tájékoztató jellegűek.<br>
+      A végleges díj az írásos megbízási szerződésben kerül rögzítésre.<br>
+      SukorADÓ · sukorado-konyveles.hu · sukorado@sukorado.hu · +36 30 493 3303
+    </div>
+  </div>`;
+
+  document.getElementById('print-view').innerHTML = html;
   window.print();
 }
 
