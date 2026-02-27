@@ -1049,7 +1049,7 @@
     <span id="header-ajanlattevo" style="font-weight:500;color:var(--text)">Váróci Ágnes e.v.</span><br>
     8096 Sukoró, Körmös utca 79.<br>
     <a href="https://sukorado-konyveles.hu" style="color:var(--accent);text-decoration:none">sukorado-konyveles.hu</a>
-    · <a href="/cdn-cgi/l/email-protection#0a797f6165786b6e654a797f6165786b6e6524627f" style="color:var(--accent);text-decoration:none"><span class="__cf_email__" data-cfemail="f586809e9a8794919ab586809e9a8794919adb9d80">[email&#160;protected]</span></a>
+    · <a href="mailto:sukorado@sukorado.hu" style="color:var(--accent);text-decoration:none">sukorado@sukorado.hu</a>
     · +36 30 493 3303
   </div>
 </header>
@@ -1917,7 +1917,7 @@
   🖨️ Összesítő nyomtatása
 </button>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 let wsType = 'ceg'; // 'ceg' or 'ev'
 
 function getActiveResultId() {
@@ -2580,4 +2580,16 @@ function openPrintView() {
     <div class="aj-footer">
       Az ajánlat a kiállítás napjától számított 30 napig érvényes. Az árak nettók, tájékoztató jellegűek.<br>
       A végleges díj az írásos megbízási szerződésben kerül rögzítésre.<br>
-      SukorADÓ · sukorado-konyveles.hu · sukorado@
+      SukorADÓ · sukorado-konyveles.hu · sukorado@      SukorADÓ · sukorado-konyveles.hu · sukorado@sukorado.hu · +36 30 493 3303
+    </div>
+  </div>`;
+
+  document.getElementById('print-view').innerHTML = html;
+  window.print();
+}
+
+// ==================== INIT ====================
+calc();
+</script>
+</body>
+</html>
