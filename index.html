@@ -354,6 +354,79 @@
     margin-top: 1px;
   }
 
+  .ked-box {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    background: #f0faf4;
+    border: 1.5px solid #5a9e6e;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .ked-box-header {
+    background: #e6f5ec;
+    padding: 7px 14px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #3a7a52;
+    border-bottom: 1px solid #c2e0cc;
+  }
+
+  .ked-box-body {
+    padding: 2px 14px 6px;
+  }
+
+  .ked-box .result-line {
+    border-bottom-color: #d0ead9;
+  }
+
+  .ked-box .result-line .lbl { color: #4a7a5a; font-size: 12px; }
+  .ked-box .result-line .val { color: #2e6b44; font-weight: 600; }
+
+  .ked-box-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 14px;
+    border-top: 1.5px solid #5a9e6e;
+    background: #e6f5ec;
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .ked-box-total .lbl { color: #2e6b44; }
+  .ked-box-total .val { color: #2e6b44; }
+
+  /* Áthúzott + kedvezményes ár egymás mellett */
+  .subtotal-ked {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 9px 0;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+    border-top: 1px solid var(--border);
+    margin-top: 4px;
+  }
+  .subtotal-ked .lbl { color: var(--text-muted); font-weight: 500; }
+  .subtotal-ked .vals { display: flex; align-items: baseline; gap: 8px; }
+  .subtotal-ked .val-orig {
+    color: var(--text-dim);
+    text-decoration: line-through;
+    font-size: 12px;
+  }
+  .subtotal-ked .val-arrow {
+    color: #5a9e6e;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .subtotal-ked .val-new {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 15px;
+  }
+
   .result-section-label {
     font-size: 10px;
     font-weight: 600;
@@ -897,8 +970,30 @@
             <div class="result-section-label">Alapdíj</div>
             <div class="result-line"><span class="lbl">Tételszám szerinti díj<div class="result-sub" id="ev-r-alap-sav"></div></span><span class="val" id="ev-r-alap">–</span></div>
             <div class="result-line" id="ev-r-arbev-row"><span class="lbl">Árbevétel felár<div class="result-sub" id="ev-r-arbev-sav"></div></span><span class="val" id="ev-r-arbev">–</span></div>
-            <div class="result-line discount" id="ev-r-adozas-row"><span class="lbl" id="ev-r-adozas-lbl">Adózási kedvezmény</span><span class="val" id="ev-r-adozas">–</span></div>
-            <div class="result-line subtotal"><span class="lbl">Módosított alapdíj</span><span class="val" id="ev-r-modalap">–</span></div>
+
+            <div class="ked-box" id="ev-r-ked-section" style="display:none">
+              <div class="ked-box-header">🎁 Kedvezmények</div>
+              <div class="ked-box-body">
+                <div class="result-line discount" id="ev-r-adozas-row" style="display:none"><span class="lbl" id="ev-r-adozas-lbl">Adózási kedvezmény</span><span class="val" id="ev-r-adozas">–</span></div>
+                <div class="result-line discount" id="ev-r-ked1-row" style="display:none"><span class="lbl">Határidős információszolgáltatás (–10%)</span><span class="val" id="ev-r-ked1">–</span></div>
+                <div class="result-line discount" id="ev-r-ked2-row" style="display:none"><span class="lbl">Határidős díjfizetés (–5%)</span><span class="val" id="ev-r-ked2">–</span></div>
+                <div class="result-line discount" id="ev-r-ked3-row" style="display:none"><span class="lbl">Árbevétel 1,8 M Ft alatt (–5%)</span><span class="val" id="ev-r-ked3">–</span></div>
+                <div class="result-line discount" id="ev-r-egyedi-row" style="display:none"><span class="lbl" id="ev-r-egyedi-lbl">Egyedi kedvezmény</span><span class="val" id="ev-r-egyedi">–</span></div>
+              </div>
+              <div class="ked-box-total">
+                <span class="lbl">Kedvezmény összesen</span>
+                <span class="val" id="ev-r-ked-total">–</span>
+              </div>
+            </div>
+
+            <div class="subtotal-ked" id="ev-r-modalap-row">
+              <span class="lbl">Módosított alapdíj</span>
+              <span class="vals">
+                <span class="val-orig" id="ev-r-modalap-orig" style="display:none">–</span>
+                <span class="val-arrow" id="ev-r-modalap-arrow" style="display:none">→</span>
+                <span class="val-new" id="ev-r-modalap">–</span>
+              </span>
+            </div>
 
             <div class="result-section-label" id="ev-r-ber-section" style="display:none">Bérszámfejtés</div>
             <div class="result-line" id="ev-r-ber-egyszer-row" style="display:none"><span class="lbl">Egyszerű havibéres</span><span class="val" id="ev-r-ber-egyszer">–</span></div>
@@ -914,12 +1009,6 @@
             <div class="result-line" id="ev-r-cegauto-row" style="display:none"><span class="lbl">Cégautóadó (havi arány)</span><span class="val" id="ev-r-cegauto">–</span></div>
             <div class="result-line" id="ev-r-turizmus-row" style="display:none"><span class="lbl">Turizmusfejlesztési hozzájárulás</span><span class="val" id="ev-r-turizmus">–</span></div>
             <div class="result-line" id="ev-r-repr-row" style="display:none"><span class="lbl">Reprezentációs ktg. bevallás</span><span class="val" id="ev-r-repr">–</span></div>
-
-            <div class="result-section-label" id="ev-r-ked-section" style="display:none">Kedvezmények</div>
-            <div class="result-line discount" id="ev-r-ked1-row" style="display:none"><span class="lbl">Határidős információszolgáltatás (–10%)</span><span class="val" id="ev-r-ked1">–</span></div>
-            <div class="result-line discount" id="ev-r-ked2-row" style="display:none"><span class="lbl">Határidős díjfizetés (–5%)</span><span class="val" id="ev-r-ked2">–</span></div>
-            <div class="result-line discount" id="ev-r-ked3-row" style="display:none"><span class="lbl">Árbevétel 1,8 M Ft alatt (–5%)</span><span class="val" id="ev-r-ked3">–</span></div>
-            <div class="result-line discount" id="ev-r-egyedi-row" style="display:none"><span class="lbl" id="ev-r-egyedi-lbl">Egyedi kedvezmény</span><span class="val" id="ev-r-egyedi">–</span></div>
 
             <div class="result-total">
               <div class="total-label">Havi becsült díj</div>
@@ -1116,7 +1205,28 @@
             <div class="result-section-label">Alapdíj</div>
             <div class="result-line"><span class="lbl">Tételszám szerinti díj<div class="result-sub" id="ceg-r-alap-sav"></div></span><span class="val" id="ceg-r-alap">–</span></div>
             <div class="result-line" id="ceg-r-arbev-row"><span class="lbl">Árbevétel felár<div class="result-sub" id="ceg-r-arbev-sav"></div></span><span class="val" id="ceg-r-arbev">–</span></div>
-            <div class="result-line subtotal"><span class="lbl">Módosított alapdíj</span><span class="val" id="ceg-r-modalap">–</span></div>
+
+            <div class="ked-box" id="ceg-r-ked-section" style="display:none">
+              <div class="ked-box-header">🎁 Kedvezmények</div>
+              <div class="ked-box-body">
+                <div class="result-line discount" id="ceg-r-ked1-row" style="display:none"><span class="lbl">Határidős feltöltés EDITH-be (–10%)</span><span class="val" id="ceg-r-ked1">–</span></div>
+                <div class="result-line discount" id="ceg-r-ked2-row" style="display:none"><span class="lbl">Határidős díjfizetés (–5%)</span><span class="val" id="ceg-r-ked2">–</span></div>
+                <div class="result-line discount" id="ceg-r-egyedi-row" style="display:none"><span class="lbl" id="ceg-r-egyedi-lbl">Egyedi kedvezmény</span><span class="val" id="ceg-r-egyedi">–</span></div>
+              </div>
+              <div class="ked-box-total">
+                <span class="lbl">Kedvezmény összesen</span>
+                <span class="val" id="ceg-r-ked-total">–</span>
+              </div>
+            </div>
+
+            <div class="subtotal-ked" id="ceg-r-modalap-row">
+              <span class="lbl">Módosított alapdíj</span>
+              <span class="vals">
+                <span class="val-orig" id="ceg-r-modalap-orig" style="display:none">–</span>
+                <span class="val-arrow" id="ceg-r-modalap-arrow" style="display:none">→</span>
+                <span class="val-new" id="ceg-r-modalap">–</span>
+              </span>
+            </div>
 
             <div class="result-section-label" id="ceg-r-ber-section" style="display:none">Bérszámfejtés</div>
             <div class="result-line" id="ceg-r-ber-egyszer-row" style="display:none"><span class="lbl">Egyszerű havibéres</span><span class="val" id="ceg-r-ber-egyszer">–</span></div>
@@ -1133,11 +1243,6 @@
             <div class="result-line" id="ceg-r-cegauto-row" style="display:none"><span class="lbl">Cégautóadó (havi arány)</span><span class="val" id="ceg-r-cegauto">–</span></div>
             <div class="result-line" id="ceg-r-turizmus-row" style="display:none"><span class="lbl">Turizmusfejlesztési hozzájárulás</span><span class="val" id="ceg-r-turizmus">–</span></div>
             <div class="result-line" id="ceg-r-repr-row" style="display:none"><span class="lbl">Reprezentációs ktg. bevallás</span><span class="val" id="ceg-r-repr">–</span></div>
-
-            <div class="result-section-label" id="ceg-r-ked-section" style="display:none">Kedvezmények</div>
-            <div class="result-line discount" id="ceg-r-ked1-row" style="display:none"><span class="lbl">Határidős feltöltés EDITH-be (–10%)</span><span class="val" id="ceg-r-ked1">–</span></div>
-            <div class="result-line discount" id="ceg-r-ked2-row" style="display:none"><span class="lbl">Határidős díjfizetés (–5%)</span><span class="val" id="ceg-r-ked2">–</span></div>
-            <div class="result-line discount" id="ceg-r-egyedi-row" style="display:none"><span class="lbl" id="ceg-r-egyedi-lbl">Egyedi kedvezmény</span><span class="val" id="ceg-r-egyedi">–</span></div>
 
             <div class="result-total">
               <div class="total-label">Havi becsült díj (nettó)</div>
@@ -1431,7 +1536,31 @@
             <div class="result-section-label">Alapdíj</div>
             <div class="result-line"><span class="lbl">Rendelési volumen díja<div class="result-sub" id="ws-r-alap-sav"></div></span><span class="val" id="ws-r-alap">–</span></div>
             <div class="result-line" id="ws-r-kock-row"><span class="lbl">Forgalmi kockázati felár<div class="result-sub" id="ws-r-kock-sav"></div></span><span class="val" id="ws-r-kock">–</span></div>
-            <div class="result-line subtotal"><span class="lbl">Módosított alapdíj</span><span class="val" id="ws-r-modalap">–</span></div>
+
+            <div class="ked-box" id="ws-r-ked-section" style="display:none">
+              <div class="ked-box-header">🎁 Kedvezmények</div>
+              <div class="ked-box-body">
+                <div class="result-line discount" id="ws-r-ked1-row" style="display:none"><span class="lbl">Határidős feltöltés (–10%)</span><span class="val" id="ws-r-ked1">–</span></div>
+                <div class="result-line discount" id="ws-r-ked2-row" style="display:none"><span class="lbl">Határidős díjfizetés (–5%)</span><span class="val" id="ws-r-ked2">–</span></div>
+                <div class="result-line discount" id="ws-r-kata-row" style="display:none"><span class="lbl">KATA kedvezmény (–50%)</span><span class="val" id="ws-r-kata">–</span></div>
+                <div class="result-line discount" id="ws-r-atalany-row" style="display:none"><span class="lbl">Átalányadózás (–20%)</span><span class="val" id="ws-r-atalany">–</span></div>
+                <div class="result-line discount" id="ws-r-kicsi-row" style="display:none"><span class="lbl">Árbevétel 1,8 M Ft alatt (–5%)</span><span class="val" id="ws-r-kicsi">–</span></div>
+                <div class="result-line discount" id="ws-r-egyedi-row" style="display:none"><span class="lbl" id="ws-r-egyedi-lbl">Egyedi kedvezmény</span><span class="val" id="ws-r-egyedi">–</span></div>
+              </div>
+              <div class="ked-box-total">
+                <span class="lbl">Kedvezmény összesen</span>
+                <span class="val" id="ws-r-ked-total">–</span>
+              </div>
+            </div>
+
+            <div class="subtotal-ked" id="ws-r-modalap-row">
+              <span class="lbl">Módosított alapdíj</span>
+              <span class="vals">
+                <span class="val-orig" id="ws-r-modalap-orig" style="display:none">–</span>
+                <span class="val-arrow" id="ws-r-modalap-arrow" style="display:none">→</span>
+                <span class="val-new" id="ws-r-modalap">–</span>
+              </span>
+            </div>
 
             <div class="result-section-label" id="ws-r-komplex-section" style="display:none">Komplexitási felárak</div>
             <div class="result-line" id="ws-r-bank2-row" style="display:none"><span class="lbl">2. bankszámla</span><span class="val" id="ws-r-bank2">–</span></div>
@@ -1453,14 +1582,6 @@
             <div class="result-line" id="ws-r-ber-egyszer-row" style="display:none"><span class="lbl">Egyszerű havibéres</span><span class="val" id="ws-r-ber-egyszer">–</span></div>
             <div class="result-line" id="ws-r-ber-1let-row" style="display:none"><span class="lbl">1 letiltás / pótlék</span><span class="val" id="ws-r-ber-1let">–</span></div>
             <div class="result-line" id="ws-r-ber-tobbet-row" style="display:none"><span class="lbl">Több letiltás / komplex</span><span class="val" id="ws-r-ber-tobbet">–</span></div>
-
-            <div class="result-section-label" id="ws-r-ked-section" style="display:none">Kedvezmények</div>
-            <div class="result-line discount" id="ws-r-ked1-row" style="display:none"><span class="lbl">Határidős feltöltés (–10%)</span><span class="val" id="ws-r-ked1">–</span></div>
-            <div class="result-line discount" id="ws-r-ked2-row" style="display:none"><span class="lbl">Határidős díjfizetés (–5%)</span><span class="val" id="ws-r-ked2">–</span></div>
-            <div class="result-line discount" id="ws-r-kata-row" style="display:none"><span class="lbl">KATA kedvezmény (–50%)</span><span class="val" id="ws-r-kata">–</span></div>
-            <div class="result-line discount" id="ws-r-atalany-row" style="display:none"><span class="lbl">Átalányadózás (–20%)</span><span class="val" id="ws-r-atalany">–</span></div>
-            <div class="result-line discount" id="ws-r-kicsi-row" style="display:none"><span class="lbl">Árbevétel 1,8 M Ft alatt (–5%)</span><span class="val" id="ws-r-kicsi">–</span></div>
-            <div class="result-line discount" id="ws-r-egyedi-row" style="display:none"><span class="lbl" id="ws-r-egyedi-lbl">Egyedi kedvezmény</span><span class="val" id="ws-r-egyedi">–</span></div>
 
             <div class="result-total">
               <div class="total-label">Havi becsült díj (nettó)</div>
@@ -1681,6 +1802,8 @@ function calcEV() {
   const ked3 = checked('ev-ked3') ? Math.round(modAlap * 0.05) : 0;
   const egyediKed = Math.round(modAlap * val('ev-ked-egyedi') / 100);
   const kedTotal = ked1 + ked2 + ked3 + egyediKed;
+  const mindenKed = Math.round(adozasKed) + kedTotal;  // teljes kedvezmény az alapdíjból
+  const hasKed = mindenKed > 0;
 
   const total = modAlap - adozasKed + berTotal + rendTotal - kedTotal;
 
@@ -1691,17 +1814,42 @@ function calcEV() {
   if (evArbevRow) evArbevRow.style.display = arbevFelár > 0 ? '' : 'none';
   document.getElementById('ev-r-arbev').textContent = fmt(arbevFelár);
   setSav('ev-r-arbev-sav', getSav('ev-arbev'));
+
+  // Kedvezmény doboz – adózási kedvezmény is ide kerül
+  setSection('ev-r-ked-section', hasKed);
   const evAdozasRow = document.getElementById('ev-r-adozas-row');
   if (evAdozasRow) evAdozasRow.style.display = adozasKed > 0 ? '' : 'none';
   if (adozasKed > 0) {
     document.getElementById('ev-r-adozas-lbl').textContent = adozas === 'kata' ? 'KATA kedvezmény (–50%)' : 'Átalányadózás (–20%)';
     document.getElementById('ev-r-adozas').textContent = '–' + fmt(Math.round(adozasKed));
   }
-  document.getElementById('ev-r-modalap').textContent = fmt(modAlap - adozasKed);
+  setRow('ev-r-ked1',   ked1,      'ev', true);
+  setRow('ev-r-ked2',   ked2,      'ev', true);
+  setRow('ev-r-ked3',   ked3,      'ev', true);
+  setRow('ev-r-egyedi', egyediKed, 'ev', true);
+  if (hasKed) {
+    document.getElementById('ev-r-ked-total').textContent = '–' + fmt(mindenKed);
+  }
+  if (egyediKed > 0) {
+    const jogcim = document.getElementById('ev-ked-jogcim').value.trim();
+    document.getElementById('ev-r-egyedi-lbl').textContent = jogcim || 'Egyedi kedvezmény';
+  }
+
+  // Módosított alapdíj – áthúzott: teljes modAlap, új: modAlap – minden kedvezmény
+  document.getElementById('ev-r-modalap').textContent = fmt(modAlap - mindenKed);
+  const evOrigEl = document.getElementById('ev-r-modalap-orig');
+  const evArr = document.getElementById('ev-r-modalap-arrow');
+  if (hasKed) {
+    evOrigEl.textContent = fmt(modAlap);
+    evOrigEl.style.display = '';
+    if (evArr) evArr.style.display = '';
+  } else {
+    evOrigEl.style.display = 'none';
+    if (evArr) evArr.style.display = 'none';
+  }
 
   // Bérszámfejtés
-  const hasBer = berTotal > 0;
-  setSection('ev-r-ber-section', hasBer);
+  setSection('ev-r-ber-section', berTotal > 0);
   setRow('ev-r-ber-egyszer', berEgyszer, 'ev');
   setRow('ev-r-ber-1let',    ber1let,    'ev');
   setRow('ev-r-ber-tobbet',  berTobbet,  'ev');
@@ -1709,26 +1857,13 @@ function calcEV() {
   setRow('ev-r-ber-ingatlan',berIngatlan,'ev');
 
   // Rendszeres
-  const hasRend = rendTotal > 0;
-  setSection('ev-r-rend-section', hasRend);
+  setSection('ev-r-rend-section', rendTotal > 0);
   setRow('ev-r-afa',     rAfa,     'ev');
   setRow('ev-r-a60',     rA60,     'ev');
   setRow('ev-r-ksh',     rKsh,     'ev');
   setRow('ev-r-cegauto', rCegauto, 'ev');
   setRow('ev-r-turizmus',rTurizmus,'ev');
   setRow('ev-r-repr',    rRepr,    'ev');
-
-  // Kedvezmények
-  const hasKed = kedTotal > 0;
-  setSection('ev-r-ked-section', hasKed);
-  setRow('ev-r-ked1',   ked1,      'ev', true);
-  setRow('ev-r-ked2',   ked2,      'ev', true);
-  setRow('ev-r-ked3',   ked3,      'ev', true);
-  setRow('ev-r-egyedi', egyediKed, 'ev', true);
-  if (egyediKed > 0) {
-    const jogcim = document.getElementById('ev-ked-jogcim').value.trim();
-    document.getElementById('ev-r-egyedi-lbl').textContent = jogcim || 'Egyedi kedvezmény';
-  }
 
   document.getElementById('ev-total').textContent = fmt(Math.round(total));
 }
@@ -1788,7 +1923,33 @@ function calcCEG() {
   if (cegArbevRow) cegArbevRow.style.display = arbevFelár > 0 ? '' : 'none';
   document.getElementById('ceg-r-arbev').textContent = fmt(arbevFelár);
   setSav('ceg-r-arbev-sav', getSav('ceg-arbev'));
-  document.getElementById('ceg-r-modalap').textContent = fmt(modAlap);
+
+  // Kedvezmény doboz
+  setSection('ceg-r-ked-section', kedTotal > 0);
+  setRow('ceg-r-ked1',   ked1,      'ceg', true);
+  setRow('ceg-r-ked2',   ked2,      'ceg', true);
+  setRow('ceg-r-egyedi', egyediKed, 'ceg', true);
+  if (kedTotal > 0) {
+    document.getElementById('ceg-r-ked-total').textContent = '–' + fmt(kedTotal);
+  }
+  if (egyediKed > 0) {
+    const jogcim = document.getElementById('ceg-ked-jogcim').value.trim();
+    document.getElementById('ceg-r-egyedi-lbl').textContent = jogcim || 'Egyedi kedvezmény';
+  }
+
+  // Módosított alapdíj – áthúzott eredeti + kedvezményes
+  document.getElementById('ceg-r-modalap').textContent = fmt(modAlap - kedTotal);
+  const cegOrigEl = document.getElementById('ceg-r-modalap-orig');
+  if (kedTotal > 0) {
+    cegOrigEl.textContent = fmt(modAlap);
+    cegOrigEl.style.display = '';
+    const arr = document.getElementById('ceg-r-modalap-arrow');
+    if (arr) arr.style.display = '';
+  } else {
+    cegOrigEl.style.display = 'none';
+    const arr = document.getElementById('ceg-r-modalap-arrow');
+    if (arr) arr.style.display = 'none';
+  }
 
   // Bérszámfejtés
   setSection('ceg-r-ber-section', berTotal > 0);
@@ -1807,16 +1968,6 @@ function calcCEG() {
   setRow('ceg-r-cegauto', rCegauto, 'ceg');
   setRow('ceg-r-turizmus',rTurizmus,'ceg');
   setRow('ceg-r-repr',    rRepr,    'ceg');
-
-  // Kedvezmények
-  setSection('ceg-r-ked-section', kedTotal > 0);
-  setRow('ceg-r-ked1',   ked1,      'ceg', true);
-  setRow('ceg-r-ked2',   ked2,      'ceg', true);
-  setRow('ceg-r-egyedi', egyediKed, 'ceg', true);
-  if (egyediKed > 0) {
-    const jogcim = document.getElementById('ceg-ked-jogcim').value.trim();
-    document.getElementById('ceg-r-egyedi-lbl').textContent = jogcim || 'Egyedi kedvezmény';
-  }
 
   document.getElementById('ceg-total').textContent = fmt(Math.round(total));
   document.getElementById('ceg-total-gross').textContent = fmt(Math.round(total * 1.27));
@@ -1886,7 +2037,36 @@ function calcWS() {
   if (wsKockRow) wsKockRow.style.display = kockFelár > 0 ? '' : 'none';
   document.getElementById('ws-r-kock').textContent = fmt(kockFelár);
   setSav('ws-r-kock-sav', getSav('ws-arbev'));
-  document.getElementById('ws-r-modalap').textContent = fmt(modAlap);
+
+  // Kedvezmény doboz
+  setSection('ws-r-ked-section', kedTotal > 0);
+  setRow('ws-r-ked1',    ked1,      'ws', true);
+  setRow('ws-r-ked2',    ked2,      'ws', true);
+  setRow('ws-r-kata',    kedKata,   'ws', true);
+  setRow('ws-r-atalany', kedAtalany,'ws', true);
+  setRow('ws-r-kicsi',   kedKicsi,  'ws', true);
+  setRow('ws-r-egyedi',  egyediKed, 'ws', true);
+  if (kedTotal > 0) {
+    document.getElementById('ws-r-ked-total').textContent = '–' + fmt(kedTotal);
+  }
+  if (egyediKed > 0) {
+    const jogcim = document.getElementById('ws-ked-jogcim').value.trim();
+    document.getElementById('ws-r-egyedi-lbl').textContent = jogcim || 'Egyedi kedvezmény';
+  }
+
+  // Módosított alapdíj – áthúzott eredeti + kedvezményes
+  document.getElementById('ws-r-modalap').textContent = fmt(modAlap - kedTotal);
+  const wsOrigEl = document.getElementById('ws-r-modalap-orig');
+  if (kedTotal > 0) {
+    wsOrigEl.textContent = fmt(modAlap);
+    wsOrigEl.style.display = '';
+    const arr = document.getElementById('ws-r-modalap-arrow');
+    if (arr) arr.style.display = '';
+  } else {
+    wsOrigEl.style.display = 'none';
+    const arr = document.getElementById('ws-r-modalap-arrow');
+    if (arr) arr.style.display = 'none';
+  }
 
   // Komplexitás
   setSection('ws-r-komplex-section', komplexTotal > 0);
@@ -1910,19 +2090,6 @@ function calcWS() {
   setRow('ws-r-ber-egyszer', berEgyszer, 'ws');
   setRow('ws-r-ber-1let',    ber1let,    'ws');
   setRow('ws-r-ber-tobbet',  berTobbet,  'ws');
-
-  // Kedvezmények
-  setSection('ws-r-ked-section', kedTotal > 0);
-  setRow('ws-r-ked1',    ked1,      'ws', true);
-  setRow('ws-r-ked2',    ked2,      'ws', true);
-  setRow('ws-r-kata',    kedKata,   'ws', true);
-  setRow('ws-r-atalany', kedAtalany,'ws', true);
-  setRow('ws-r-kicsi',   kedKicsi,  'ws', true);
-  setRow('ws-r-egyedi',  egyediKed, 'ws', true);
-  if (egyediKed > 0) {
-    const jogcim = document.getElementById('ws-ked-jogcim').value.trim();
-    document.getElementById('ws-r-egyedi-lbl').textContent = jogcim || 'Egyedi kedvezmény';
-  }
 
   document.getElementById('ws-total').textContent = fmt(Math.round(total));
   const wsAfaline = document.getElementById('ws-afa-line');
