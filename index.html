@@ -1631,6 +1631,43 @@
           </div>
         </div>
 
+        <!-- 2. Kedvezmények -->
+        <div class="section section-ked">
+          <div class="section-header">
+            <div class="section-num">2</div>
+            <div class="section-title">Kedvezmények</div>
+          </div>
+          <div class="section-body">
+            <div class="check-row">
+              <div><div class="check-label">EDITH rendszerbe határidőre, hiánytalanul feltöltés</div></div>
+              <div class="check-price">–10% alapdíj</div>
+              <label class="toggle"><input type="checkbox" id="ws-ked1" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">Határidőben történő díjfizetés</div></div>
+              <div class="check-price">–5% alapdíj</div>
+              <label class="toggle"><input type="checkbox" id="ws-ked2" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="divider"></div>
+            <div class="egyedi-ked-block">
+              <div class="two-col" style="margin-bottom:8px">
+                <div class="field">
+                  <label>Egyedi kedvezmény – jogcím</label>
+                  <input type="text" id="ws-ked-jogcim" placeholder="pl. cégcsoport kedvezmény" oninput="updateEgyediLabel('ws'); calc()">
+                </div>
+                <div class="field">
+                  <label>Mértéke (% az alapdíjból)</label>
+                  <div style="position:relative">
+                    <input type="number" id="ws-ked-egyedi" min="0" max="100" value="" placeholder="0" onchange="calc()" style="padding-right:32px">
+                    <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:14px;pointer-events:none">%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="hint">Szabadon megadható kedvezmény az alapdíj százalékában – pl. cégcsoport, hosszú távú szerződés stb.</div>
+            </div>
+          </div>
+        </div>
+
         <!-- 3. Komplexitási felárak -->
         <div class="section">
           <div class="section-header">
@@ -1741,43 +1778,6 @@
               </div>
             </div>
 
-          </div>
-        </div>
-
-        <!-- 4. Kedvezmények → 2. pozícióba -->
-        <div class="section section-ked">
-          <div class="section-header">
-            <div class="section-num">2</div>
-            <div class="section-title">Kedvezmények</div>
-          </div>
-          <div class="section-body">
-            <div class="check-row">
-              <div><div class="check-label">EDITH rendszerbe határidőre, hiánytalanul feltöltés</div></div>
-              <div class="check-price">–10% alapdíj</div>
-              <label class="toggle"><input type="checkbox" id="ws-ked1" onchange="calc()"><span class="toggle-slider"></span></label>
-            </div>
-            <div class="check-row">
-              <div><div class="check-label">Határidőben történő díjfizetés</div></div>
-              <div class="check-price">–5% alapdíj</div>
-              <label class="toggle"><input type="checkbox" id="ws-ked2" onchange="calc()"><span class="toggle-slider"></span></label>
-            </div>
-            <div class="divider"></div>
-            <div class="egyedi-ked-block">
-              <div class="two-col" style="margin-bottom:8px">
-                <div class="field">
-                  <label>Egyedi kedvezmény – jogcím</label>
-                  <input type="text" id="ws-ked-jogcim" placeholder="pl. cégcsoport kedvezmény" oninput="updateEgyediLabel('ws'); calc()">
-                </div>
-                <div class="field">
-                  <label>Mértéke (% az alapdíjból)</label>
-                  <div style="position:relative">
-                    <input type="number" id="ws-ked-egyedi" min="0" max="100" value="" placeholder="0" onchange="calc()" style="padding-right:32px">
-                    <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:14px;pointer-events:none">%</span>
-                  </div>
-                </div>
-              </div>
-              <div class="hint">Szabadon megadható kedvezmény az alapdíj százalékában – pl. cégcsoport, hosszú távú szerződés stb.</div>
-            </div>
           </div>
         </div>
 
@@ -2004,21 +2004,6 @@ function updateClientName() {
 
 function fmt(n) {
   return n.toLocaleString('hu-HU') + ' Ft';
-}
-
-function berCalc(egyszer, elet, tobbet, passz, ingatlan) {
-  let total = 0;
-  // Simple salary
-  if (egyszer > 0) {
-    if (egyszer <= 5) total += egyszer * 6000;
-    else if (egyszer <= 20) total += 5 * 6000 + (egyszer - 5) * 5000;
-    else total += 5 * 6000 + 15 * 5000 + (egyszer - 20) * 3500;
-  }
-  total += elet * 6000;
-  total += tobbet * 5000;
-  total += (passz || 0) * 2000;
-  total += (ingatlan || 0) * 5000;
-  return total;
 }
 
 function updateHeaderSender() {
@@ -2298,7 +2283,7 @@ function calcCEG() {
 
   // Éves zárás figyelmeztetés
   const cegZarEl = document.getElementById('ceg-zar-amount');
-  if (cegZarEl) cegZarEl.textContent = 'Becsült éves zárás díja: ' + fmt(Math.round(modAlap)) + ' Ft (könyvvizsgálattal: ' + fmt(Math.round(modAlap * 1.5)) + ' Ft)';
+  if (cegZarEl) cegZarEl.textContent = 'Becsült éves zárás díja: ' + fmt(Math.round(modAlap)) + ' (könyvvizsgálattal: ' + fmt(Math.round(modAlap * 1.5)) + ')';
 }
 
 function calcWS() {
@@ -2430,7 +2415,7 @@ function calcWS() {
 
   // Éves zárás figyelmeztetés
   const wsZarEl = document.getElementById('ws-zar-amount');
-  if (wsZarEl) wsZarEl.textContent = 'Becsült éves zárás díja: ' + fmt(Math.round(modAlap)) + ' Ft' + (wsType === 'ceg' ? ' (+ ÁFA)' : '') + ' · Közbenső mérleg igény esetén: ugyanennyi';
+  if (wsZarEl) wsZarEl.textContent = 'Becsült éves zárás díja: ' + fmt(Math.round(modAlap)) + (wsType === 'ceg' ? ' (+ ÁFA)' : '') + ' · Közbenső mérleg igény esetén: ugyanennyi';
 }
 
 // ==================== PRINT / AJÁNLAT ====================
