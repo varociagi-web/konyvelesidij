@@ -2592,6 +2592,8 @@ function openPrintView() {
 
       } else if (el.classList.contains('result-line')) {
         if (el.style.display === 'none') return;
+        // Skip lines that are inside a ked-box (already rendered above)
+        if (el.closest('.ked-box')) return;
         const lblEl = el.querySelector('.lbl');
         const valEl = el.querySelector('.val, .val-new');
         if (!lblEl || !valEl) return;
