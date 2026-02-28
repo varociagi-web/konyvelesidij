@@ -1239,6 +1239,12 @@
                 <div class="check-label">KSH jelentés</div>
               </div>
               <div class="check-price">10 000 Ft/alkalom</div>
+              <label class="toggle"><input type="checkbox" id="ev-nav-atv" onchange="calc()"><span class="toggle-slider"></span></label>
+              <div class="check-label">NAV összevont adónem-átvezetés</div>
+              <div class="check-sub">Havi egyszeri utaláshoz</div>
+              <div class="check-amount">3 000 Ft</div>
+            </div>
+            <div class="check-row">
               <label class="toggle"><input type="checkbox" id="ev-ksh" onchange="calc()"><span class="toggle-slider"></span></label>
             </div>
             <div class="check-row">
@@ -1319,6 +1325,7 @@
             <div class="result-section-label" id="ev-r-rend-section" style="display:none">Rendszeres feladatok</div>
             <div class="result-line" id="ev-r-afa-row" style="display:none"><span class="lbl">ÁFA bevallás</span><span class="val" id="ev-r-afa">–</span></div>
             <div class="result-line" id="ev-r-a60-row" style="display:none"><span class="lbl">A60-as ÁFA összesítő</span><span class="val" id="ev-r-a60">–</span></div>
+            <div class="result-line" id="ev-r-nav-atv-row" style="display:none"><span class="lbl">NAV adónem-átvezetés</span><span class="val" id="ev-r-nav-atv">–</span></div>
             <div class="result-line" id="ev-r-ksh-row" style="display:none"><span class="lbl">KSH jelentés</span><span class="val" id="ev-r-ksh">–</span></div>
             <div class="result-line" id="ev-r-cegauto-row" style="display:none"><span class="lbl">Cégautóadó (havi arány)</span><span class="val" id="ev-r-cegauto">–</span></div>
             <div class="result-line" id="ev-r-turizmus-row" style="display:none"><span class="lbl">Turizmusfejlesztési hozzájárulás</span><span class="val" id="ev-r-turizmus">–</span></div>
@@ -1476,6 +1483,12 @@
             <div class="check-row">
               <div><div class="check-label">KIVA előleg bevallás</div><div class="check-sub">Negyedéves → havi bontásban: 1 667 Ft/hó</div></div>
               <div class="check-price">5 000 Ft/negyed.</div>
+              <label class="toggle"><input type="checkbox" id="ceg-nav-atv" onchange="calc()"><span class="toggle-slider"></span></label>
+              <div class="check-label">NAV összevont adónem-átvezetés</div>
+              <div class="check-sub">Havi egyszeri utaláshoz</div>
+              <div class="check-amount">3 000 Ft</div>
+            </div>
+            <div class="check-row">
               <label class="toggle"><input type="checkbox" id="ceg-kiva" onchange="calc()"><span class="toggle-slider"></span></label>
             </div>
             <div class="check-row">
@@ -1552,6 +1565,7 @@
             <div class="result-section-label" id="ceg-r-rend-section" style="display:none">Rendszeres feladatok</div>
             <div class="result-line" id="ceg-r-afa-row" style="display:none"><span class="lbl">ÁFA bevallás</span><span class="val" id="ceg-r-afa">–</span></div>
             <div class="result-line" id="ceg-r-a60-row" style="display:none"><span class="lbl">A60-as ÁFA összesítő</span><span class="val" id="ceg-r-a60">–</span></div>
+            <div class="result-line" id="ceg-r-nav-atv-row" style="display:none"><span class="lbl">NAV adónem-átvezetés</span><span class="val" id="ceg-r-nav-atv">–</span></div>
             <div class="result-line" id="ceg-r-kiva-row" style="display:none"><span class="lbl">KIVA előleg (havi arány)</span><span class="val" id="ceg-r-kiva">–</span></div>
             <div class="result-line" id="ceg-r-ksh-row" style="display:none"><span class="lbl">KSH jelentés</span><span class="val" id="ceg-r-ksh">–</span></div>
             <div class="result-line" id="ceg-r-cegauto-row" style="display:none"><span class="lbl">Cégautóadó (havi arány)</span><span class="val" id="ceg-r-cegauto">–</span></div>
@@ -1617,6 +1631,7 @@
                   <option value="170000">1 501–3 000 rendelés</option>
                   <option value="0">3 000+ (egyedi ajánlat)</option>
                 </select>
+                <div class="hint">Rendelés = tárgyhavi teljesítésű, kiállított vevői számlák db-száma</div>
               </div>
               <div class="field">
                 <label>Éves webshop árbevétel</label>
@@ -1822,6 +1837,59 @@
           </div>
         </div>
 
+        <!-- 5. Rendszeres feladatok WS -->
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-num">5</div>
+            <div class="section-title">Rendszeres feladatok</div>
+          </div>
+          <div class="checks-grid">
+            <div class="check-row">
+              <div><div class="check-label">ÁFA bevallás</div></div>
+              <div class="check-price">5 000 Ft</div>
+              <label class="toggle"><input type="checkbox" id="ws-afa" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">A60-as ÁFA összesítő</div><div class="check-sub">Csak ha van ÁFA bevallás</div></div>
+              <div class="check-price">2 000 Ft</div>
+              <label class="toggle"><input type="checkbox" id="ws-a60" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">NAV összevont adónem-átvezetés</div><div class="check-sub">Havi egyszeri utaláshoz</div></div>
+              <div class="check-price">3 000 Ft</div>
+              <label class="toggle"><input type="checkbox" id="ws-nav-atv" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">KIVA előleg bevallás</div><div class="check-sub">Negyedévente (1 667 Ft/hó)</div></div>
+              <div class="check-price">1 667 Ft/hó</div>
+              <label class="toggle"><input type="checkbox" id="ws-kiva" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">KSH jelentés</div></div>
+              <div class="check-price">10 000 Ft</div>
+              <label class="toggle"><input type="checkbox" id="ws-ksh" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">Cégautóadó bevallás</div><div class="check-sub">Negyedéves → havi bontásban: 1 667 Ft/autó/hó</div></div>
+              <div class="check-price">5 000 Ft/autó/negyed.</div>
+              <div class="inline-num">
+                <input type="number" id="ws-cegauto" min="0" value="0" onchange="calc()" style="width:60px">
+                <span style="font-size:12px;color:var(--text-muted)">autó</span>
+              </div>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">Turizmusfejlesztési hozzájárulás</div></div>
+              <div class="check-price">5 000 Ft</div>
+              <label class="toggle"><input type="checkbox" id="ws-turizmus" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">Reprezentációs ktg. bevallása</div></div>
+              <div class="check-price">10 000 Ft</div>
+              <label class="toggle"><input type="checkbox" id="ws-repr" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+        </div>
+
       </div><!-- /left -->
 
       <!-- Result panel WS -->
@@ -1882,6 +1950,16 @@
             <div class="result-line" id="ws-r-ber-tobbet-row" style="display:none"><span class="lbl">Több letiltás / komplex</span><span class="val" id="ws-r-ber-tobbet">–</span></div>
             <div class="result-line" id="ws-r-ber-passz-row" style="display:none"><span class="lbl">Passzív / jövedelem nélküli tag</span><span class="val" id="ws-r-ber-passz">–</span></div>
             <div class="result-line" id="ws-r-ber-ingatlan-row" style="display:none"><span class="lbl">Bérelt ingatlan magánszemélytől</span><span class="val" id="ws-r-ber-ingatlan">–</span></div>
+
+            <div class="result-section-label" id="ws-r-rend-section" style="display:none">Rendszeres feladatok</div>
+            <div class="result-line" id="ws-r-afa-row" style="display:none"><span class="lbl">ÁFA bevallás</span><span class="val" id="ws-r-afa">–</span></div>
+            <div class="result-line" id="ws-r-a60-row" style="display:none"><span class="lbl">A60-as ÁFA összesítő</span><span class="val" id="ws-r-a60">–</span></div>
+            <div class="result-line" id="ws-r-nav-atv-row" style="display:none"><span class="lbl">NAV adónem-átvezetés</span><span class="val" id="ws-r-nav-atv">–</span></div>
+            <div class="result-line" id="ws-r-kiva-row" style="display:none"><span class="lbl">KIVA előleg bevallás</span><span class="val" id="ws-r-kiva">–</span></div>
+            <div class="result-line" id="ws-r-ksh-row" style="display:none"><span class="lbl">KSH jelentés</span><span class="val" id="ws-r-ksh">–</span></div>
+            <div class="result-line" id="ws-r-cegauto-row" style="display:none"><span class="lbl">Cégautóadó bevallás</span><span class="val" id="ws-r-cegauto">–</span></div>
+            <div class="result-line" id="ws-r-turizmus-row" style="display:none"><span class="lbl">Turizmusfejlesztési hozzájárulás</span><span class="val" id="ws-r-turizmus">–</span></div>
+            <div class="result-line" id="ws-r-repr-row" style="display:none"><span class="lbl">Reprezentációs ktg. bevallása</span><span class="val" id="ws-r-repr">–</span></div>
 
             <div class="result-total">
               <div class="total-label">Havi becsült díj (nettó)</div>
@@ -2101,11 +2179,12 @@ function calcEV() {
   // Rendszeres tételenként
   const rAfa      = checked('ev-afa')      ? 5000 : 0;
   const rA60      = checked('ev-a60')      ? 2000 : 0;
+  const rNavAtv   = checked('ev-nav-atv')  ? 3000 : 0;
   const rKsh      = checked('ev-ksh')      ? 10000 : 0;
   const rCegauto  = val('ev-cegauto') * Math.round(5000/3);
   const rTurizmus = checked('ev-turizmus') ? 5000 : 0;
   const rRepr     = checked('ev-repr')     ? 10000 : 0;
-  const rendTotal = rAfa + rA60 + rKsh + rCegauto + rTurizmus + rRepr;
+  const rendTotal = rAfa + rA60 + rNavAtv + rKsh + rCegauto + rTurizmus + rRepr;
 
   // Kedvezmények tételenként
   const ked1 = checked('ev-ked1') ? Math.round(modAlap * 0.1)  : 0;
@@ -2171,6 +2250,7 @@ function calcEV() {
   setSection('ev-r-rend-section', rendTotal > 0);
   setRow('ev-r-afa',     rAfa,     'ev');
   setRow('ev-r-a60',     rA60,     'ev');
+  setRow('ev-r-nav-atv', rNavAtv,  'ev');
   setRow('ev-r-ksh',     rKsh,     'ev');
   setRow('ev-r-cegauto', rCegauto, 'ev');
   setRow('ev-r-turizmus',rTurizmus,'ev');
@@ -2212,12 +2292,13 @@ function calcCEG() {
   // Rendszeres tételenként
   const rAfa      = checked('ceg-afa')      ? 5000 : 0;
   const rA60      = checked('ceg-a60')      ? 2000 : 0;
+  const rNavAtv   = checked('ceg-nav-atv')  ? 3000 : 0;
   const rKiva     = checked('ceg-kiva')     ? Math.round(5000/3) : 0;
   const rKsh      = checked('ceg-ksh')      ? 10000 : 0;
   const rCegauto  = val('ceg-cegauto') * Math.round(5000/3);
   const rTurizmus = checked('ceg-turizmus') ? 5000 : 0;
   const rRepr     = checked('ceg-repr')     ? 10000 : 0;
-  const rendTotal = rAfa + rA60 + rKiva + rKsh + rCegauto + rTurizmus + rRepr;
+  const rendTotal = rAfa + rA60 + rNavAtv + rKiva + rKsh + rCegauto + rTurizmus + rRepr;
 
   // Kedvezmények tételenként
   const ked1 = checked('ceg-ked1') ? Math.round(modAlap * 0.1)  : 0;
@@ -2274,6 +2355,7 @@ function calcCEG() {
   setSection('ceg-r-rend-section', rendTotal > 0);
   setRow('ceg-r-afa',     rAfa,     'ceg');
   setRow('ceg-r-a60',     rA60,     'ceg');
+  setRow('ceg-r-nav-atv', rNavAtv,  'ceg');
   setRow('ceg-r-kiva',    rKiva,    'ceg');
   setRow('ceg-r-ksh',     rKsh,     'ceg');
   setRow('ceg-r-cegauto', rCegauto, 'ceg');
@@ -2335,12 +2417,22 @@ function calcWS() {
   const berTotal   = berEgyszer + ber1let + berTobbet + berPassz + berIngatlan;
 
   // Kedvezmények tételenként
+  const rAfa      = checked('ws-afa')      ? 5000 : 0;
+  const rA60      = checked('ws-a60')      ? 2000 : 0;
+  const rNavAtv   = checked('ws-nav-atv')  ? 3000 : 0;
+  const rKiva     = checked('ws-kiva')     ? Math.round(5000/3) : 0;
+  const rKsh      = checked('ws-ksh')      ? 10000 : 0;
+  const rCegauto  = val('ws-cegauto') * Math.round(5000/3);
+  const rTurizmus = checked('ws-turizmus') ? 5000 : 0;
+  const rRepr     = checked('ws-repr')     ? 10000 : 0;
+  const rendTotal = rAfa + rA60 + rNavAtv + rKiva + rKsh + rCegauto + rTurizmus + rRepr;
+
   const ked1 = checked('ws-ked1') ? Math.round(modAlap * 0.1)  : 0;
   const ked2 = checked('ws-ked2') ? Math.round(modAlap * 0.05) : 0;
   const egyediKed = Math.round(modAlap * val('ws-ked-egyedi') / 100);
   const kedTotal  = ked1 + ked2 + egyediKed;
 
-  const total = modAlap + berTotal - kedTotal;
+  const total = modAlap + berTotal + rendTotal - kedTotal;
 
   // Alapdíj
   document.getElementById('ws-r-alap').textContent = fmt(alapdijBase);
@@ -2403,6 +2495,20 @@ function calcWS() {
   setRow('ws-r-ber-tobbet',  berTobbet,  'ws');
   setRow('ws-r-ber-passz',   berPassz,   'ws');
   setRow('ws-r-ber-ingatlan',berIngatlan,'ws');
+
+  // Rendszeres feladatok WS
+  setSection('ws-r-rend-section', rendTotal > 0);
+  setRow('ws-r-afa',      rAfa,     'ws');
+  setRow('ws-r-a60',      rA60,     'ws');
+  setRow('ws-r-nav-atv',  rNavAtv,  'ws');
+  setRow('ws-r-kiva',     rKiva,    'ws');
+  setRow('ws-r-ksh',      rKsh,     'ws');
+  setRow('ws-r-cegauto',  rCegauto, 'ws');
+  setRow('ws-r-turizmus', rTurizmus,'ws');
+  setRow('ws-r-repr',     rRepr,    'ws');
+  // Update cegauto display amount
+  const wsCegautoAmtEl = document.getElementById('ws-cegauto-amt');
+  if (wsCegautoAmtEl) wsCegautoAmtEl.textContent = rCegauto > 0 ? fmt(rCegauto) + ' Ft/hó' : '–';
 
   document.getElementById('ws-total').textContent = fmt(Math.round(total));
   const wsAfaline = document.getElementById('ws-afa-line');
