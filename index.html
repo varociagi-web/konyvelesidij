@@ -2416,7 +2416,8 @@ function calcWS() {
   const kMp2p     = val('ws-mp2plus')    * 15000;
   const komplexTotal = kBankHuf+kDevbank+kKart2+kFutar+kEubesz+kOss+kHarmadik+kDeviz+kMp1+kMp2p;
 
-  const modAlap = alapdijBase + kockFelár + komplexTotal;
+  const kedAlap  = alapdijBase + kockFelár;          // kedvezmény alapja: alapdíj + kockázati felár
+  const modAlap  = kedAlap + komplexTotal;            // teljes módosított alapdíj (megjelenítéshez)
 
   // Bérszámfejtés tételenként
   const nEgyszer = val('ws-ber-egyszer');
@@ -2445,9 +2446,9 @@ function calcWS() {
   const rRepr     = checked('ws-repr')     ? 10000 : 0;
   const rendTotal = rAfa + rA60 + rNavAtv + rKiva + rKsh + rCegauto + rTurizmus + rRepr;
 
-  const ked1 = checked('ws-ked1') ? Math.round(modAlap * 0.1)  : 0;
-  const ked2 = checked('ws-ked2') ? Math.round(modAlap * 0.05) : 0;
-  const egyediKed = Math.round(modAlap * val('ws-ked-egyedi') / 100);
+  const ked1 = checked('ws-ked1') ? Math.round(kedAlap * 0.1)  : 0;
+  const ked2 = checked('ws-ked2') ? Math.round(kedAlap * 0.05) : 0;
+  const egyediKed = Math.round(kedAlap * val('ws-ked-egyedi') / 100);
   const kedTotal  = ked1 + ked2 + egyediKed;
 
   const total = modAlap + berTotal + rendTotal - kedTotal;
@@ -2541,7 +2542,7 @@ function calcWS() {
 
   // Éves zárás figyelmeztetés
   const wsZarEl = document.getElementById('ws-zar-amount');
-  if (wsZarEl) wsZarEl.textContent = 'Becsült éves zárás díja: ' + fmt(Math.round(modAlap)) + (wsType === 'ceg' ? ' (+ ÁFA)' : '') + ' · Közbenső mérleg igény esetén: ugyanennyi';
+  if (wsZarEl) wsZarEl.textContent = 'Becsült éves zárás díja: ' + fmt(Math.round(kedAlap)) + (wsType === 'ceg' ? ' (+ ÁFA)' : '') + ' · Közbenső mérleg igény esetén: ugyanennyi';
 }
 
 // ==================== PRINT / AJÁNLAT ====================
