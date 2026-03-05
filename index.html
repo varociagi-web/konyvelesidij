@@ -2075,9 +2075,10 @@ function setWsType(type) {
 
 function updateEgyediLabel(prefix) {
   const jogcim = document.getElementById(prefix + '-ked-jogcim').value.trim();
+  const pct = val(prefix + '-ked-egyedi');
   const labelEl = document.querySelector('#' + prefix + '-r-egyedi-row .lbl');
   if (labelEl) {
-    labelEl.textContent = jogcim ? jogcim : 'Egyedi kedvezmény';
+    labelEl.textContent = (jogcim || 'Egyedi kedvezmény') + (pct > 0 ? ' (–' + pct + '%)' : '');
   }
 }
 
@@ -2240,7 +2241,7 @@ function calcEV() {
   }
   if (egyediKed > 0) {
     const jogcim = document.getElementById('ev-ked-jogcim').value.trim();
-    document.getElementById('ev-r-egyedi-lbl').textContent = jogcim || 'Egyedi kedvezmény';
+    const evPct = val('ev-ked-egyedi'); document.getElementById('ev-r-egyedi-lbl').textContent = (jogcim || 'Egyedi kedvezmény') + (evPct > 0 ? ' (–' + evPct + '%)' : '');
   }
 
   // Módosított alapdíj – áthúzott: teljes modAlap, új: modAlap – minden kedvezmény
@@ -2344,7 +2345,7 @@ function calcCEG() {
   }
   if (egyediKed > 0) {
     const jogcim = document.getElementById('ceg-ked-jogcim').value.trim();
-    document.getElementById('ceg-r-egyedi-lbl').textContent = jogcim || 'Egyedi kedvezmény';
+    const cegPct = val('ceg-ked-egyedi'); document.getElementById('ceg-r-egyedi-lbl').textContent = (jogcim || 'Egyedi kedvezmény') + (cegPct > 0 ? ' (–' + cegPct + '%)' : '');
   }
 
   // Módosított alapdíj – áthúzott eredeti + kedvezményes
@@ -2471,7 +2472,7 @@ function calcWS() {
   }
   if (egyediKed > 0) {
     const jogcim = document.getElementById('ws-ked-jogcim').value.trim();
-    document.getElementById('ws-r-egyedi-lbl').textContent = jogcim || 'Egyedi kedvezmény';
+    const wsPct = val('ws-ked-egyedi'); document.getElementById('ws-r-egyedi-lbl').textContent = (jogcim || 'Egyedi kedvezmény') + (wsPct > 0 ? ' (–' + wsPct + '%)' : '');
   }
 
   // Módosított alapdíj – áthúzott eredeti + kedvezményes
