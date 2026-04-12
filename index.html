@@ -1061,6 +1061,13 @@
     <h1>SukorADÓ</h1>
     <p>Könyvelési díj kalkulátor</p>
   </div>
+  <div style="display:flex;align-items:center;gap:10px;margin:0 16px">
+    <span style="font-size:12px;color:rgba(255,255,255,0.7)">Verzió:</span>
+    <select id="global-verzio" onchange="onVerzioChange()" style="background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.35);color:white;padding:5px 12px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer">
+      <option value="v2">V2 – 2026. jan. 1-től</option>
+      <option value="v3" selected>V3 – 2026. ápr. 1-től</option>
+    </select>
+  </div>
   <div style="margin-left:auto;text-align:right;font-size:12px;color:var(--text-muted);line-height:1.8">
     <span id="header-ajanlattevo" style="font-weight:500;color:var(--text)">Váróci Ágnes e.v.</span><br>
     8096 Sukoró, Körmös utca 79.<br>
@@ -1288,6 +1295,79 @@
           </div>
         </div>
 
+        <!-- 5. KOMPLEXITÁSI FELÁR (V3) -->
+        <div class="section" id="ev-komplex-section" style="display:none">
+          <div class="section-header">
+            <div class="section-num">5</div>
+            <div class="section-title">Komplexitási felárak <span style="background:#1e4d8c;color:white;font-size:9px;padding:2px 7px;border-radius:8px;margin-left:6px;font-family:DM Sans,sans-serif;font-weight:700;letter-spacing:0.5px">V3</span></div>
+          </div>
+          <div class="section-body">
+            <div class="check-row">
+              <div><div class="check-label">Extra HUF bankszámla</div><div class="check-sub">1 db az alapárban, 2. db-tól +3 000 Ft/db</div></div>
+              <div class="check-price">3 000 Ft/hó/db</div>
+              <div class="inline-num">
+                <input type="number" id="ev-k-huf-bank" min="0" value="0" onchange="calc()" style="width:60px">
+                <span style="font-size:12px;color:var(--text-muted)">db extra</span>
+              </div>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">Deviza bankszámla</div><div class="check-sub">1. db-tól +6 000 Ft/db</div></div>
+              <div class="check-price">6 000 Ft/hó/db</div>
+              <div class="inline-num">
+                <input type="number" id="ev-k-dev-bank" min="0" value="0" onchange="calc()" style="width:60px">
+                <span style="font-size:12px;color:var(--text-muted)">db</span>
+              </div>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">Extra pénztárgép</div><div class="check-sub">1 db az alapárban, 2. db-tól +2 000 Ft/db</div></div>
+              <div class="check-price">2 000 Ft/hó/db</div>
+              <div class="inline-num">
+                <input type="number" id="ev-k-pztgep" min="0" value="0" onchange="calc()" style="width:60px">
+                <span style="font-size:12px;color:var(--text-muted)">db extra</span>
+              </div>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">Extra pénztár</div><div class="check-sub">1 db az alapárban, 2. db-tól +2 000 Ft/db</div></div>
+              <div class="check-price">2 000 Ft/hó/db</div>
+              <div class="inline-num">
+                <input type="number" id="ev-k-pztar" min="0" value="0" onchange="calc()" style="width:60px">
+                <span style="font-size:12px;color:var(--text-muted)">db extra</span>
+              </div>
+            </div>
+            <div style="margin-top:8px;font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.8px;padding:4px 0 2px">Kategória alapú felárak</div>
+            <div style="background:#f0f4fa;border:1px solid #aac4e0;border-radius:6px;padding:6px 10px;margin-bottom:6px;font-size:10px;color:#5a7eb0">
+              <strong>Csekély</strong> – néhány tétel/hó &nbsp;·&nbsp; <strong>Jelentős</strong> – a könyvelési munka érzékelhető részét teszi ki &nbsp;·&nbsp; <strong>Meghatározó</strong> – az ügyletek többségét érinti
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">Devizás ügyletek</div></div>
+              <select id="ev-k-deviza" onchange="calc()" style="font-size:12px;padding:4px 8px;border-radius:6px;border:1px solid var(--border)">
+                <option value="0">Nincs</option>
+                <option value="3000">Csekély (+3 000 Ft)</option>
+                <option value="8000">Jelentős (+8 000 Ft)</option>
+                <option value="15000">Meghatározó (+15 000 Ft)</option>
+              </select>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">Külföldi ügyletek (EU / harmadik ország)</div></div>
+              <select id="ev-k-kulfoldi" onchange="calc()" style="font-size:12px;padding:4px 8px;border-radius:6px;border:1px solid var(--border)">
+                <option value="0">Nincs</option>
+                <option value="3000">Csekély (+3 000 Ft)</option>
+                <option value="8000">Jelentős (+8 000 Ft)</option>
+                <option value="15000">Meghatározó (+15 000 Ft)</option>
+              </select>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">Fordított áfa</div></div>
+              <select id="ev-k-fordafa" onchange="calc()" style="font-size:12px;padding:4px 8px;border-radius:6px;border:1px solid var(--border)">
+                <option value="0">Nincs</option>
+                <option value="2000">Csekély (+2 000 Ft)</option>
+                <option value="5000">Jelentős (+5 000 Ft)</option>
+                <option value="8000">Meghatározó (+8 000 Ft)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
       </div><!-- /left col -->
 
       <!-- Result panel EV -->
@@ -1343,6 +1423,16 @@
             <div class="result-line" id="ev-r-cegauto-row" style="display:none"><span class="lbl">Cégautóadó (havi arány)</span><span class="val" id="ev-r-cegauto">–</span></div>
             <div class="result-line" id="ev-r-turizmus-row" style="display:none"><span class="lbl">Turizmusfejlesztési hozzájárulás</span><span class="val" id="ev-r-turizmus">–</span></div>
             <div class="result-line" id="ev-r-repr-row" style="display:none"><span class="lbl">Reprezentációs ktg. bevallás</span><span class="val" id="ev-r-repr">–</span></div>
+
+            <div class="result-section-label" id="ev-r-komplex-section" style="display:none">Komplexitási felárak (V3)</div>
+            <div class="result-line" id="ev-r-k-huf-bank-row" style="display:none"><span class="lbl">Extra HUF bankszámla</span><span class="val" id="ev-r-k-huf-bank">–</span></div>
+            <div class="result-line" id="ev-r-k-dev-bank-row" style="display:none"><span class="lbl">Deviza bankszámla</span><span class="val" id="ev-r-k-dev-bank">–</span></div>
+            <div class="result-line" id="ev-r-k-pztgep-row" style="display:none"><span class="lbl">Extra pénztárgép</span><span class="val" id="ev-r-k-pztgep">–</span></div>
+            <div class="result-line" id="ev-r-k-pztar-row" style="display:none"><span class="lbl">Extra pénztár</span><span class="val" id="ev-r-k-pztar">–</span></div>
+            <div class="result-line" id="ev-r-k-deviza-row" style="display:none"><span class="lbl">Devizás ügyletek</span><span class="val" id="ev-r-k-deviza">–</span></div>
+            <div class="result-line" id="ev-r-k-kulfoldi-row" style="display:none"><span class="lbl">Külföldi ügyletek</span><span class="val" id="ev-r-k-kulfoldi">–</span></div>
+            <div class="result-line" id="ev-r-k-fordafa-row" style="display:none"><span class="lbl">Fordított áfa</span><span class="val" id="ev-r-k-fordafa">–</span></div>
+
 
             <div class="result-total">
               <div class="total-label">Havi becsült díj</div>
@@ -1526,6 +1616,59 @@
               <div class="check-price">10 000 Ft</div>
               <label class="toggle"><input type="checkbox" id="ceg-repr" onchange="calc()"><span class="toggle-slider"></span></label>
             </div>
+            <div class="check-row">
+              <div><div class="check-label">Rehabilitációs hozzájárulás bevallás</div><div class="check-sub">Negyedéves → havi bontásban: 1 667 Ft/hó</div></div>
+              <div class="check-price">5 000 Ft/negyed.</div>
+              <label class="toggle"><input type="checkbox" id="ceg-rehab" onchange="calc()"><span class="toggle-slider"></span></label>
+            </div>
+        <div class="section" id="ceg-komplex-section" style="display:none">
+          <div class="section-header">
+            <div class="section-num">5</div>
+            <div class="section-title">Komplexitási felárak <span style="background:#1e4d8c;color:white;font-size:9px;padding:2px 7px;border-radius:8px;margin-left:6px;font-family:DM Sans,sans-serif;font-weight:700;letter-spacing:0.5px">V3</span></div>
+          </div>
+          <div class="section-body">
+            <div class="check-row">
+              <div><div class="check-label">Extra HUF bankszámla</div><div class="check-sub">1 db az alapárban, 2. db-tól +3 000 Ft/db</div></div>
+              <div class="check-price">3 000 Ft/hó/db</div>
+              <div class="inline-num"><input type="number" id="ceg-k-huf-bank" min="0" value="0" onchange="calc()" style="width:60px"><span style="font-size:12px;color:var(--text-muted)">db extra</span></div>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">Deviza bankszámla</div><div class="check-sub">1. db-tól +6 000 Ft/db</div></div>
+              <div class="check-price">6 000 Ft/hó/db</div>
+              <div class="inline-num"><input type="number" id="ceg-k-dev-bank" min="0" value="0" onchange="calc()" style="width:60px"><span style="font-size:12px;color:var(--text-muted)">db</span></div>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">Extra pénztárgép</div><div class="check-sub">1 db az alapárban, 2. db-tól +2 000 Ft/db</div></div>
+              <div class="check-price">2 000 Ft/hó/db</div>
+              <div class="inline-num"><input type="number" id="ceg-k-pztgep" min="0" value="0" onchange="calc()" style="width:60px"><span style="font-size:12px;color:var(--text-muted)">db extra</span></div>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">Extra pénztár</div><div class="check-sub">1 db az alapárban, 2. db-tól +2 000 Ft/db</div></div>
+              <div class="check-price">2 000 Ft/hó/db</div>
+              <div class="inline-num"><input type="number" id="ceg-k-pztar" min="0" value="0" onchange="calc()" style="width:60px"><span style="font-size:12px;color:var(--text-muted)">db extra</span></div>
+            </div>
+            <div style="margin-top:8px;font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.8px;padding:4px 0 2px">Kategória alapú felárak</div>
+            <div style="background:#f0f4fa;border:1px solid #aac4e0;border-radius:6px;padding:6px 10px;margin-bottom:6px;font-size:10px;color:#5a7eb0">
+              <strong>Csekély</strong> – néhány tétel/hó &nbsp;·&nbsp; <strong>Jelentős</strong> – a könyvelési munka érzékelhető részét teszi ki &nbsp;·&nbsp; <strong>Meghatározó</strong> – az ügyletek többségét érinti
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">Devizás ügyletek</div></div>
+              <select id="ceg-k-deviza" onchange="calc()" style="font-size:12px;padding:4px 8px;border-radius:6px;border:1px solid var(--border)">
+                <option value="0">Nincs</option><option value="3000">Csekély (+3 000 Ft)</option><option value="8000">Jelentős (+8 000 Ft)</option><option value="15000">Meghatározó (+15 000 Ft)</option>
+              </select>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">Külföldi ügyletek (EU / harmadik ország)</div></div>
+              <select id="ceg-k-kulfoldi" onchange="calc()" style="font-size:12px;padding:4px 8px;border-radius:6px;border:1px solid var(--border)">
+                <option value="0">Nincs</option><option value="3000">Csekély (+3 000 Ft)</option><option value="8000">Jelentős (+8 000 Ft)</option><option value="15000">Meghatározó (+15 000 Ft)</option>
+              </select>
+            </div>
+            <div class="check-row">
+              <div><div class="check-label">Fordított áfa</div></div>
+              <select id="ceg-k-fordafa" onchange="calc()" style="font-size:12px;padding:4px 8px;border-radius:6px;border:1px solid var(--border)">
+                <option value="0">Nincs</option><option value="2000">Csekély (+2 000 Ft)</option><option value="5000">Jelentős (+5 000 Ft)</option><option value="8000">Meghatározó (+8 000 Ft)</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -1583,6 +1726,17 @@
             <div class="result-line" id="ceg-r-cegauto-row" style="display:none"><span class="lbl">Cégautóadó (havi arány)</span><span class="val" id="ceg-r-cegauto">–</span></div>
             <div class="result-line" id="ceg-r-turizmus-row" style="display:none"><span class="lbl">Turizmusfejlesztési hozzájárulás</span><span class="val" id="ceg-r-turizmus">–</span></div>
             <div class="result-line" id="ceg-r-repr-row" style="display:none"><span class="lbl">Reprezentációs ktg. bevallás</span><span class="val" id="ceg-r-repr">–</span></div>
+            <div class="result-line" id="ceg-r-rehab-row" style="display:none"><span class="lbl">Rehabilitációs hozzájárulás (havi arány)</span><span class="val" id="ceg-r-rehab">–</span></div>
+
+            <div class="result-section-label" id="ceg-r-komplex-section" style="display:none">Komplexitási felárak (V3)</div>
+            <div class="result-line" id="ceg-r-k-huf-bank-row" style="display:none"><span class="lbl">Extra HUF bankszámla</span><span class="val" id="ceg-r-k-huf-bank">–</span></div>
+            <div class="result-line" id="ceg-r-k-dev-bank-row" style="display:none"><span class="lbl">Deviza bankszámla</span><span class="val" id="ceg-r-k-dev-bank">–</span></div>
+            <div class="result-line" id="ceg-r-k-pztgep-row" style="display:none"><span class="lbl">Extra pénztárgép</span><span class="val" id="ceg-r-k-pztgep">–</span></div>
+            <div class="result-line" id="ceg-r-k-pztar-row" style="display:none"><span class="lbl">Extra pénztár</span><span class="val" id="ceg-r-k-pztar">–</span></div>
+            <div class="result-line" id="ceg-r-k-deviza-row" style="display:none"><span class="lbl">Devizás ügyletek</span><span class="val" id="ceg-r-k-deviza">–</span></div>
+            <div class="result-line" id="ceg-r-k-kulfoldi-row" style="display:none"><span class="lbl">Külföldi ügyletek</span><span class="val" id="ceg-r-k-kulfoldi">–</span></div>
+            <div class="result-line" id="ceg-r-k-fordafa-row" style="display:none"><span class="lbl">Fordított áfa</span><span class="val" id="ceg-r-k-fordafa">–</span></div>
+
 
             <div class="result-total">
               <div class="total-label">Havi becsült díj (nettó)</div>
@@ -1596,7 +1750,7 @@
               <div class="eves-zar-icon">📅</div>
               <div class="eves-zar-body">
                 <div class="eves-zar-title">Éves zárás – egyszer számlázva</div>
-                <div class="eves-zar-text">Az éves zárás díja 1 havi alapdíj, könyvvizsgálattal 1,5×. Ez nem szerepel a havi díjban.</div>
+                <div class="eves-zar-text">Az éves zárás díja: alapdíj + árbevétel felár (könyvvizsgálattal 1,5×). Ez nem szerepel a havi díjban.</div>
                 <div class="eves-zar-amount" id="ceg-zar-amount">–</div>
               </div>
             </div>
@@ -1986,7 +2140,7 @@
               <div class="eves-zar-icon">📅</div>
               <div class="eves-zar-body">
                 <div class="eves-zar-title">Éves zárás & közbenső mérleg – egyszer számlázva</div>
-                <div class="eves-zar-text">Éves zárás: 1 havi alapdíj. Közbenső mérleg (igény esetén): szintén 1 havi alapdíj. Ezek nem szerepelnek a havi díjban.</div>
+                <div class="eves-zar-text">Éves zárás: alapdíj + árbevétel felár. Közbenső mérleg (igény esetén): szintén alapdíj + árbevétel felár. Ezek nem szerepelnek a havi díjban.</div>
                 <div class="eves-zar-amount" id="ws-zar-amount">–</div>
               </div>
             </div>
@@ -2164,7 +2318,25 @@ function setSection(id, show) {
   if (el) el.style.display = show ? '' : 'none';
 }
 
+function getVerzio() {
+  const el = document.getElementById('global-verzio');
+  return el ? el.value : 'v3';
+}
+
+function onVerzioChange() {
+  const v = getVerzio();
+  // EV komplexitási szekció megjelenítése/elrejtése
+  const evK = document.getElementById('ev-komplex-section');
+  if (evK) evK.style.display = v === 'v3' ? '' : 'none';
+  const cegK = document.getElementById('ceg-komplex-section');
+  if (cegK) cegK.style.display = v === 'v3' ? '' : 'none';
+  // V3 badge-ek
+  document.querySelectorAll('.v3-badge').forEach(el => el.style.display = v === 'v3' ? '' : 'none');
+  calc();
+}
+
 function calcEV() {
+  const v = getVerzio();
   const alapdijBase = sel('ev-tetelek');
   const arbevFelár = sel('ev-arbev');
   const adozas = document.getElementById('ev-adozas').value;
@@ -2175,11 +2347,14 @@ function calcEV() {
 
   const modAlap = alapdijBase + arbevFelár;
 
-  let adozasKed = 0;
-  if (adozas === 'kata') adozasKed = modAlap * 0.5;
-  else if (adozas === 'atalany') adozasKed = modAlap * 0.2;
+  // Kedvezmény alapja: V3-ban csak alapdíj, V2-ben alapdíj + árbevétel felár
+  const kedAlap = v === 'v3' ? alapdijBase : modAlap;
 
-  // Bérszámfejtés tételenként
+  let adozasKed = 0;
+  if (adozas === 'kata') adozasKed = kedAlap * 0.5;
+  else if (adozas === 'atalany') adozasKed = kedAlap * 0.2;
+
+  // Bérszámfejtés
   const nEgyszer = val('ev-ber-egyszer');
   const n1let    = val('ev-ber-1let');
   const nTobbet  = val('ev-ber-tobbet');
@@ -2195,7 +2370,7 @@ function calcEV() {
   const berIngatlan = nIngatlan * 5000;
   const berTotal    = berEgyszer + ber1let + berTobbet + berPassz + berIngatlan;
 
-  // Rendszeres tételenként
+  // Rendszeres
   const rAfa      = checked('ev-afa')      ? 5000 : 0;
   const rA60      = checked('ev-a60')      ? 2000 : 0;
   const rNavAtv   = checked('ev-nav-atv')  ? 3000 : 0;
@@ -2205,18 +2380,33 @@ function calcEV() {
   const rRepr     = checked('ev-repr')     ? 10000 : 0;
   const rendTotal = rAfa + rA60 + rNavAtv + rKsh + rCegauto + rTurizmus + rRepr;
 
-  // Kedvezmények tételenként
-  const ked1 = checked('ev-ked1') ? Math.round(modAlap * 0.1)  : 0;
-  const ked2 = checked('ev-ked2') ? Math.round(modAlap * 0.05) : 0;
-  const ked3 = checked('ev-ked3') ? Math.round(modAlap * 0.05) : 0;
-  const egyediKed = Math.round(modAlap * val('ev-ked-egyedi') / 100);
+  // Komplexitási felár (csak V3)
+  let komplexTotal = 0;
+  let kHufBank = 0, kDevBank = 0, kPztgep = 0, kPztar = 0;
+  let kDeviza = 0, kKulfoldi = 0, kFordafa = 0;
+  if (v === 'v3') {
+    kHufBank   = val('ev-k-huf-bank') * 3000;
+    kDevBank   = val('ev-k-dev-bank') * 6000;
+    kPztgep    = val('ev-k-pztgep') * 2000;
+    kPztar     = val('ev-k-pztar') * 2000;
+    kDeviza    = sel('ev-k-deviza');
+    kKulfoldi  = sel('ev-k-kulfoldi');
+    kFordafa   = sel('ev-k-fordafa');
+    komplexTotal = kHufBank + kDevBank + kPztgep + kPztar + kDeviza + kKulfoldi + kFordafa;
+  }
+
+  // Kedvezmények (kedAlap alapján)
+  const ked1 = checked('ev-ked1') ? Math.round(kedAlap * 0.1)  : 0;
+  const ked2 = checked('ev-ked2') ? Math.round(kedAlap * 0.05) : 0;
+  const ked3 = checked('ev-ked3') ? Math.round(kedAlap * 0.05) : 0;
+  const egyediKed = Math.round(kedAlap * val('ev-ked-egyedi') / 100);
   const kedTotal = ked1 + ked2 + ked3 + egyediKed;
-  const mindenKed = Math.round(adozasKed) + kedTotal;  // teljes kedvezmény az alapdíjból
+  const mindenKed = Math.round(adozasKed) + kedTotal;
   const hasKed = mindenKed > 0;
 
-  const total = modAlap - adozasKed + berTotal + rendTotal - kedTotal;
+  const total = modAlap - adozasKed + berTotal + rendTotal + komplexTotal - kedTotal;
 
-  // Alapdíj
+  // Megjelenítés
   document.getElementById('ev-r-alap').textContent = fmt(alapdijBase);
   setSav('ev-r-alap-sav', getSav('ev-tetelek'));
   const evArbevRow = document.getElementById('ev-r-arbev-row');
@@ -2224,7 +2414,7 @@ function calcEV() {
   document.getElementById('ev-r-arbev').textContent = fmt(arbevFelár);
   setSav('ev-r-arbev-sav', getSav('ev-arbev'));
 
-  // Kedvezmény doboz – adózási kedvezmény is ide kerül
+  // Kedvezmény
   setSection('ev-r-ked-section', hasKed);
   const evAdozasRow = document.getElementById('ev-r-adozas-row');
   if (evAdozasRow) evAdozasRow.style.display = adozasKed > 0 ? '' : 'none';
@@ -2236,21 +2426,19 @@ function calcEV() {
   setRow('ev-r-ked2',   ked2,      'ev', true);
   setRow('ev-r-ked3',   ked3,      'ev', true);
   setRow('ev-r-egyedi', egyediKed, 'ev', true);
-  if (hasKed) {
-    document.getElementById('ev-r-ked-total').textContent = '–' + fmt(mindenKed);
-  }
+  if (hasKed) document.getElementById('ev-r-ked-total').textContent = '–' + fmt(mindenKed);
   if (egyediKed > 0) {
     const jogcim = document.getElementById('ev-ked-jogcim').value.trim();
-    const evPct = val('ev-ked-egyedi'); document.getElementById('ev-r-egyedi-lbl').textContent = (jogcim || 'Egyedi kedvezmény') + (evPct > 0 ? ' (–' + evPct + '%)' : '');
+    const evPct = val('ev-ked-egyedi');
+    document.getElementById('ev-r-egyedi-lbl').textContent = (jogcim || 'Egyedi kedvezmény') + (evPct > 0 ? ' (–' + evPct + '%)' : '');
   }
 
-  // Módosított alapdíj – áthúzott: teljes modAlap, új: modAlap – minden kedvezmény
+  // Módosított alapdíj
   document.getElementById('ev-r-modalap').textContent = fmt(modAlap - mindenKed);
   const evOrigEl = document.getElementById('ev-r-modalap-orig');
   const evArr = document.getElementById('ev-r-modalap-arrow');
   if (hasKed) {
-    evOrigEl.textContent = fmt(modAlap);
-    evOrigEl.style.display = '';
+    evOrigEl.textContent = fmt(modAlap); evOrigEl.style.display = '';
     if (evArr) evArr.style.display = '';
   } else {
     evOrigEl.style.display = 'none';
@@ -2259,11 +2447,11 @@ function calcEV() {
 
   // Bérszámfejtés
   setSection('ev-r-ber-section', berTotal > 0);
-  setRow('ev-r-ber-egyszer', berEgyszer, 'ev');  setBerFo('ev-r-ber-egyszer', nEgyszer);
-  setRow('ev-r-ber-1let',    ber1let,    'ev');  setBerFo('ev-r-ber-1let',    n1let);
-  setRow('ev-r-ber-tobbet',  berTobbet,  'ev');  setBerFo('ev-r-ber-tobbet',  nTobbet);
-  setRow('ev-r-ber-passz',   berPassz,   'ev');  setBerFo('ev-r-ber-passz',   nPassz);
-  setRow('ev-r-ber-ingatlan',berIngatlan,'ev');  setBerFo('ev-r-ber-ingatlan',nIngatlan);
+  setRow('ev-r-ber-egyszer', berEgyszer, 'ev'); setBerFo('ev-r-ber-egyszer', nEgyszer);
+  setRow('ev-r-ber-1let',    ber1let,    'ev'); setBerFo('ev-r-ber-1let',    n1let);
+  setRow('ev-r-ber-tobbet',  berTobbet,  'ev'); setBerFo('ev-r-ber-tobbet',  nTobbet);
+  setRow('ev-r-ber-passz',   berPassz,   'ev'); setBerFo('ev-r-ber-passz',   nPassz);
+  setRow('ev-r-ber-ingatlan',berIngatlan,'ev'); setBerFo('ev-r-ber-ingatlan',nIngatlan);
 
   // Rendszeres
   setSection('ev-r-rend-section', rendTotal > 0);
@@ -2275,10 +2463,21 @@ function calcEV() {
   setRow('ev-r-turizmus',rTurizmus,'ev');
   setRow('ev-r-repr',    rRepr,    'ev');
 
+  // Komplexitási felár (V3)
+  setSection('ev-r-komplex-section', komplexTotal > 0);
+  setRow('ev-r-k-huf-bank',  kHufBank,   'ev');
+  setRow('ev-r-k-dev-bank',  kDevBank,   'ev');
+  setRow('ev-r-k-pztgep',    kPztgep,    'ev');
+  setRow('ev-r-k-pztar',     kPztar,     'ev');
+  setRow('ev-r-k-deviza',    kDeviza,    'ev');
+  setRow('ev-r-k-kulfoldi',  kKulfoldi,  'ev');
+  setRow('ev-r-k-fordafa',   kFordafa,   'ev');
+
   document.getElementById('ev-total').textContent = fmt(Math.round(total));
 }
 
 function calcCEG() {
+  const v = getVerzio();
   const alapdijBase = sel('ceg-tetelek');
   const arbevFelár = sel('ceg-arbev');
   const egyedi = alapdijBase === 0 || arbevFelár === -1;
@@ -2292,7 +2491,10 @@ function calcCEG() {
 
   const modAlap = alapdijBase + arbevFelár;
 
-  // Bérszámfejtés tételenként
+  // Kedvezmény alapja: V3-ban csak alapdíj, V2-ben modAlap
+  const kedAlap = v === 'v3' ? alapdijBase : modAlap;
+
+  // Bérszámfejtés
   const nEgyszer = val('ceg-ber-egyszer');
   const n1let    = val('ceg-ber-1let');
   const nTobbet  = val('ceg-ber-tobbet');
@@ -2308,7 +2510,7 @@ function calcCEG() {
   const berIngatlan = nIngatlan * 5000;
   const berTotal    = berEgyszer + ber1let + berTobbet + berPassz + berIngatlan;
 
-  // Rendszeres tételenként
+  // Rendszeres
   const rAfa      = checked('ceg-afa')      ? 5000 : 0;
   const rA60      = checked('ceg-a60')      ? 2000 : 0;
   const rNavAtv   = checked('ceg-nav-atv')  ? 3000 : 0;
@@ -2317,17 +2519,33 @@ function calcCEG() {
   const rCegauto  = val('ceg-cegauto') * Math.round(5000/3);
   const rTurizmus = checked('ceg-turizmus') ? 5000 : 0;
   const rRepr     = checked('ceg-repr')     ? 10000 : 0;
-  const rendTotal = rAfa + rA60 + rNavAtv + rKiva + rKsh + rCegauto + rTurizmus + rRepr;
+  const rRehab    = checked('ceg-rehab')    ? Math.round(5000/3) : 0;
+  const rendTotal = rAfa + rA60 + rNavAtv + rKiva + rKsh + rCegauto + rTurizmus + rRepr + rRehab;
 
-  // Kedvezmények tételenként
-  const ked1 = checked('ceg-ked1') ? Math.round(modAlap * 0.1)  : 0;
-  const ked2 = checked('ceg-ked2') ? Math.round(modAlap * 0.05) : 0;
-  const egyediKed = Math.round(modAlap * val('ceg-ked-egyedi') / 100);
+  // Komplexitási felár (csak V3)
+  let komplexTotal = 0;
+  let kHufBank = 0, kDevBank = 0, kPztgep = 0, kPztar = 0;
+  let kDeviza = 0, kKulfoldi = 0, kFordafa = 0;
+  if (v === 'v3') {
+    kHufBank   = val('ceg-k-huf-bank') * 3000;
+    kDevBank   = val('ceg-k-dev-bank') * 6000;
+    kPztgep    = val('ceg-k-pztgep') * 2000;
+    kPztar     = val('ceg-k-pztar') * 2000;
+    kDeviza    = sel('ceg-k-deviza');
+    kKulfoldi  = sel('ceg-k-kulfoldi');
+    kFordafa   = sel('ceg-k-fordafa');
+    komplexTotal = kHufBank + kDevBank + kPztgep + kPztar + kDeviza + kKulfoldi + kFordafa;
+  }
+
+  // Kedvezmények (kedAlap alapján)
+  const ked1 = checked('ceg-ked1') ? Math.round(kedAlap * 0.1)  : 0;
+  const ked2 = checked('ceg-ked2') ? Math.round(kedAlap * 0.05) : 0;
+  const egyediKed = Math.round(kedAlap * val('ceg-ked-egyedi') / 100);
   const kedTotal = ked1 + ked2 + egyediKed;
 
-  const total = modAlap + berTotal + rendTotal - kedTotal;
+  const total = modAlap + berTotal + rendTotal + komplexTotal - kedTotal;
 
-  // Alapdíj
+  // Megjelenítés
   document.getElementById('ceg-r-alap').textContent = fmt(alapdijBase);
   setSav('ceg-r-alap-sav', getSav('ceg-tetelek'));
   const cegArbevRow = document.getElementById('ceg-r-arbev-row');
@@ -2335,40 +2553,37 @@ function calcCEG() {
   document.getElementById('ceg-r-arbev').textContent = fmt(arbevFelár);
   setSav('ceg-r-arbev-sav', getSav('ceg-arbev'));
 
-  // Kedvezmény doboz
+  // Kedvezmény
   setSection('ceg-r-ked-section', kedTotal > 0);
   setRow('ceg-r-ked1',   ked1,      'ceg', true);
   setRow('ceg-r-ked2',   ked2,      'ceg', true);
   setRow('ceg-r-egyedi', egyediKed, 'ceg', true);
-  if (kedTotal > 0) {
-    document.getElementById('ceg-r-ked-total').textContent = '–' + fmt(kedTotal);
-  }
+  if (kedTotal > 0) document.getElementById('ceg-r-ked-total').textContent = '–' + fmt(kedTotal);
   if (egyediKed > 0) {
     const jogcim = document.getElementById('ceg-ked-jogcim').value.trim();
-    const cegPct = val('ceg-ked-egyedi'); document.getElementById('ceg-r-egyedi-lbl').textContent = (jogcim || 'Egyedi kedvezmény') + (cegPct > 0 ? ' (–' + cegPct + '%)' : '');
+    const cegPct = val('ceg-ked-egyedi');
+    document.getElementById('ceg-r-egyedi-lbl').textContent = (jogcim || 'Egyedi kedvezmény') + (cegPct > 0 ? ' (–' + cegPct + '%)' : '');
   }
 
-  // Módosított alapdíj – áthúzott eredeti + kedvezményes
+  // Módosított alapdíj
   document.getElementById('ceg-r-modalap').textContent = fmt(modAlap - kedTotal);
   const cegOrigEl = document.getElementById('ceg-r-modalap-orig');
+  const arr = document.getElementById('ceg-r-modalap-arrow');
   if (kedTotal > 0) {
-    cegOrigEl.textContent = fmt(modAlap);
-    cegOrigEl.style.display = '';
-    const arr = document.getElementById('ceg-r-modalap-arrow');
+    cegOrigEl.textContent = fmt(modAlap); cegOrigEl.style.display = '';
     if (arr) arr.style.display = '';
   } else {
     cegOrigEl.style.display = 'none';
-    const arr = document.getElementById('ceg-r-modalap-arrow');
     if (arr) arr.style.display = 'none';
   }
 
   // Bérszámfejtés
   setSection('ceg-r-ber-section', berTotal > 0);
-  setRow('ceg-r-ber-egyszer', berEgyszer, 'ceg');  setBerFo('ceg-r-ber-egyszer', nEgyszer);
-  setRow('ceg-r-ber-1let',    ber1let,    'ceg');  setBerFo('ceg-r-ber-1let',    n1let);
-  setRow('ceg-r-ber-tobbet',  berTobbet,  'ceg');  setBerFo('ceg-r-ber-tobbet',  nTobbet);
-  setRow('ceg-r-ber-passz',   berPassz,   'ceg');  setBerFo('ceg-r-ber-passz',   nPassz);
-  setRow('ceg-r-ber-ingatlan',berIngatlan,'ceg');  setBerFo('ceg-r-ber-ingatlan',nIngatlan);
+  setRow('ceg-r-ber-egyszer', berEgyszer, 'ceg'); setBerFo('ceg-r-ber-egyszer', nEgyszer);
+  setRow('ceg-r-ber-1let',    ber1let,    'ceg'); setBerFo('ceg-r-ber-1let',    n1let);
+  setRow('ceg-r-ber-tobbet',  berTobbet,  'ceg'); setBerFo('ceg-r-ber-tobbet',  nTobbet);
+  setRow('ceg-r-ber-passz',   berPassz,   'ceg'); setBerFo('ceg-r-ber-passz',   nPassz);
+  setRow('ceg-r-ber-ingatlan',berIngatlan,'ceg'); setBerFo('ceg-r-ber-ingatlan',nIngatlan);
 
   // Rendszeres
   setSection('ceg-r-rend-section', rendTotal > 0);
@@ -2380,13 +2595,24 @@ function calcCEG() {
   setRow('ceg-r-cegauto', rCegauto, 'ceg');
   setRow('ceg-r-turizmus',rTurizmus,'ceg');
   setRow('ceg-r-repr',    rRepr,    'ceg');
+  setRow('ceg-r-rehab',   rRehab,   'ceg');
+
+  // Komplexitási felár (V3)
+  setSection('ceg-r-komplex-section', komplexTotal > 0);
+  setRow('ceg-r-k-huf-bank',  kHufBank,   'ceg');
+  setRow('ceg-r-k-dev-bank',  kDevBank,   'ceg');
+  setRow('ceg-r-k-pztgep',    kPztgep,    'ceg');
+  setRow('ceg-r-k-pztar',     kPztar,     'ceg');
+  setRow('ceg-r-k-deviza',    kDeviza,    'ceg');
+  setRow('ceg-r-k-kulfoldi',  kKulfoldi,  'ceg');
+  setRow('ceg-r-k-fordafa',   kFordafa,   'ceg');
 
   document.getElementById('ceg-total').textContent = fmt(Math.round(total));
   document.getElementById('ceg-total-gross').textContent = fmt(Math.round(total * 1.27));
 
-  // Éves zárás figyelmeztetés
+  // Éves zárás: alapdíj + árbevétel felár
   const cegZarEl = document.getElementById('ceg-zar-amount');
-  if (cegZarEl) cegZarEl.textContent = 'Becsült éves zárás díja: ' + fmt(Math.round(modAlap)) + ' (könyvvizsgálattal: ' + fmt(Math.round(modAlap * 1.5)) + ')';
+  if (cegZarEl) cegZarEl.textContent = 'Becsült éves zárás díja: ' + fmt(Math.round(modAlap)) + ' Ft (könyvvizsgálattal: ' + fmt(Math.round(modAlap * 1.5)) + ' Ft)';
 }
 
 function calcWS() {
@@ -2764,6 +2990,7 @@ function renumberSectionLabels() {
   });
 }
 calc();
+onVerzioChange();
 renumberSectionLabels();
 </script>
 </body>
