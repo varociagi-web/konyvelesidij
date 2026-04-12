@@ -1621,6 +1621,10 @@
               <div class="check-price">5 000 Ft/negyed.</div>
               <label class="toggle"><input type="checkbox" id="ceg-rehab" onchange="calc()"><span class="toggle-slider"></span></label>
             </div>
+          </div>
+        </div>
+
+        <!-- 5. KOMPLEXITÁSI FELÁR CÉG (V3) -->
         <div class="section" id="ceg-komplex-section" style="display:none">
           <div class="section-header">
             <div class="section-num">5</div>
@@ -2264,8 +2268,13 @@ function switchTab(t) {
   document.querySelectorAll('.tab-btn').forEach((b,i) => {
     b.classList.toggle('active', ['ev','ceg','ws'][i] === t);
   });
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('tab-' + t).classList.add('active');
+  document.querySelectorAll('.tab-panel').forEach(p => {
+    p.classList.remove('active');
+    p.style.display = 'none';
+  });
+  const panel = document.getElementById('tab-' + t);
+  panel.classList.add('active');
+  panel.style.display = 'block';
   updateHeaderSender();
   calc();
   setTimeout(updateFab, 50);
